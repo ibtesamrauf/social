@@ -5,6 +5,14 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
+                @if(Session::has('alert'))
+                    <div class="alert alert-success">
+                        {{ Session::get('alert') }}
+                        @php
+                        Session::forget('alert');
+                        @endphp
+                    </div>
+                @endif
                 <div class="panel-heading">Login</div>
 
                 <div class="panel-body">
