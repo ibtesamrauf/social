@@ -44,12 +44,12 @@ class LoginController extends Controller
      *
      * @return Response
      */
-    // public function authenticate() {
-    //     if ( Auth::attempt( ['email' => $email, 'password' => $password, 'verified' => 1] ) ) {
-    //         // Authentication passed...
-    //         return redirect()->intended( '/' );
-    //     }
-    // }
+    public function authenticate() {
+        if ( Auth::attempt( ['email' => $email, 'password' => $password, 'verified' => 1] ) ) {
+            // Authentication passed...
+            return redirect()->intended( '/' );
+        }
+    }
 
     /**
      * Get the needed authorization credentials from the request.
