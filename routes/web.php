@@ -18,3 +18,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/buildpage', 'BuildpageController@index');
+
+Route::get('/upload_youtube_video', 'BuildpageController@upload_youtube_video');
+
+Route::post('/number_of_videos', 'BuildpageController@number_of_videos');
+
+Route::get('/viewpage', 'ViewpageController@index');
+
+
+

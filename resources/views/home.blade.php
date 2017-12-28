@@ -16,6 +16,16 @@
 
                     You are logged in!
                 </div>
+
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="/buildpage">Builb your page</a></li>
+                        <li><a href="/viewpage">View page</a></li>
+                        <li><a href="">Find Inluencers</a></li>
+                    </ul>
+                    
+                </div>
+
             </div>
         </div>
     </div>
