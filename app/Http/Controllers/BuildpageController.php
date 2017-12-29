@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 // use Session;
 use App\User_videos;
 use Auth;
+use App\User_page;
+use Illuminate\Support\Facades\Validator;
 
 class BuildpageController extends Controller
 {
@@ -45,7 +47,7 @@ class BuildpageController extends Controller
                 if(isset($value)){
                     // var_dump($value);
                     $youtube_ids = explode('v=', $value);
-                    User_videos::insert([
+                    User_videos::create([
                         'user_id'       => Auth::user()->id, 
                         'videos_url'    => $youtube_ids[1]
                     ]);
@@ -53,7 +55,7 @@ class BuildpageController extends Controller
             }
         }
 
-        return redirect('home')->with('status', 'Videos Added!');
+        return redirect('viewpage')->with('status', 'Videos Added!');
 
         // $data = [
         //     'success': true,
@@ -63,6 +65,31 @@ class BuildpageController extends Controller
 
         // return response()->json($data);
     }
+
+    public function buildpage_form(Request $request)
+    {
+        Validator::make($request->all(), [
+            'page_title'                => 'required',
+            'page_description'          => 'required',
+            'page_about_your_self'      => 'required',
+        ])->validate();
+
+        User_page::create([
+                'user_id'                   => Auth::user()->id, 
+                'page_title'                => $request->page_title,
+                'page_description'          => $request->page_description,
+                'page_about_your_self'      => $request->page_about_your_self,
+            ]);
+        return redirect('home')->with('status', 'Page created succesfully!');
+    }
     
+    public function editpage($id)
+    {
+        $user_page_data = User_page::where('user_id' , Auth::user()->id)
+                            ->where('id',$id)
+                            ->first();                 
+        // vv($user_page_data);
+        return view('buildpage' , compact('user_page_data'));
+    }
 
 }

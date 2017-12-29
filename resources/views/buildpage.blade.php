@@ -59,8 +59,61 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <li><a href="/upload_youtube_video">upload youtube videos</a></li>
-                    <div id="player"></div>
+                    <form class="form-horizontal" method="POST" action="/buildpage_form">
+                        {{ csrf_field() }}
+
+                        <div class="form-group{{ $errors->has('page_title') ? ' has-error' : '' }}">
+                            <label for="page_title" class="col-md-4 control-label">Page Title</label>
+
+                            <div class="col-md-6">
+                                <input id="page_title" type="text"   class="form-control" name="page_title" value="{{{ isset($user_page_data->page_title) ? $user_page_data->page_title : '' }}}{{ old('page_title') }}" required autofocus>
+
+                                @if ($errors->has('page_title'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('page_title') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('page_description') ? ' has-error' : '' }}">
+                            <label for="page_description" class="col-md-4 control-label">Description</label>
+
+                            <div class="col-md-6">
+                                <input id="page_description" type="text" class="form-control" name="page_description" value="{{{ isset($user_page_data->page_description) ? $user_page_data->page_description : '' }}}{{ old('page_description') }}" required>
+
+                                @if ($errors->has('page_description'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('page_description') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('page_about_your_self') ? ' has-error' : '' }}">
+                            <label for="page_about_your_self" class="col-md-4 control-label">About your Page</label>
+
+                            <div class="col-md-6">
+                                <input id="page_about_your_self" type="text" class="form-control" name="page_about_your_self" value="{{{ isset($user_page_data->page_about_your_self) ? $user_page_data->page_about_your_self : '' }}}{{ old('page_about_your_self') }}" required>
+
+                                @if ($errors->has('page_about_your_self'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('page_about_your_self') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Register
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- <li><a href="/upload_youtube_video">upload youtube videos</a></li> -->
+                    <!-- <div id="player"></div> -->
                 </div>
 
 

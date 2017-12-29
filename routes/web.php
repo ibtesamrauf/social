@@ -21,11 +21,18 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/buildpage', 'BuildpageController@index');
 
+Route::post('/buildpage_form', 'BuildpageController@buildpage_form');
+
+Route::get('/editpage/{id}', 'BuildpageController@editpage');
+
+
 Route::get('/upload_youtube_video', 'BuildpageController@upload_youtube_video');
 
 Route::post('/number_of_videos', 'BuildpageController@number_of_videos');
 
 Route::get('/viewpage', 'ViewpageController@index');
+
+Route::get('/delete_youtube_video/{youtube_video_id}/{id}', 'ViewpageController@delete_youtube_video');
 
 
 

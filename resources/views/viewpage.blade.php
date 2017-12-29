@@ -54,23 +54,6 @@
     function get_youtube_video_data(youtube_video_id,count) 
     {  
       $(function() {
-        // $("#search-txt").on("keypress", function(e) {
-        //   if (e.which === 13) {
-        //     e.preventDefault();
-        //     $("#search-btn").trigger("click");
-        //   }
-        // });
-        // $("#search-btn").on("click", function() {
-          // $("#video-data-1, #video-data-2").empty();
-          // var videoid = $("#search-txt").val();
-          // var matches = videoid.match(/^http:\/\/www\.youtube\.com\/.*[?&]v=([^&]+)/i) || videoid.match(/^http:\/\/youtu\.be\/([^?]+)/i);
-          // if (matches) {
-          //   videoid = matches[1];
-          // }
-          // if (videoid.match(/^[a-z0-9_-]{11}$/i) === null) {
-          //   $("<p style='color: #F00;'>Unable to parse Video ID/URL.</p>").appendTo("#video-data-1");
-          //   return;
-          // }
           $.getJSON("https://www.googleapis.com/youtube/v3/videos", {
             key: "AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE",
             part: "snippet,statistics",
@@ -86,8 +69,10 @@
               width: data.items[0].snippet.thumbnails.medium.width,
               height: data.items[0].snippet.thumbnails.medium.height
             }).appendTo("#video-data-"+count);
-            $("<h1></h1>").text(data.items[0].snippet.title).appendTo("#video-data-"+count);
-            $("<p></p>").text(data.items[0].snippet.description).appendTo("#video-data-"+count);
+            $("<br><br><a href='/delete_youtube_video/" + youtube_video_id + "/" + count + "' class='btn btn-danger'>To delete video</a>").appendTo("#video-data-"+count);
+
+            $("<h1></h1>").text(data.items[0].snippet.title).appendTo("#video-data-ul-"+count);
+            // $("<p></p>").text(data.items[0].snippet.description).appendTo("#video-data-"+count);
             $("<li></li>").text("Published at: " + data.items[0].snippet.publishedAt).appendTo("#video-data-ul-"+count);
             $("<li></li>").text("View count: " + data.items[0].statistics.viewCount).appendTo("#video-data-ul-"+count);
             $("<li></li>").text("Favorite count: " + data.items[0].statistics.favoriteCount).appendTo("#video-data-ul-"+count);
@@ -96,7 +81,6 @@
           }).fail(function(jqXHR, textStatus, errorThrown) {
             $("<p style='color: #F00;'></p>").text(jqXHR.responseText || errorThrown).appendTo("#video-data-"+count);
           });
-        // });
       });
     }
   </script>
@@ -107,7 +91,7 @@
         <!-- <div class="col-md-8 col-md-offset-2"> -->
         <div class="">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">My Page</div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -115,13 +99,35 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <li><a href="/upload_youtube_video">upload youtube videos</a></li>
+                    <a href="/editpage/{{$user_page_data[0]->id}}" class="btn btn-primary" >edit</a>
+                    <table>
+                      <tr>
+                        <td colspan="2"><h1>{{ $user_page_data[0]->page_title}}</h1></td>
+                      </tr>
+                      <tr>
+                        <td style="width:70%">Description</td>
+                        <td>{{ $user_page_data[0]->page_description}}</td>
+                      </tr>
+                      <tr>
+                        <td>About your page</td>
+                        <td>{{ $user_page_data[0]->page_about_your_self}}</td>
+                      </tr>
+                    </table>
+                    <br>
+                    <li><a href="/upload_youtube_video" class="btn btn-primary">upload youtube videos</a></li>
+                    <br>
                     @foreach ($user_videos_data as $video)
                         <script type="text/javascript">
                           get_youtube_video_data("<?php echo $video->videos_url; ?>","<?php echo $video->id; ?>");
                         </script>
-                        <div id="video-data-{{ $video->id }}"></div>
-                        <ul id="video-data-ul-{{ $video->id }}"></ul>
+                        <br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-4" id="video-data-{{ $video->id }}"></div>
+                                <ul class="col-xs-8" id="video-data-ul-{{ $video->id }}"></ul>
+                            </div>
+                        </div>
+                        <br>
                         <!-- <img src="http://img.youtube.com/vi/{{ $video->videos_url }}/0.jpg"> -->
                         <!-- {{ $video->videos_url }} -->
                     @endforeach

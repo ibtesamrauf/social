@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 // use Session;
 use App\User_videos;
 use Auth;
+use App\User_page;
+
 
 class ViewpageController extends Controller
 {
@@ -28,9 +30,10 @@ class ViewpageController extends Controller
     public function index()
     {
         $user_videos_data = User_videos::where('user_id' , Auth::user()->id)->orderBy('id','DESC')->paginate(15);
-        return view('viewpage',compact('user_videos_data'));
-        // return view('youtube');
+        $user_page_data = User_page::where('user_id' , Auth::user()->id)->get();
 
+        return view('viewpage',compact('user_videos_data' , 'user_page_data'));
+        // return view('youtube');
     }
 
     public function upload_youtube_video()
@@ -65,6 +68,20 @@ class ViewpageController extends Controller
         // return response()->json($data, 200, [], JSON_PRETTY_PRINT);
 
         // return response()->json($data);
+    }
+
+    public function delete_youtube_video($youtube_video_id,$id)
+    {
+        if(!empty($youtube_video_id)){
+            User_videos::where('user_id', Auth::user()->id)
+                            ->where('videos_url' , $youtube_video_id)
+                            ->where('id' , $id)
+                            ->delete();
+            return redirect('viewpage')->with('status', 'Video deleted Success fully!');
+        }else{
+            return redirect('viewpage')->with('status', 'Havign some problem try again later!');
+        }
+        # code...
     }
     
 
