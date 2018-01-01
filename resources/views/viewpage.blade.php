@@ -69,7 +69,7 @@
               width: data.items[0].snippet.thumbnails.medium.width,
               height: data.items[0].snippet.thumbnails.medium.height
             }).appendTo("#video-data-"+count);
-            $("<br><br><a href='/delete_youtube_video/" + youtube_video_id + "/" + count + "' class='btn btn-danger'>To delete video</a>").appendTo("#video-data-"+count);
+            $("<br><br><a href='/delete_youtube_video/" + youtube_video_id + "/" + count + "' class='btn btn-danger'>Delete video</a>").appendTo("#video-data-"+count);
 
             $("<h1></h1>").text(data.items[0].snippet.title).appendTo("#video-data-ul-"+count);
             // $("<p></p>").text(data.items[0].snippet.description).appendTo("#video-data-"+count);
@@ -99,7 +99,13 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <a href="/editpage/{{$user_page_data[0]->id}}" class="btn btn-primary" >edit</a>
+                    @if ($user_page_data->isEmpty())
+                        
+                      <a href="/buildpage" class="btn btn-primary">Create your page first</a>
+
+                    @else
+                    
+                    <a href="/editpage/{{$user_page_data[0]->id}}" class="btn btn-primary" >Edit page</a>
                     <table>
                       <tr>
                         <td colspan="2"><h1>{{ $user_page_data[0]->page_title}}</h1></td>
@@ -131,7 +137,7 @@
                         <!-- <img src="http://img.youtube.com/vi/{{ $video->videos_url }}/0.jpg"> -->
                         <!-- {{ $video->videos_url }} -->
                     @endforeach
-
+                    @endif
                     <!-- <div id="player"></div> -->
                 </div>
 
