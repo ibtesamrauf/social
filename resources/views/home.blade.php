@@ -21,7 +21,7 @@
                     <ul>
                         <li><a href="/buildpage">Builb your page</a></li>
                         <li><a href="/viewpage">View page</a></li>
-                        <li><a href="">Find Inluencers</a></li>
+                        <li><a href="/findinfulencer">Find Inluencers</a></li>
                     </ul>
                     
                 </div>
