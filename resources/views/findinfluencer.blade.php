@@ -26,6 +26,8 @@
                                 <th>Name</th>
                                 <th>Page title</th>
                                 <th>About Them</th>
+                                <th>Add to favorite</th>
+                                <th>Message</th>
                                     @foreach ($user_page_data as $video)
                                         <tr>
                                             <td>
@@ -36,6 +38,16 @@
                                             </td>
                                             <td>
                                                 {{ $video->page_about_your_self }}
+   	                                        </td>
+                                            <td>
+                                           		<a href="#">
+										          <span class="glyphicon glyphicon-star"></span>
+										        </a>
+                                            </td>
+	                                        <td>
+		                                        <a href="#">
+										          <span class="glyphicon glyphicon-envelope"></span>
+										        </a>
                                             </td>
                                         </tr>
                                     @endforeach
