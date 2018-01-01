@@ -16,7 +16,14 @@
                     <form action="/findinfulencer"  method="GET">
 	                    <div class="form-group">
 						    <label for="exampleInputEmail1">Search</label>
-	                    	<input type="text" class="form-control" name="search" value="{{ $_GET['search'] ?  $_GET['search'] : '' }}" id="search" placeholder="Search">
+						    <?php
+						    	$search_var = "";
+							    if ( isset( $_GET['search'] ) ) {
+								    // check emptiness after triming whitespace.
+								    $search_var = $_GET['search'];
+								}
+							?>  
+	                    	<input type="text" class="form-control" name="search" value="{{ $search_var ?  $search_var : '' }}" id="search" placeholder="Search">
 						</div>
 						<button type="submit" class="btn btn-primary">Start Search</button>
 	                    
