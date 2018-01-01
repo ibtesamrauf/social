@@ -13,14 +13,26 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    <form action="/findinfulencer"  method="GET">
+	                    <div class="form-group">
+						    <label for="exampleInputEmail1">Search</label>
+	                    	<input type="text" class="form-control" name="search" value="{{ $_GET['search'] ?  $_GET['search'] : '' }}" id="search" placeholder="Search">
+						</div>
+						<button type="submit" class="btn btn-primary">Start Search</button>
+	                    
+                    </form>
                 </div>
 
                 <div class="panel-body">
                         <div class="container">
                             <div class="row">
                                 @if ($user_page_data->isEmpty())
-                                    <h2>NO influencer is register yet</h2>
-                                    <a href="/home" class="btn btn-primary">Go back to home</a>
+                                	@if (isset($user_page_data->search))
+                                		<h2>{{ $user_page_data->search }}</h2>
+                            		@else
+	                                    <h2>NO influencer is register yet</h2>
+	                                    <a href="/home" class="btn btn-primary">Go back to home</a>
+                                	@endif	
                                 @else
                                 <table class="table">
                                 <th>Name</th>

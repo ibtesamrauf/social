@@ -27,13 +27,23 @@ class FindInfulencerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $pageLimit = 15;
-        $user_page_data = User_page::with('Users')->paginate($pageLimit);
+    	if(isset($request->search)){
+	        $user_page_data = User_page::with('Users')
+	        			->where('page_title', 'like' , "%$request->search%")
+	        			->orWhere('page_description', 'like' , "%$request->search%")
+	        			->orWhere('page_about_your_self', 'like' , "%$request->search%")
+	        			->paginate($pageLimit);   
+			if($user_page_data->isEmpty()){
+				$user_page_data->search = "No match found. Search again!";
+			} 		    		
+    	}else{
+	        $user_page_data = User_page::with('Users')->paginate($pageLimit);    		
+    	}
         
         return view('findinfluencer',compact('user_page_data'));
-        // return view('youtube');
     }
 
     public function upload_youtube_video()
