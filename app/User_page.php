@@ -29,9 +29,9 @@ class User_page extends Model
  
     protected $fillable = ['user_id', 'page_title', 'page_description', 'page_about_your_self'];
     
-    // public function ImageDesc(){
-    //     return $this->hasMany('App\Image_order');
-    // }
+    public function Users(){
+        return $this->hasOne('App\User', 'id', 'user_id');
+    }
     
     // public function HotspotInfo(){
     //     return $this->hasMany('App\Hot_spot_info');
