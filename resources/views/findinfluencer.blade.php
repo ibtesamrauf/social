@@ -18,6 +18,10 @@
                 <div class="panel-body">
                         <div class="container">
                             <div class="row">
+                                @if ($user_page_data->isEmpty())
+                                    <h2>NO influencer is register yet</h2>
+                                    <a href="/home" class="btn btn-primary">Go back to home</a>
+                                @else
                                 <table class="table">
                                 <th>Name</th>
                                 <th>Page title</th>
@@ -36,6 +40,7 @@
                                         </tr>
                                     @endforeach
                                 </table>
+                                @endif
                             </div>
                             {!! $user_page_data->render() !!} 
                         </div>
