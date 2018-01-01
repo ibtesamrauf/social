@@ -42,10 +42,11 @@
                                 </table>
                                 @endif
                             </div>
-                            {!! $user_page_data->render() !!} 
+                            @if ($user_page_data->isEmpty())
+                            @else
+                                {!! $user_page_data->render() !!} 
+                            @endif
                         </div>
-                        <!-- <img src="http://img.youtube.com/vi/{{ $video->videos_url }}/0.jpg"> -->
-                        <!-- {{ $video->videos_url }} -->
                 </div>
 
             </div>
