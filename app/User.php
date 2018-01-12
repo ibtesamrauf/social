@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Hashtags;
 
 class User extends Authenticatable
 {
@@ -15,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','verified',
+        'name', 'user_type', 'email', 'password','verified',
     ];
 
     /**
@@ -26,4 +27,25 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function Users_Roles_hashtags(){
+        return $this->hasMany('App\Roles_hashtags');
+    }
+    // public function Users_Roles_hashtags_names(){
+    //     $temp = $this->hasMany('App\Roles_hashtags');
+    //     $hashtags_data = array();
+    //     // vv($temp);
+    //     $zz = "";
+    //     foreach ($temp as $key => $value) {
+    //     //     v($value);
+    //         $hashtags_data = $value; 
+    //     $zz = Hashtags::select('tags')->where('id' , $value->hashtags_id);
+    //     }
+    //     v($hashtags_data);
+    //     // vv($hashtags_data);
+    //     // $object = new stdClass;
+    //     // return $object;
+    //     return $zz;
+    //     // return $temp; 
+    // }
 }

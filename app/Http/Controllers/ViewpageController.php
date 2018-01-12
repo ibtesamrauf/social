@@ -12,7 +12,7 @@ use Facebook\Facebook;
 use App\Facebook_page_data;
 use App\Youtube_page_data;
 use App\Instagram_page_data;
-
+use App\Hashtags;
 // use SammyK;
 
 class ViewpageController extends Controller
@@ -157,7 +157,12 @@ class ViewpageController extends Controller
         $facebook_page_data = Facebook_page_data::where('user_id' , Auth::user()->id)->get();
         $youtube_page_data = Youtube_page_data::where('user_id' , Auth::user()->id)->get();
         $instagram_page_data = Instagram_page_data::where('user_id' , Auth::user()->id)->get();
+        // $c = Hashtags::get();
+        // vv($c);
         // v($facebook_page_data);
+        // vv(Auth::user()->Users_Roles_hashtags); 
+        // vv(Auth::user()->Users_Roles_hashtags_names); 
+         
         return view('viewprofile' , compact('facebook_page_data' , 'youtube_page_data' , 
             'instagram_page_data' ));
     }

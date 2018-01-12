@@ -62,16 +62,26 @@
             </ul>
  -->
             <ul class="list-group">
-                <li class="list-group-item text-muted">Relevant hatags 
+                <li class="list-group-item text-muted">Relevant hashtags 
                     <i class="fa fa-dashboard fa-1x"></i>
                 </li>
                 <!-- fashion, food, makeup, clothing, tech, diy    -->
-                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Fashion</strong></span> 125</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Food</strong></span> 13</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Makeup</strong></span> 37</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Clothing</strong></span> 78</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Tech</strong></span> 78</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Diy</strong></span> 78</li>
+<!--                     <li class="list-group-item text-right"><span class="pull-left"><strong class="">Fashion</strong></span> 125</li>
+                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Food</strong></span> 13</li>
+                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Makeup</strong></span> 37</li>
+                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Clothing</strong></span> 78</li>
+                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Tech</strong></span> 78</li>
+                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Diy</strong></span> 78</li> -->
+                @foreach(Auth::user()->Users_Roles_hashtags as $hashtags)
+                    <li class="list-group-item text-right">
+                        <span class="pull-left">
+                            <strong class="">
+                                {!! \App\Hashtags::findOrFail($hashtags->hashtags_id)->tags; !!}
+                            </strong>
+                        </span> 
+                        .
+                    </li>
+                @endforeach
             </ul>
             <!-- <div class="panel panel-default">
                 <div class="panel-heading">Relevant hatags</div>
