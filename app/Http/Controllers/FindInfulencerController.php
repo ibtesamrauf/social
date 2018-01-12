@@ -32,6 +32,8 @@ class FindInfulencerController extends Controller
         $pageLimit = 15;
     	if(isset($request->search)){
 	        $user_page_data = User_page::with('Users')
+                        ->with('Facebook_page')
+                        ->with('Youtube_page')
 	        			->where('page_title', 'like' , "%$request->search%")
 	        			->orWhere('page_description', 'like' , "%$request->search%")
 	        			->orWhere('page_about_your_self', 'like' , "%$request->search%")
@@ -40,9 +42,9 @@ class FindInfulencerController extends Controller
 				$user_page_data->search = "No match found. Search again!";
 			} 		    		
     	}else{
-	        $user_page_data = User_page::with('Users')->paginate($pageLimit);    		
+	        $user_page_data = User_page::with('Users')->with('Facebook_page')->with('Youtube_page')->paginate($pageLimit);    		
     	}
-        
+        // vv($user_page_data);
         return view('findinfluencer',compact('user_page_data'));
     }
 

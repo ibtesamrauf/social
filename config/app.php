@@ -163,6 +163,10 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Jrean\UserVerification\UserVerificationServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+        Ixudra\Curl\CurlServiceProvider::class,
+        // SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
+        // facebook\Facebook\Facebook::class,
 
 
         /*
@@ -228,7 +232,14 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'UserVerification' => Jrean\UserVerification\Facades\UserVerification::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'Curl' => Ixudra\Curl\Facades\Curl::class,
+        // 'Facebook' => SammyK\LaravelFacebookSdk\FacebookFacade::class,
 
+        // 'Facebook' => SammyK\Facebook\Facebook::class,
+        // 'Facebook' => facebook\Facebook\Facebook::class,
+        
 
     ],
 

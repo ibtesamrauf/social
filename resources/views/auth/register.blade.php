@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="">
             <div class="panel panel-default">
                 @if(Session::has('alert'))
                 <div class="alert alert-success">
@@ -20,7 +20,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
+                            <label for="name" class="col-md-4 control-label">Name or social media account name</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
@@ -42,6 +42,53 @@
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('my_assets') ? ' has-error' : '' }}">
+                            <label for="my_assets" class="col-md-4 control-label">My assets</label>
+
+                            <div class="col-md-6">
+                                <!-- <input id="my_assets" type="email" class="form-control" name="email" value="{{ old('email') }}" required> -->
+                                <select name="my_assets" class="form-control" id="my_assets">
+                                    <option value="Instagram‎">Instagram‎</option>
+                                    <option value="Bussiness">Bussiness</option>
+                                    <option value="YouTube‎">YouTube‎</option>
+                                    <option value="Facebook‎">Facebook‎</option>
+                                    <option value="Twitter‎">Twitter‎</option>
+                                    <option value="Blog‎">Blog‎</option>
+                                    <option value="Other‎">Other‎</option>
+                                </select>
+
+                                @if ($errors->has('my_assets'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('my_assets') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        
+                        <div class="form-group{{ $errors->has('hashtags') ? ' has-error' : '' }}">
+                            <label for="hashtags" class="col-md-4 control-label">Hashtags</label>
+
+                            <div class="col-md-6">
+                                    @foreach($hashtags as $tags)
+                                        <input type="checkbox" value="{{ $tags->id }}" name="hashtags[]" id="hashtags[]"> {{ $tags->tags }}<br>
+                                    @endforeach
+                                <!-- <select name="hashtags" class="form-control" id="hashtags"> -->
+<!--                                     <option value="Academics">Academics</option>
+                                    <option value="Bussiness">Bussiness</option>
+                                    <option value="Media">Media</option>
+                                    <option value="Music">Music</option>
+                                    <option value="News and journalism">News and journalism</option>
+                                    <option value="Politics">Politics</option>
+                                    <option value="Sports">Sports</option> -->
+                                <!-- </select> -->
+                                @if ($errors->has('hashtags'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('hashtags') }}</strong>
                                     </span>
                                 @endif
                             </div>

@@ -10,6 +10,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Jrean\UserVerification\Traits\VerifiesUsers;
 use Jrean\UserVerification\Facades\UserVerification;
 use Illuminate\Http\Request;
+use App\Hashtags;
+use App\Roles_hashtags;
 
 class RegisterController extends Controller
 {
@@ -55,6 +57,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'hashtags' => 'required',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -67,11 +70,28 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        if($data['hashtags']){
+
+        } 
+        foreach ($data['hashtags'] as $key => $value) {    
+            Roles_hashtags::create([
+                'user_id'       => $user->id,
+                'hashtags_id'   => $value,
+            ]);
+        }  
+        return $user;
+    }
+
+    public function showRegistrationForm()
+    {
+        $hashtags = Hashtags::get();
+        return view('auth.register' , compact('hashtags'));
     }
 
     public function register(Request $request)

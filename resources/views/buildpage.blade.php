@@ -104,6 +104,48 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('facebook_page_url') ? ' has-error' : '' }}">
+                            <label for="facebook_page_url" class="col-md-4 control-label">Facebook page url</label>
+
+                            <div class="col-md-6">
+                                <input id="facebook_page_url" type="text" class="form-control" name="facebook_page_url" value="{{{ isset($user_page_data->facebook_page_url) ? $user_page_data->facebook_page_url : '' }}}{{ old('facebook_page_url') }}" required>
+
+                                @if ($errors->has('facebook_page_url'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('facebook_page_url') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('youtube_page_url') ? ' has-error' : '' }}">
+                            <label for="youtube_page_url" class="col-md-4 control-label">Youtube page url</label>
+
+                            <div class="col-md-6">
+                                <input id="youtube_page_url" type="text" class="form-control" name="youtube_page_url" value="{{{ isset($user_page_data->youtube_page_url) ? $user_page_data->youtube_page_url : '' }}}{{ old('youtube_page_url') }}" required>
+
+                                @if ($errors->has('youtube_page_url'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('youtube_page_url') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('instagram_page_url') ? ' has-error' : '' }}">
+                            <label for="instagram_page_url" class="col-md-4 control-label">Instagram page url</label>
+
+                            <div class="col-md-6">
+                                <input id="instagram_page_url" type="text" class="form-control" name="instagram_page_url" value="{{{ isset($user_page_data->instagram_page_url) ? $user_page_data->instagram_page_url : '' }}}{{ old('instagram_page_url') }}" required>
+
+                                @if ($errors->has('instagram_page_url'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('instagram_page_url') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

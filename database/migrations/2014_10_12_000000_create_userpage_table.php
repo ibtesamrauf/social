@@ -18,7 +18,10 @@ class CreateUserpageTable extends Migration
             $table->integer('user_id');
             $table->string('page_title');
             $table->string('page_description', 500);
-            $table->string('page_about_your_self', 255);
+            $table->string('page_about_your_self', 500);
+            $table->string('facebook_pagr_url');
+            $table->string('youtube_pagr_url');
+            $table->string('instagram_pagr_url');
             // $table->rememberToken();
             $table->timestamps();
         });

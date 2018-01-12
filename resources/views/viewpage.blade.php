@@ -45,7 +45,7 @@
       }
 </script>
 
-
+<!-- https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UC20vb-R_px4CguHzzBPhoyQ&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE -->
 <script>
     /*
      * YouTube: Retrieve Title, Description and Thumbnail
@@ -104,20 +104,84 @@
                       <a href="/buildpage" class="btn btn-primary">Create your page first</a>
 
                     @else
-                    
-                    <a href="/editpage/{{$user_page_data[0]->id}}" class="btn btn-primary" >Edit page</a>
-                    <table>
+                    <a class="btn btn-primary" href="{{ url('/buildpages/' . $user_page_data[0]->id . '/edit') }}" title="Edit User">Edit page</a>
+
+                    <table class="table">
                       <tr>
                         <td colspan="2"><h1>{{ $user_page_data[0]->page_title}}</h1></td>
                       </tr>
                       <tr>
-                        <td style="width:70%">Description</td>
+                        <td style="width:18%">Description</td>
                         <td>{{ $user_page_data[0]->page_description}}</td>
                       </tr>
                       <tr>
                         <td>About your page</td>
                         <td>{{ $user_page_data[0]->page_about_your_self}}</td>
                       </tr>
+
+                      <tr>
+                        <td colspan="2"><br></td>
+                      </tr>
+                      
+                      <tr>
+                        <td colspan="2">Youtube Channel data</td>
+                      </tr>
+                      
+                      <tr>
+                        <td>
+                          <img src="{{$youtube_response_page_image}}">
+                        </td>
+                        <td>
+                          <ul>
+                            <li>
+                              subscriberCount : {{ $youtube_response->statistics->subscriberCount }}
+                            </li>
+                            
+                            <li>
+                              videoCount : {{ $youtube_response->statistics->videoCount }}
+                            </li>
+                            
+                            <li>
+                              viewCount : {{ $youtube_response->statistics->viewCount }}
+                            </li>
+                            
+                            <li>
+                              commentCount : {{ $youtube_response->statistics->commentCount }}
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td colspan="2">Facebook Page data</td>
+                      </tr>
+                      
+                      <tr>
+                        <td>
+                          <img src="{{$facebook_response_page_image}}">
+                        </td>
+                        <td>
+                          <ul>
+                            <li>
+                              Name : {{ $facebook_response->name }}
+                            </li>
+                            
+                            <li>
+                              Likes : {{ $facebook_response->fan_count }}
+                            </li>
+                            
+                            <li>
+                              Link : {{ $facebook_response->link }}
+                            </li>
+                            
+                          </ul>
+                        </td>
+                      </tr>
+                      <!-- <tr><td><br></td></tr> -->
+              
+
+                      
+
                     </table>
                     <br>
                     <li><a href="/upload_youtube_video" class="btn btn-primary">upload youtube videos</a></li>

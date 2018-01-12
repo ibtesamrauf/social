@@ -42,22 +42,30 @@
                                 	@endif	
                                 @else
                                 <table class="table">
-                                <th>Name</th>
+                                <!-- <th>User Name</th> -->
                                 <th>Page title</th>
                                 <th>About Them</th>
+                                <th>Facebook Likes</th>
+                                <th>Youtube Subscriber</th>
                                 <th>Add to favorite</th>
                                 <th>Message</th>
                                     @foreach ($user_page_data as $video)
                                         <tr>
-                                            <td>
+                                            <!-- <td>
                                                 {{ $video->Users->name }}    
-                                            </td>
+                                            </td> -->
                                             <td>
                                                 {{ $video->page_title }}
                                             </td>
                                             <td>
                                                 {{ $video->page_about_your_self }}
    	                                        </td>
+                                            <td>
+                                                <!-- $video->Facebook_page[0]->likes -->
+                                            </td>
+                                            <td>
+                                                <!-- $video->Youtube_page[0]->subscriberCount -->
+                                            </td>
                                             <td>
                                            		<a href="#">
 										          <span class="glyphicon glyphicon-star"></span>

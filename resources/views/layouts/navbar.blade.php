@@ -20,9 +20,13 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;
-                        <li><a href="{{ route('home') }}">Home</a></li>
-                        <li><a href="/buildpage">Build Page</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/buildpages">Build Page</a></li>
                         <li><a href="/findinfulencer">Find Infulencers</a></li>
+    
+                        <li><a href="/viewpagelist">Pages List</a></li>
+                        <li><a href="/viewprofile">Profile</a></li>
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
