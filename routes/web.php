@@ -62,6 +62,8 @@ Route::resource('facebook_page_resource', 'Facebook_pageController');
 Route::resource('youtube_page_resource', 'Youtube_pageController');
 Route::resource('instagram_page_resource', 'Instagram_pageController');
 
+Route::resource('hashtags', 'HashtagsController');
+
 
 // Route::get('/register', 'Auth\RegisterController@getRegister');
 
