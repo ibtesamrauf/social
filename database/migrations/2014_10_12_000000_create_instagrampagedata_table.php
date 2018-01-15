@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFacebookpagedataTable extends Migration
+class CreateInstagrampagedataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateFacebookpagedataTable extends Migration
      */
     public function up()
     {
-        Schema::create('facebook_page_data', function (Blueprint $table) {
+        Schema::create('instagram_page_data', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('page_id');
             $table->string('name');
-            $table->string('likes');
+            $table->string('followed_by');
+            $table->string('follows');
             $table->string('image', 500);
             $table->timestamps();
         });
@@ -31,6 +32,6 @@ class CreateFacebookpagedataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('facebook_page_data');
+        Schema::dropIfExists('instagram_page_data');
     }
 }

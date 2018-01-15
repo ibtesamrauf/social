@@ -15,11 +15,12 @@ class CreateYoutubepagedataTable extends Migration
     {
         Schema::create('youtube_page_data', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->integer('page_id');
             $table->string('name');
             $table->string('subscriberCount');
             $table->string('image', 500);
-            $table->string('description', 500);
+            $table->string('description', 2000);
             $table->timestamps();
         });
     }

@@ -18,6 +18,13 @@
                 <div class="panel-body">
                     <center>
                         <h1>{{ env('APP_NAME') }}</h1>
+                        <a class="btn btn-success" href="{{ route('register') }}">Register as an Influencer</a>
+                        <br>
+                        <br>
+                        <a class="btn btn-warning" href="/jobseeker_register">Register as a Marketer</a>
+                        <br>
+                        <br>
+                        <a class="btn btn-warning" href="/jobseeker_login">Login as Marketer</a>
                     </center>
 
                   

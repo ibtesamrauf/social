@@ -64,3 +64,32 @@ Route::resource('instagram_page_resource', 'Instagram_pageController');
 
 
 // Route::get('/register', 'Auth\RegisterController@getRegister');
+
+Route::group(['middleware' => 'jobseeker_guest'], function() {
+    // Route::get('/', function () {
+    //     return view('frontend.welcome');
+    // });
+//    Route::post('search', 'SearchController@search');
+    Route::get('/jobseeker_register', 'JobseekerAuth\RegisterController@showRegistrationForm');
+    Route::post('/jobseeker_register', 'JobseekerAuth\RegisterController@register');
+    Route::get('jobseeker_login', 'JobseekerAuth\LoginController@showLoginForm');
+    Route::post('jobseeker_login', 'JobseekerAuth\LoginController@login');
+    Route::get("/view-job/{token}", 'Jobseeker\JobseekerController@viewJob');
+});
+
+Route::group(['middleware' => 'jobseeker_auth'], function() {
+    Route::get('/findinfulencer', 'FindInfulencerController@index');
+
+	
+	// Route::get('/jobseeker_home', ['uses' => 'Jobseeker\JobseekerController@home']);
+ //    Route::post('/submitCV',['uses' => 'Jobseeker\JobseekerController@submitCV'] );
+
+    Route::get('/jobseeker_logout', 'JobseekerAuth\LoginController@logout');
+ //    Route::get('jobseeker_search', 'Jobseeker\JobseekerController@search');
+    
+ //    Route::get('jobseeker_map', 'Jobseeker\JobseekerController@map');
+ //    Route::get('job/{job_id}/apply', 'Jobseeker\JobseekerController@applyJob');
+ //    Route::get('job/{job_id}/save', 'Jobseeker\JobseekerController@saveJob');
+ //    Route::post('jobseeker/delete_license/{license_id}', 'Jobseeker\JobseekerController@deleteLicense');
+
+});
