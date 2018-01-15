@@ -71,9 +71,11 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'name'              => $data['name'],
+            'user_role'         => 'influencer',
+            'company_name'      => 'no',
+            'email'             => $data['email'],
+            'password'          => bcrypt($data['password']),
         ]);
 
         if($data['hashtags']){
