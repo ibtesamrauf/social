@@ -38,7 +38,7 @@
                                 		<h2>{{ $user_page_data->search }}</h2>
                             		@else
 	                                    <h2>NO influencer is register yet</h2>
-	                                    <a href="/home" class="btn btn-primary">Go back to home</a>
+	                                    <a href="/" class="btn btn-primary">Go back to home</a>
                                 	@endif	
                                 @else
                                 <table class="table">

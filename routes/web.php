@@ -46,7 +46,7 @@ Route::get('/viewpagelist', 'ViewpageController@viewpagelist');
 
 Route::get('/delete_youtube_video/{youtube_video_id}/{id}', 'ViewpageController@delete_youtube_video');
 
-Route::get('/findinfulencer', 'FindInfulencerController@index');
+// Route::get('/findinfulencer', 'FindInfulencerController@index');
 
 
 Route::get('/test', 'ViewpageController@test');

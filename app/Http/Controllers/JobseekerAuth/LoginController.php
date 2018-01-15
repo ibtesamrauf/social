@@ -43,9 +43,12 @@ class LoginController extends Controller
     protected function validateLogin(Request $request)
     {
         $user = \App\User::where('email',$request->email)->first();
-        if($user->user_role == 'jobseeker' && Hash::check($request->password, $user->password)){
-                return TRUE;
+        // vv($user);
+        if(!empty($user)){
+            if($user->user_role == 'jobseeker' && Hash::check($request->password, $user->password)){
+                    return TRUE;
 
+            }
         }
         return FALSE;
     }

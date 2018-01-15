@@ -15,7 +15,7 @@ use App\Roles_hashtags;
 
 class RegisterController extends Controller
 {
-    protected $redirectTo = 'jobseeker_home';
+    protected $redirectTo = 'findinfulencer';
     
     //shows registration form to jobseeker
     public function showRegistrationForm()
