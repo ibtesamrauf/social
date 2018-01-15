@@ -12,11 +12,20 @@ use Event;
 use App\Events\JobSeekerSignup;
 use App\Hashtags;
 use App\Roles_hashtags;
+use Jrean\UserVerification\Traits\VerifiesUsers;
+use Jrean\UserVerification\Facades\UserVerification;
 
 class RegisterController extends Controller
 {
+    use VerifiesUsers;
+
     protected $redirectTo = 'findinfulencer';
     
+    public function __construct()
+    {
+        $this->middleware('guest',['except' => ['getVerification', 'getVerificationError']]);
+    }
+
     //shows registration form to jobseeker
     public function showRegistrationForm()
     {
@@ -38,18 +47,22 @@ class RegisterController extends Controller
             'email'         => $request->email,
             'password'      => bcrypt($request->password)
         ]);
+        UserVerification::generate($user);
+        UserVerification::send($user, 'Account varification Email');
+        return back()->withAlert('Register successfully, please verify your email.');
+
+
+       // // $jobseeker = new Jobseeker($request->all());
         
-       // $jobseeker = new Jobseeker($request->all());
+       //  // $jobseeker = $user->jobseeker()->create($request->all());
         
-        // $jobseeker = $user->jobseeker()->create($request->all());
+       //  // Authenticates seller
+       //  $this->guard()->login($user);
         
-        // Authenticates seller
-        $this->guard()->login($user);
+       //  // Event::fire(new JobSeekerSignup($jobseeker));
         
-        // Event::fire(new JobSeekerSignup($jobseeker));
-        
-       //Redirects 
-        return redirect($this->redirectTo);
+       // //Redirects 
+       //  return redirect($this->redirectTo);
     }
     
     //Validates user's Input
