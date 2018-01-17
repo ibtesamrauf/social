@@ -71,7 +71,92 @@
 
                             <br>
                             <div id="div_criteria">
-                                Traction:
+                                <table class="table">
+                                    <th>Traction</th>
+                                    <th colspan="4">Range</th>
+                                    <th>Action</th>
+                                    <tr>
+                                        <td></td>
+                                        <td>10000-20000</td>
+                                        <td>20000-30000</td>
+                                        <td>30000-40000</td>
+                                        <td>40000-50000</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>likes on Facebook</td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td>
+                                            <input name="action" type="radio">or&nbsp
+                                            <input name="action" type="radio">and
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>followers on Twitter</td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td>
+                                            <input name="action" type="radio">or&nbsp
+                                            <input name="action" type="radio">and
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>followers on Instagram</td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td>
+                                            <input name="action" type="radio">or&nbsp
+                                            <input name="action" type="radio">and
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Subscribers on Youtube</td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td>
+                                            <input name="action" type="radio">or&nbsp
+                                            <input name="action" type="radio">and
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Followers on Soundcloud</td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td>
+                                            <input name="action" type="radio">or&nbsp
+                                            <input name="action" type="radio">and
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Blog visitors per month</td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td>
+                                        <td>
+                                            <input name="action" type="radio">or&nbsp
+                                            <input name="action" type="radio">and
+                                        </td>
+                                    </tr>
+                                    
+                                </table>
+                                <!-- Traction:
                                 <input type="text" class="form-control" placeholder="Enter number of likes">
                                 From:
                                 <select id="country" name="country" class="form-control">
@@ -81,13 +166,13 @@
                                     <option>Subscribers on Youtube</option>
                                     <option>Followers on Soundcloud</option>
                                     <option>Blog visitors per month</option>
-                                </select>
+                                </select> -->
                             </div>
 
-                            <button class="btn btn-danger" id="add_another">Add new </button>
+                            <!-- <button class="btn btn-danger" id="add_another">Add new </button> -->
 
                         </div>
-                        <button type="submit" class="btn btn-primary">Start Search</button>
+                        <button type="submit" class="btn btn-primary">Advance Search</button>
                         
                     <!-- </form> -->
                     
@@ -112,16 +197,16 @@
                                         <tr>
                                             
                                             <td>
-                                                video->page_title 
+                                                page_title 
                                             </td>
                                             <td>
-                                                video->page_about_your_self
+                                                page_about_your_self
    	                                        </td>
                                             <td>
-                                                video->Facebook_page[0]->likes
+                                                Facebook_page likes
                                             </td>
                                             <td>
-                                                video->Youtube_page[0]->subscriberCount
+                                                Youtube_page subscriberCount
                                             </td>
                                             <td>
                                            		<a href="#">
