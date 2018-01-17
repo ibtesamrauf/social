@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('countery') ? ' has-error' : '' }}">
-                            <label for="countery" class="col-md-4 control-label">Countery</label>
+                            <label for="countery" class="col-md-4 control-label">Country</label>
 
                             <div class="col-md-6">
                                 <select name="countery" class="form-control" id="countery">
@@ -81,23 +81,40 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                            <label for="title" class="col-md-4 control-label">Title</label>
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
-                                <input id="title" type="text" class="form-control" name="title" value="{{ old('title') }}" placeholder="Your alias, company , how you are known etc" required autofocus>
+                                <input id="password" type="password" class="form-control" name="password" required>
 
-                                @if ($errors->has('title'))
+                                @if ($errors->has('password'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('title') }}</strong>
+                                        <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            </div>
+                        </div>
+
+
+                        <hr>
+                        <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
+                            <div class="col-md-12">
+                                <p align="center" style=" font-size: 22px; ">Agency / Company details</p>                               
+                            </div>
+                        </div>
+                        <hr>
+
 
                         <div class="form-group{{ $errors->has('company_name') ? ' has-error' : '' }}">
-                            <label for="company_name" class="col-md-4 control-label">Company name</label>
+                            <label for="company_name" class="col-md-4 control-label">Agency / Company name</label>
 
                             <div class="col-md-6">
                                 <input id="company_name" type="text" class="form-control" name="company_name" value="{{ old('company_name') }}" required autofocus>
@@ -204,29 +221,51 @@
                             </div>
                         </div>
 
-                        
-                        
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
+                        <div class="form-group{{ $errors->has('influencer_used') ? ' has-error' : '' }}">
+                            <label for="influencer_used" class="col-md-4 control-label">Influencer used</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input id="influencer_used" type="text" class="form-control" name="influencer_used" value="{{ old('influencer_used') }}" required autofocus>
 
-                                @if ($errors->has('password'))
+                                @if ($errors->has('influencer_used'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
+                                        <strong>{{ $errors->first('influencer_used') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+                        <div class="form-group{{ $errors->has('link_p') ? ' has-error' : '' }}">
+                            <label for="link_p" class="col-md-4 control-label">Link</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <input id="link_p" type="text" class="form-control" name="link_p" value="{{ old('link_p') }}" required autofocus>
+
+                                @if ($errors->has('link_p'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('link_p') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
+
+
+                        <div class="form-group{{ $errors->has('description_p') ? ' has-error' : '' }}">
+                            <label for="description_p" class="col-md-4 control-label">Description</label>
+
+                            <div class="col-md-6">
+                                <input id="description_p" type="text" class="form-control" name="description_p" value="{{ old('description_p') }}" required autofocus>
+
+                                @if ($errors->has('description_p'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('description_p') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        
+                        
+                        
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
