@@ -280,11 +280,18 @@
                         
                         <div class="form-group{{ $errors->has('preferred_medium') ? ' has-error' : '' }}">
                             <label for="preferred_medium" class="col-md-4 control-label"></label>
-
                             <div class="col-md-6">
                                 @foreach($preferred_medium as $preferred_medium_value)
-                                    <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]"> {{ $preferred_medium_value->preferred_medium_title }}<br>
+                                    <!-- <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]"> {{ $preferred_medium_value->preferred_medium_title }}<br> -->
                                 @endforeach
+                                
+                                <input type="checkbox" value="1" name="preferred_medium[]" id="preferred_medium[]">Recorded Video<br>
+                                <input type="checkbox" value="2" name="preferred_medium[]" id="preferred_medium[]">Live Video<br>
+                                <input type="checkbox" value="3" name="preferred_medium[]" id="preferred_medium[]">Photos<br>
+                                <input type="checkbox" value="4" name="preferred_medium[]" id="preferred_medium[]">Blog Posts<br>
+                                <input type="checkbox" value="5" name="preferred_medium[]" id="preferred_medium[]">Tweets / Comments<br>
+                                <input type="checkbox" value="6" name="preferred_medium[]" id="preferred_medium[]">Long Form Articles<br>
+                   
                                 @if ($errors->has('preferred_medium'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('preferred_medium') }}</strong>
