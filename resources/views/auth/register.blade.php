@@ -118,9 +118,11 @@
                             <label for="hashtags" class="col-md-4 control-label">Hashtags</label>
 
                             <div class="col-md-6">
-                                    @foreach($hashtags as $tags)
-                                        <input type="checkbox" value="{{ $tags->id }}" name="hashtags[]" id="hashtags[]"> {{ $tags->tags }}<br>
-                                    @endforeach
+                                <input id="title" type="text" class="form-control" name="title" value="{{ old('title') }}" placeholder="Enter hashtags like #new #old #fancy #buy" required autofocus>
+
+                                @foreach($hashtags as $tags)
+                                    <!-- <input type="checkbox" value="{{ $tags->id }}" name="hashtags[]" id="hashtags[]"> {{ $tags->tags }}<br> -->
+                                @endforeach
                                 <!-- <select name="hashtags" class="form-control" id="hashtags"> -->
 <!--                                     <option value="Academics">Academics</option>
                                     <option value="Bussiness">Bussiness</option>
@@ -255,7 +257,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('monthly_visitors') ? ' has-error' : '' }}">
-                            <label for="monthly_visitors" class="col-md-4 control-label">av. monthly visitors</label>
+                            <label for="monthly_visitors" class="col-md-4 control-label">Snapchat</label>
 
                             <div class="col-md-6">
                                 <input id="monthly_visitors" type="text" class="form-control" name="monthly_visitors" value="{{ old('monthly_visitors') }}" placeholder="Url" autofocus>
@@ -289,7 +291,7 @@
                                 <input type="checkbox" value="2" name="preferred_medium[]" id="preferred_medium[]">Live Video<br>
                                 <input type="checkbox" value="3" name="preferred_medium[]" id="preferred_medium[]">Photos<br>
                                 <input type="checkbox" value="4" name="preferred_medium[]" id="preferred_medium[]">Blog Posts<br>
-                                <input type="checkbox" value="5" name="preferred_medium[]" id="preferred_medium[]">Tweets / Comments<br>
+                                <input type="checkbox" value="5" name="preferred_medium[]" id="preferred_medium[]">Tweets<br>
                                 <input type="checkbox" value="6" name="preferred_medium[]" id="preferred_medium[]">Long Form Articles<br>
                    
                                 @if ($errors->has('preferred_medium'))
