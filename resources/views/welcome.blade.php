@@ -21,10 +21,13 @@
                         <a class="btn btn-success" href="{{ route('register') }}">Register as an Influencer</a>
                         <br>
                         <br>
+                        <a class="btn btn-success" href="{{ route('login') }}">Login as an Influencer</a>
+                        <br>
+                        <br>
                         <a class="btn btn-warning" href="/jobseeker_register">Register as a Marketer</a>
                         <br>
                         <br>
-                        <a class="btn btn-warning" href="/jobseeker_login">Login as Marketer</a>
+                        <a class="btn btn-warning" href="/jobseeker_login">Login as a Marketer</a>
                     </center>
 
                   
