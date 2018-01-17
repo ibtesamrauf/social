@@ -48,6 +48,12 @@ class FindInfulencerController extends Controller
         return view('findinfluencer',compact('user_page_data'));
     }
 
+    public function finde_influencer_test()
+    {
+        // vv("asdasd");
+        return view('finde_influencer_test');
+    }
+
     public function upload_youtube_video()
     {
         return view('upload_youtube_video');

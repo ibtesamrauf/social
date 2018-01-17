@@ -115,7 +115,7 @@
                         </div>
                         
                         <div class="form-group{{ $errors->has('hashtags') ? ' has-error' : '' }}">
-                            <label for="hashtags" class="col-md-4 control-label">Hashtags</label>
+                            <label for="hashtags" class="col-md-4 control-label">Genre</label>
 
                             <div class="col-md-6">
                                 <input id="title" type="text" class="form-control" name="title" value="{{ old('title') }}" placeholder="Enter hashtags like #new #old #fancy #buy" required autofocus>

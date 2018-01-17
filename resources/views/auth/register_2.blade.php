@@ -131,7 +131,7 @@
                             <label for="logo" class="col-md-4 control-label">Logo</label>
 
                             <div class="col-md-6">
-                                <input id="logo" type="text" class="form-control" name="logo" value="{{ old('logo') }}" required autofocus>
+                                <input id="logo" type="file"  name="logo" value="{{ old('logo') }}" required autofocus>
 
                                 @if ($errors->has('logo'))
                                     <span class="help-block">
@@ -264,6 +264,19 @@
                             </div>
                         </div>
                         
+                        <div class="form-group{{ $errors->has('description_p') ? ' has-error' : '' }}">
+
+                            <div class="col-md-6">
+                                <button></button>
+                                @if ($errors->has('description_p'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('description_p') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        
+
                         
                         
 

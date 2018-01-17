@@ -65,6 +65,9 @@ Route::resource('instagram_page_resource', 'Instagram_pageController');
 Route::resource('hashtags', 'HashtagsController');
 
 
+Route::get('finde_influencer_test', 'FindInfulencerController@finde_influencer_test');
+
+
 // Route::get('/register', 'Auth\RegisterController@getRegister');
 
 Route::group(['middleware' => 'jobseeker_guest'], function() {
