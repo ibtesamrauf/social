@@ -1,0 +1,146 @@
+@extends('layouts.app')
+
+@section('content')
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        $( "#add_another" ).click(function() {
+          console.log("asdasd");
+          $( "#div_criteria" ).append('<br>Traction of likes:<input type="text" class="form-control" placeholder="Enter number of likes">From:<select id="country" name="country" class="form-control"><option>likes on Facebook</option><option>followers on Twitter</option><option>followers on Instagram</option><option>Subscribers on Youtube</option><option>Followers on Soundcloud</option><option>Blog visitors per month</option></select>'); 
+        });
+    });
+</script>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="">
+            <div class="panel panel-default">
+                <div class="panel-heading">Find Infulencer</div>
+
+                <div class="panel-body">
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                    <form action="/findinfulencer"  method="GET">
+	                    <div class="form-group">
+						    <label for="exampleInputEmail1">Keyword Search</label>
+						    <?php
+						    	$search_var = "";
+							    if ( isset( $_GET['search'] ) ) {
+								    // check emptiness after triming whitespace.
+								    $search_var = $_GET['search'];
+								}
+							?>  
+	                    	<input type="text" class="form-control" name="search" value="{{ $search_var ?  $search_var : '' }}" id="search" placeholder="Search">
+						</div>
+						<button type="submit" class="btn btn-primary">Start Search</button>
+	                    
+                    </form>
+                    <br><br>
+                    <!-- <form action="/findinfulencer"  method="GET"> -->
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Advanced Search</label>
+                            <?php
+                                $search_var = "";
+                                if ( isset( $_GET['search'] ) ) {
+                                    // check emptiness after triming whitespace.
+                                    $search_var = $_GET['search'];
+                                }
+                            ?>  
+                            <!-- <input type="text" class="form-control" name="search" value="{{ $search_var ?  $search_var : '' }}" id="search" placeholder="Search"> -->
+                            <select id="country" name="country" class="form-control">
+                                <option>Amarica</option>
+                                <option>Australia</option>
+                                <option>Canada</option>
+                                <option>India</option>
+                                <option>Pakistan</option>
+                            </select>
+                            <br>Prefered medium<br>
+                            <input id="prefered_medium[]" name="prefered_medium[]" type="checkbox">Recorded Video<br>
+                            <input id="prefered_medium[]" name="prefered_medium[]" type="checkbox">Live Video<br>
+                            <input id="prefered_medium[]" name="prefered_medium[]" type="checkbox">Photos<br>
+                            <input id="prefered_medium[]" name="prefered_medium[]" type="checkbox">Blog Posts<br>
+                            <input id="prefered_medium[]" name="prefered_medium[]" type="checkbox">Podcast<br>
+                            <input id="prefered_medium[]" name="prefered_medium[]" type="checkbox">Tweets / Comments<br>
+                            <input id="prefered_medium[]" name="prefered_medium[]" type="checkbox">Long Form Articles<br>
+
+                            <br>
+                            <div id="div_criteria">
+                                Traction:
+                                <input type="text" class="form-control" placeholder="Enter number of likes">
+                                From:
+                                <select id="country" name="country" class="form-control">
+                                    <option>likes on Facebook</option>
+                                    <option>followers on Twitter</option>
+                                    <option>followers on Instagram</option>
+                                    <option>Subscribers on Youtube</option>
+                                    <option>Followers on Soundcloud</option>
+                                    <option>Blog visitors per month</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-danger" id="add_another">Add new </button>
+
+                        </div>
+                        <button type="submit" class="btn btn-primary">Start Search</button>
+                        
+                    <!-- </form> -->
+                    
+
+                </div>
+                <div class="panel-body">
+                        <div class="container">
+                            <div class="row">
+                                <h2>Results</h2>
+                                		<!-- <h2> $user_page_data->search </h2> -->
+                            	        <!-- <h2>NO influencer is register yet</h2> -->
+	                                    <!-- <a href="/" class="btn btn-primary">Go back to home</a> -->
+                                
+                                <table class="table">
+                                <!-- <th>User Name</th> -->
+                                <th>Page title</th>
+                                <th>About Them</th>
+                                <th>Facebook Likes</th>
+                                <th>Youtube Subscriber</th>
+                                <th>Add to favorite</th>
+                                <th>Message</th>
+                                        <tr>
+                                            
+                                            <td>
+                                                video->page_title 
+                                            </td>
+                                            <td>
+                                                video->page_about_your_self
+   	                                        </td>
+                                            <td>
+                                                video->Facebook_page[0]->likes
+                                            </td>
+                                            <td>
+                                                video->Youtube_page[0]->subscriberCount
+                                            </td>
+                                            <td>
+                                           		<a href="#">
+										          <span class="glyphicon glyphicon-star"></span>
+										        </a>
+                                            </td>
+	                                        <td>
+		                                        <a href="#">
+										          <span class="glyphicon glyphicon-envelope"></span>
+										        </a>
+                                            </td>
+                                        </tr>
+                                </table>
+                            </div>
+                        </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
