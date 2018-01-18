@@ -23,10 +23,15 @@
                         <li><a href="/">Home</a></li>
                         <!-- <li><a href="/buildpages">Build Page</a></li> -->
                         <!-- <li><a href="/findinfulencer">Find Infulencers</a></li> -->
-                        <li><a href="/finde_influencer_test">Find Infulencers</a></li>
-    
-                        <li><a href="/viewpagelist">Pages List</a></li>
+                        <li><a href="#">Find Campaigns</a></li>
+                        <!-- <li><a href="/viewpagelist">Pages List</a></li> -->
+
+                        <!-- <li><a href="/viewpagelist">Pages List</a></li> -->
+                        @if (Auth::guest())
+                            
+                        @else
                         <li><a href="/viewprofile">Profile</a></li>
+                        @endif
 
                     </ul>
 
@@ -55,7 +60,7 @@
                                 </li>
                             <?php }else{ ?>
                                 <li><a href="{{ route('login') }}">Login</a></li>
-                                <li><a href="{{ route('register') }}">Register</a></li>
+                                <!-- <li><a href="{{ route('register') }}">Register</a></li> -->
                             <?php } ?>
                         @else
                             <li class="dropdown">
