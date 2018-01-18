@@ -1,6 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        $( "#add_another" ).click(function() {
+            console.log("asdasd");
+            $( "#previously_campaigns" ).append('<br><div class="form-group{{ $errors->has('influencer_used') ? ' has-error' : '' }}"><label for="influencer_used" class="col-md-4 control-label">Influencer used</label><div class="col-md-6"><input id="influencer_used" type="text" class="form-control" name="influencer_used" value="{{ old('influencer_used') }}" required autofocus>@if ($errors->has('influencer_used'))<span class="help-block"><strong>{{ $errors->first('influencer_used') }}</strong></span>@endif</div></div><div class="campaign_link_div1"><div class="form-group{{ $errors->has('link_p') ? ' has-error' : '' }}"><label for="link_p" class="col-md-4 control-label">Campaign Link</label><div class="col-md-6"><input id="link_p" type="text" class="form-control" placeholder="Please link to any relavant content" name="link_p" value="{{ old('link_p') }}" required autofocus><a id="add_another_link1"class="btn btn-primary" >+</a>@if ($errors->has('link_p'))<span class="help-block"><strong>{{ $errors->first('link_p') }}</strong></span>@endif</div></div></div><div class="form-group{{ $errors->has('description_p') ? ' has-error' : '' }}"><label for="description_p" class="col-md-4 control-label">Description</label><div class="col-md-6"><input id="description_p" type="text" class="form-control" name="description_p" value="{{ old('description_p') }}" required autofocus>@if ($errors->has('description_p'))<span class="help-block"><strong>{{ $errors->first('description_p') }}</strong></span>@endif</div></div>'); 
+        });
+    
+        $("#previously_campaigns_div").css("display" , "block");
+
+        $( 'input[type=radio][name=campaigns]' ).on('change',function() {
+            console.log(this.value+"change");
+            if (this.value == 'yes') {
+                $("#previously_campaigns_div").css("display" , "block");
+            }
+            else if (this.value == 'no') {
+                $("#previously_campaigns_div").css("display" , "none");
+            }
+        });  
+
+        $( ".add_another_link" ).click(function() {
+            console.log("asdsd");
+            $( ".campaign_link_div" ).append('<div class="form-group{{ $errors->has('link_p') ? ' has-error' : '' }}"><label for="link_p" class="col-md-4 control-label">Campaign Link</label><div class="col-md-6"><input id="link_p" type="text" class="form-control" placeholder="Please link to any relavant content" name="link_p" value="{{ old('link_p') }}" required autofocus>@if ($errors->has('link_p'))<span class="help-block"><strong>{{ $errors->first('link_p') }}</strong></span>@endif</div></div>'); 
+        });
+
+
+        $( "#add_another_link1" ).click(function() {
+            console.log("new new new");
+        });
+
+        $("#previously_campaigns_div").css("display" , "none");
+    });
+</script>
+
+
 <div class="container">
     <div class="row">
         <div class="">
@@ -13,14 +49,21 @@
                     @endphp
                 </div>
                 @endif
-                <div class="panel-heading">Register as a Marketer</div>
+                <!-- <div class="panel-heading">Register as a Marketer</div> -->
 
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ url('/jobseeker_register') }}">
                         {{ csrf_field() }}
 
+                        <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
+                            <div class="col-md-12">
+                                <p align="center" style=" font-size: 22px; ">General</p>                               
+                            </div>
+                        </div>
+                        <!-- <hr> -->
+
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
+                            <label for="name" class="col-md-4 control-label">First Name</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
@@ -33,6 +76,19 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                            <label for="name" class="col-md-4 control-label">Last Name</label>
+
+                            <div class="col-md-6">
+                                <input id="name1" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+
+                                @if ($errors->has('name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -210,8 +266,8 @@
                             <label for="campaigns" class="col-md-4 control-label">Option</label>
 
                             <div class="col-md-6">
-                                <input id="campaigns" type="radio"  name="campaigns" value="{{ old('campaigns') }}" placeholder="" autofocus>Yes &nbsp&nbsp
-                                <input id="campaigns" type="radio"  name="campaigns" value="{{ old('campaigns') }}" placeholder="" autofocus>No
+                                <input id="campaigns" type="radio" name="campaigns" value="yes{{ old('campaigns') }}" placeholder="" autofocus>Yes &nbsp&nbsp
+                                <input id="campaigns1" type="radio" checked name="campaigns" value="no{{ old('campaigns') }}" placeholder="" autofocus>No
 
                                 @if ($errors->has('campaigns'))
                                     <span class="help-block">
@@ -220,66 +276,64 @@
                                 @endif
                             </div>
                         </div>
+                        <div id="previously_campaigns_div" style=" display:none; ">
+                            <div id="previously_campaigns">
+                                <div class="form-group{{ $errors->has('influencer_used') ? ' has-error' : '' }}">
+                                    <label for="influencer_used" class="col-md-4 control-label">Influencer used</label>
 
-                        <div class="form-group{{ $errors->has('influencer_used') ? ' has-error' : '' }}">
-                            <label for="influencer_used" class="col-md-4 control-label">Influencer used</label>
+                                    <div class="col-md-6">
+                                        <input id="influencer_used" type="text" class="form-control" name="influencer_used" value="{{ old('influencer_used') }}" required autofocus>
 
-                            <div class="col-md-6">
-                                <input id="influencer_used" type="text" class="form-control" name="influencer_used" value="{{ old('influencer_used') }}" required autofocus>
+                                        @if ($errors->has('influencer_used'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('influencer_used') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
 
-                                @if ($errors->has('influencer_used'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('influencer_used') }}</strong>
-                                    </span>
-                                @endif
+                                <div class="campaign_link_div" >
+                                    <div class="form-group{{ $errors->has('link_p') ? ' has-error' : '' }}">
+                                        <label for="link_p" class="col-md-4 control-label">Campaign Link</label>
+
+                                        <div class="col-md-6">
+                                            <input id="link_p" type="text" class="form-control" placeholder="Please link to any relavant content" name="link_p" value="{{ old('link_p') }}" required autofocus>
+                                            <a class="add_another_link btn btn-primary" >+</a>
+                                            @if ($errors->has('link_p'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('link_p') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group{{ $errors->has('description_p') ? ' has-error' : '' }}">
+                                    <label for="description_p" class="col-md-4 control-label">Description</label>
+
+                                    <div class="col-md-6">
+                                        <input id="description_p" type="text" class="form-control" name="description_p" value="{{ old('description_p') }}" required autofocus>
+
+                                        @if ($errors->has('description_p'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('description_p') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            
+                            </div>
+
+                            <div class="form-group{{ $errors->has('details') ? ' has-error' : '' }}">
+                                <label for="details" class="col-md-4 control-label"></label>
+                                <div class="col-md-6">
+                                    <a id="add_another" class="btn btn-primary">Add Another</a>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('link_p') ? ' has-error' : '' }}">
-                            <label for="link_p" class="col-md-4 control-label">Link</label>
-
-                            <div class="col-md-6">
-                                <input id="link_p" type="text" class="form-control" name="link_p" value="{{ old('link_p') }}" required autofocus>
-
-                                @if ($errors->has('link_p'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('link_p') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-
-                        <div class="form-group{{ $errors->has('description_p') ? ' has-error' : '' }}">
-                            <label for="description_p" class="col-md-4 control-label">Description</label>
-
-                            <div class="col-md-6">
-                                <input id="description_p" type="text" class="form-control" name="description_p" value="{{ old('description_p') }}" required autofocus>
-
-                                @if ($errors->has('description_p'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('description_p') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
                         
-                        <div class="form-group{{ $errors->has('description_p') ? ' has-error' : '' }}">
-
-                            <div class="col-md-6">
-                                <button></button>
-                                @if ($errors->has('description_p'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('description_p') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        
-
-                        
-                        
-
+                        <hr>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
