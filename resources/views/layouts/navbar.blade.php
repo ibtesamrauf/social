@@ -23,6 +23,7 @@
                         <li><a href="/">Home</a></li>
                         <!-- <li><a href="/buildpages">Build Page</a></li> -->
                         <!-- <li><a href="/findinfulencer">Find Infulencers</a></li> -->
+                        <li><a href="/finde_influencer_test">Find Infulencers</a></li>
                         <li><a href="#">Find Campaigns</a></li>
                         <!-- <li><a href="/viewpagelist">Pages List</a></li> -->
 

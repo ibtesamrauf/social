@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User_videos;
 use Auth;
 use App\User_page;
+use App\Country;
 
 
 class FindInfulencerController extends Controller
@@ -51,7 +52,8 @@ class FindInfulencerController extends Controller
     public function finde_influencer_test()
     {
         // vv("asdasd");
-        return view('finde_influencer_test');
+        $country = Country::orderBy('id' , 'asc')->get();
+        return view('finde_influencer_test' , compact('country'));
     }
 
     public function upload_youtube_video()

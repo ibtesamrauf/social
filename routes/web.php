@@ -98,3 +98,6 @@ Route::group(['middleware' => 'jobseeker_auth'], function() {
  //    Route::post('jobseeker/delete_license/{license_id}', 'Jobseeker\JobseekerController@deleteLicense');
 
 });
+
+// insert data i  countery table
+Route::get('/insert_country', 'HomeController@insert_country');

@@ -54,11 +54,9 @@
                             ?>  
                             <!-- <input type="text" class="form-control" name="search" value="{{ $search_var ?  $search_var : '' }}" id="search" placeholder="Search"> -->
                             <select id="country" name="country" class="form-control">
-                                <option>Amarica</option>
-                                <option>Australia</option>
-                                <option>Canada</option>
-                                <option>India</option>
-                                <option>Pakistan</option>
+                                @foreach($country as $country_value)
+                                    <option value="{{ $country_value->id }}">{{ $country_value->country_name }}</option>
+                                @endforeach
                             </select>
                             <br>Prefered medium<br>
                             <input id="prefered_medium[]" name="prefered_medium[]" type="checkbox">Recorded Video<br>
