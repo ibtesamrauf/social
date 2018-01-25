@@ -230,6 +230,20 @@ class HomeController extends Controller
         );
 
         Country::insert($data);
+
+
+        $data2 = array(
+            array('preferred_medium_title'  =>  'Recorded Video'),
+            array('preferred_medium_title'  =>  'Live Video'),
+            array('preferred_medium_title'  =>  'Photos'),
+            array('preferred_medium_title'  =>  'Blog Posts'),
+            array('preferred_medium_title'  =>  'Podcast'),
+            array('preferred_medium_title'  =>  'Tweets / Comments'),
+            array('preferred_medium_title'  =>  'Long Form Articles'),
+            );
+        
+        Preferred_medium::insert($data2);
+
     }
     
 

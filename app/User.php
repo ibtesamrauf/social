@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'user_role', 'company_name', 'company_id', 'email', 'phone_number', 'countery',
+        'first_name', 'last_name' , 'profile_picture' , 'user_role', 'company_name', 'company_id', 'email', 'phone_number', 'country',
         'title', 'faebook_url', 'instagram_url', 'youtube_url', 'twitter_url', 
         'soundcloud_url', 'website_blog', 'monthly_visitors',
         'password','verified',
@@ -32,7 +32,7 @@ class User extends Authenticatable
     ];
 
     public function Users_Roles_hashtags(){
-        return $this->hasMany('App\Roles_hashtags');
+        return $this->hasMany('App\User_roles_hashtags');
     }
     // public function Users_Roles_hashtags_names(){
     //     $temp = $this->hasMany('App\Roles_hashtags');

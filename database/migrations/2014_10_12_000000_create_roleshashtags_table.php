@@ -13,7 +13,7 @@ class CreateRoleshashtagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('roles_hashtags', function (Blueprint $table) {
+        Schema::create('User_roles_hashtags', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('hashtags_id');
@@ -28,6 +28,6 @@ class CreateRoleshashtagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles_hashtags');
+        Schema::dropIfExists('User_roles_hashtags');
     }
 }

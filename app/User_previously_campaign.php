@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Roles_hashtags extends Model
+class User_previously_campaign extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'roles_hashtags';
+    protected $table = 'user_previously_campaign';
 
     /**
     * The database primary key value.
@@ -27,7 +27,7 @@ class Roles_hashtags extends Model
      */
  
  
-    protected $fillable = ['user_id' , 'hashtags_id' ];
+    protected $fillable = ['user_id' , 'client', 'link', 'details' ];
     
     // public function ImageDesc(){
     //     return $this->hasMany('App\Image_order');

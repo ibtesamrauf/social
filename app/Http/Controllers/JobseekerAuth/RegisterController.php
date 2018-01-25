@@ -11,9 +11,10 @@ use Illuminate\Support\Facades\Auth;
 use Event;
 use App\Events\JobSeekerSignup;
 use App\Hashtags;
-use App\Roles_hashtags;
+use App\User_roles_hashtags;
 use Jrean\UserVerification\Traits\VerifiesUsers;
 use Jrean\UserVerification\Facades\UserVerification;
+use App\Country;
 
 class RegisterController extends Controller
 {
@@ -30,7 +31,9 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $hashtags = Hashtags::get();
-        return view('auth.register_2' , compact('hashtags'));
+        $country = Country::orderBy('id' , 'asc')->get();
+
+        return view('auth.register_2' , compact('hashtags' , 'country'));
     }
     
     public function register(Request $request)

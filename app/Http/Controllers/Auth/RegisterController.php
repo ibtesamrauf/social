@@ -11,10 +11,13 @@ use Jrean\UserVerification\Traits\VerifiesUsers;
 use Jrean\UserVerification\Facades\UserVerification;
 use Illuminate\Http\Request;
 use App\Hashtags;
-use App\Roles_hashtags;
+use App\User_roles_hashtags;
 use App\Preferred_medium;
 use App\User_preferred_medium;
 use App\User_portfolio;
+use App\Country;
+use Illuminate\Support\Facades\Input;
+use App\User_previously_campaign;
 
 class RegisterController extends Controller
 {
@@ -58,15 +61,18 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'phone_number' => 'required',
+            'country' => 'required|numeric',
+            'title' => 'required',
             'hashtags' => 'required',
             'preferred_medium' => 'required',
-            'phone_number' => 'required|numeric',
-            'countery' => 'required',
-            'title' => 'required',
+            'country' => 'required',
             'password' => 'required|string|min:6|confirmed',
         ]);
+        // vv("ppp");
     }
 
     /**
@@ -77,19 +83,32 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $image_name = "";
         foreach ($data as $key => $value) {
             if(empty($value)){
                 $data[$key] = ""; 
             }
         }
+        // v('ads');
+        $data['file']->move('users',$data['file']->getClientOriginalName());
+        if(Input::hasFile($data['file'])){
+            echo 'Uploaded';
+            $file = Input::file($data['file']);
+            $file->move('uploads', $file->getClientOriginalName());
+            echo '';
+            $image_name = $file->getClientOriginalName();
+        }
+        die;
         // vv($data);
         $user = User::create([
-            'name'              => $data['name'],
-            'user_role'         => 'influencer',
-            'phone_number'      => $data['phone_number'],
-            'countery'          => $data['countery'],
-            'title'             => $data['title'],
-
+            'first_name'          => $data['first_name'],
+            'last_name'           => $data['last_name'],
+            'profile_picture'     => $image_name,
+            'user_role'           => 'influencer',
+            'email'               => $data['email'],
+            'phone_number'        => $data['phone_number'],
+            'country'             => $data['country'],
+            'title'               => $data['title'],
             'faebook_url'         => $data['faebook_url'],
             'instagram_url'       => $data['instagram_url'],
             'youtube_url'         => $data['youtube_url'],
@@ -97,9 +116,8 @@ class RegisterController extends Controller
             'soundcloud_url'      => $data['soundcloud_url'],
             'website_blog'        => $data['website_blog'],
             'monthly_visitors'    => $data['monthly_visitors'],
-            
+            'company_id' => 1,
             'company_name'      => 'no',
-            'email'             => $data['email'],
             'password'          => bcrypt($data['password']),
         ]);
 
@@ -112,11 +130,36 @@ class RegisterController extends Controller
                     if(empty($link_var[$key])){
                         $link_var[$key] = "";
                     }
+                }
+                if(empty($value) && empty($link_var[$key])){
+                }else{
+                    User_portfolio::create([
+                        'user_id'       => $user->id,
+                        'link'          => $link_var[$key],
+                        'description'   => $value,
+                    ]);
                 }  
-                User_portfolio::create([
+            }  
+        }
+
+        if(!empty($data['client'])){
+            $link_var = $data['link'];        
+            $details_var = $data['details'];        
+            foreach ($data['client'] as $key => $value) {  
+                if(empty($value)){
+                    $value = "";
+                    if(empty($link_var[$key])){
+                        $link_var[$key] = "";
+                    }
+                    if(empty($details_var[$key])){
+                        $details_var[$key] = "";
+                    }
+                }  
+                User_previously_campaign::create([
                     'user_id'       => $user->id,
+                    'client'        => $value,
                     'link'          => $link_var[$key],
-                    'description'   => $value,
+                    'details'       => $details_var[$key],
                 ]);
             }  
         }
@@ -127,11 +170,26 @@ class RegisterController extends Controller
                 'preferred_medium_id'   => $value,
             ]);
         }  
-        
-        foreach ($data['hashtags'] as $key => $value) {    
-            Roles_hashtags::create([
+        $hashtags_var = $data['hashtags'];
+        $hashtags_var = explode("#", $hashtags_var);
+        $hashtags_var = array_filter($hashtags_var);
+        $hashtags_var = str_replace(' ', '', $hashtags_var);
+        foreach ($hashtags_var as $key => $value) {
+            # code...
+            $checking_exist = Hashtags::where('tags' , $value)->get();
+            if($checking_exist->isEmpty()){
+                // v($checking_exist);
+                Hashtags::create([
+                    'tags' => $value,
+                    ]);
+            }
+        }
+
+        foreach ($hashtags_var as $key => $value) {
+            $checking_exist = Hashtags::where('tags' , $value)->first();    
+            User_roles_hashtags::create([
                 'user_id'       => $user->id,
-                'hashtags_id'   => $value,
+                'hashtags_id'   => $checking_exist->id,
             ]);
         }  
         return $user;
@@ -139,14 +197,17 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        $hashtags = Hashtags::get();
-        $preferred_medium = Preferred_medium::get();
-        
-        return view('auth.register' , compact('hashtags' , 'preferred_medium'));
+        // $hashtags = Hashtags::get();
+        $preferred_medium_value = Preferred_medium::get();
+        $country1 = Country::orderBy('id' , 'asc')->get();
+
+        // return view('auth.register' , compact('hashtags' , 'preferred_medium' , 'country'));
+        return view('auth.register' , compact( 'preferred_medium_value' , 'country1'));
     }
 
     public function register(Request $request)
-    {
+    {   
+        // vv($request->all());
         $this->validator($request->all())->validate();
         $user = $this->create($request->all());
         UserVerification::generate($user);
