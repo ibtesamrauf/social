@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 // use Session;
 use App\Country;
+use App\Preferred_medium;
 
 class HomeController extends Controller
 {
