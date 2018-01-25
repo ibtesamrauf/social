@@ -241,6 +241,8 @@ class HomeController extends Controller
             array('preferred_medium_title'  =>  'Podcast'),
             array('preferred_medium_title'  =>  'Tweets / Comments'),
             array('preferred_medium_title'  =>  'Long Form Articles'),
+            array('preferred_medium_title'  =>  'Long Form Articles'),
+            array('preferred_medium_title'  =>  'Others'),
             );
         
         Preferred_medium::insert($data2);

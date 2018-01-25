@@ -330,7 +330,7 @@
                                 @foreach($preferred_medium_value as $preferred_medium_value)
                                     <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]"> {{ $preferred_medium_value->preferred_medium_title }}<br>
                                     <?php 
-                                        if($preferred_medium_value->id  == 8){
+                                        if($preferred_medium_value->preferred_medium_title  == "Others"){
                                     ?>
                                         <span><input id="others" name="others" type="text"></span>
                                     <?php
