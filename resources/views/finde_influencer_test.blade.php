@@ -59,16 +59,173 @@
                                 @endforeach
                             </select>
                             <br>Prefered medium<br>
-                            <input id="prefered_medium[]" name="prefered_medium[]" type="checkbox">Recorded Video<br>
-                            <input id="prefered_medium[]" name="prefered_medium[]" type="checkbox">Live Video<br>
-                            <input id="prefered_medium[]" name="prefered_medium[]" type="checkbox">Photos<br>
-                            <input id="prefered_medium[]" name="prefered_medium[]" type="checkbox">Blog Posts<br>
-                            <input id="prefered_medium[]" name="prefered_medium[]" type="checkbox">Podcast<br>
-                            <input id="prefered_medium[]" name="prefered_medium[]" type="checkbox">Tweets / Comments<br>
-                            <input id="prefered_medium[]" name="prefered_medium[]" type="checkbox">Long Form Articles<br>
+                            @foreach($preferred_medium_value as $preferred_medium_value)
+                                <?php 
+                                    if($preferred_medium_value->id  == 8){
+                                ?>
+                                <?php
+                                    }else{
+                                ?>
+                                <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]"> {{ $preferred_medium_value->preferred_medium_title }}<br>
+                                <?php
+                                    }
+                                ?>
+                            @endforeach    
 
                             <br>
+
+
                             <div id="div_criteria">
+                                <table class="table">
+                                    <th style="width: 7%;">Including</th>
+                                    <th style="width: 25%;">Traction</th>
+                                    <th style="width: 58%;">Range</th>
+                                    <th style="width: 10%;">Action</th>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>likes on Facebook</td>
+                                        <td><input type="text" class="form-control" id="likes_on_Facebook" placeholder="Enter number of likes"></td>
+                                        <td>
+                                            <select name="action">
+                                                <option value="1">AND</option>
+                                                <option value="2">OR</option>
+                                            </select>
+<!--                                             <input name="action" type="radio">or&nbsp
+                                            <input name="action" type="radio">and -->                                        
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>followers on Twitter</td>
+                                        <td><input type="text" class="form-control" id="followers_on_Twitter" placeholder="Enter number of followers on Twitter"></td>
+                                        <td>
+                                            <select name="action">
+                                                <option value="1">AND</option>
+                                                <option value="2">OR</option>
+                                            </select>
+<!--                                             <input name="action" type="radio">or&nbsp
+                                            <input name="action" type="radio">and -->
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>followers on Instagram</td>
+                                        <td><input type="text" class="form-control" id="followers_on_Instagram" placeholder="Enter number of followers on Instagram"></td>
+                                        <td>
+                                            <select name="action">
+                                                <option value="1">AND</option>
+                                                <option value="2">OR</option>
+                                            </select>
+<!--                                             <input name="action" type="radio">or&nbsp
+                                            <input name="action" type="radio">and -->
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+
+                                        <td>Subscribers on Youtube</td>
+                                        <td><input type="text" class="form-control" id="subscribers_on_Youtube" placeholder="Enter number of Subscribers on Youtube"></td>
+                                        <td>
+                                            <select name="action">
+                                                <option value="1">AND</option>
+                                                <option value="2">OR</option>
+                                            </select>
+                                            <!-- <input name="action" type="radio">or&nbsp
+                                            <input name="action" type="radio">and -->
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+
+                                        <td>Followers on Soundcloud</td>
+                                        
+                                        <td><input type="text" class="form-control" id="followers_on_Soundcloud" placeholder="Enter number of Followers on Soundcloud"></td>
+                                        <td>
+                                            <select name="action">
+                                                <option value="1">AND</option>
+                                                <option value="2">OR</option>
+                                            </select>
+    <!--                                         <input name="action" type="radio">or&nbsp
+                                            <input name="action" type="radio">and -->
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+
+                                        <td>Blog visitors per month</td>
+                                        
+                                        <td><input type="text" class="form-control" id="Blog_visitors_per_month" placeholder="Enter number of Blog visitors per month"></td>
+                                        <td>
+                                            <select name="action">
+                                                <option value="1">AND</option>
+                                                <option value="2">OR</option>
+                                            </select>
+<!--                                             <input name="action" type="radio">or&nbsp
+                                            <input name="action" type="radio">and -->
+                                        </td>
+                                    </tr>
+                                    
+                                </table>
+                                <!-- Traction:
+                                <input type="text" class="form-control" placeholder="Enter number of likes">
+                                From:
+                                <select id="country" name="country" class="form-control">
+                                    <option>likes on Facebook</option>
+                                    <option>followers on Twitter</option>
+                                    <option>followers on Instagram</option>
+                                    <option>Subscribers on Youtube</option>
+                                    <option>Followers on Soundcloud</option>
+                                    <option>Blog visitors per month</option>
+                                </select> -->
+                            </div>
+
+
+
+                            <!-- new style div -->
+                            <!-- <div>
+                                Likes on Facebook <input type="text" id="likes_on_Facebook" placeholder="Enter number of likes">
+                                <select >
+                                    <option value="1">AND</option>
+                                    <option value="2">OR</option>
+                                </select>
+                                <br>
+                                Followers on Twitter <input type="text" id="followers_on_Twitter" placeholder="Enter number of likes">
+                                <select >
+                                    <option value="1">AND</option>
+                                    <option value="2">OR</option>
+                                </select>
+                                <br>
+                                Followers on Instagram <input type="text" id="followers_on_Instagram" placeholder="Enter number of likes">
+                                <select >
+                                    <option value="1">AND</option>
+                                    <option value="2">OR</option>
+                                </select>
+
+                                Subscribers on Youtube <input type="text" id="subscribers_on_Youtube" placeholder="Enter number of likes">
+                                <select >
+                                    <option value="1">AND</option>
+                                    <option value="2">OR</option>
+                                </select>
+
+                                Followers on Soundcloud <input type="text" id="followers_on_Soundcloud" placeholder="Enter number of likes">
+                                <select >
+                                    <option value="1">AND</option>
+                                    <option value="2">OR</option>
+                                </select>
+
+                                Blog visitors per month <input type="text" id="Blog_visitors_per_month" placeholder="Enter number of likes">
+                                <select >
+                                    <option value="1">AND</option>
+                                    <option value="2">OR</option>
+                                </select>
+                            </div> -->
+
+                            <!-- <div id="div_criteria">
                                 <table class="table">
                                     <th>Traction</th>
                                     <th colspan="4">Range</th>
@@ -164,8 +321,8 @@
                                     <option>Subscribers on Youtube</option>
                                     <option>Followers on Soundcloud</option>
                                     <option>Blog visitors per month</option>
-                                </select> -->
-                            </div>
+                                </select> 
+                            </div> -->
 
                             <!-- <button class="btn btn-danger" id="add_another">Add new </button> -->
 
