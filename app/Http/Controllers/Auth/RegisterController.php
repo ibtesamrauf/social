@@ -90,15 +90,17 @@ class RegisterController extends Controller
             }
         }
         // v('ads');
-        $data['file']->move('users',$data['file']->getClientOriginalName());
-        if(Input::hasFile($data['file'])){
+        // $data['file']->move('users',$data['file']->getClientOriginalName());
+        // if(Input::hasFile($data['file'])){
+        if($data['file']){
             echo 'Uploaded';
-            $file = Input::file($data['file']);
+            // $file = Input::file($data['file']);
+            $file = $data['file'];
             $file->move('uploads', $file->getClientOriginalName());
             echo '';
             $image_name = $file->getClientOriginalName();
         }
-        die;
+        // die;
         // vv($data);
         $user = User::create([
             'first_name'          => $data['first_name'],
@@ -155,12 +157,15 @@ class RegisterController extends Controller
                         $details_var[$key] = "";
                     }
                 }  
-                User_previously_campaign::create([
-                    'user_id'       => $user->id,
-                    'client'        => $value,
-                    'link'          => $link_var[$key],
-                    'details'       => $details_var[$key],
-                ]);
+                if(empty($value) && empty($link_var[$key]) && empty($details_var[$key]) ){
+                }else{
+                    User_previously_campaign::create([
+                        'user_id'       => $user->id,
+                        'client'        => $value,
+                        'link'          => $link_var[$key],
+                        'details'       => $details_var[$key],
+                    ]);
+                }  
             }  
         }
 

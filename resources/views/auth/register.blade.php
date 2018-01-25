@@ -37,11 +37,6 @@
     <div class="row">
         <div class="">
             <div class="panel panel-default">
-        @if( count( $errors ) > 0 )
-           @foreach ($errors->all() as $error)
-              <div>{{ $error }}</div>
-          @endforeach
-        @endif
                 @if(Session::has('alert'))
                 <div class="alert alert-success">
                     {{ Session::get('alert') }}
@@ -53,7 +48,7 @@
                 <div class="panel-heading">Register</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+                    <form class="form-horizontal" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
                         <div class="form-group">
@@ -91,11 +86,17 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="file" class="col-md-4 control-label">Profile picture</label>
+                        <div class="form-group{{ $errors->has('phone_number') ? ' has-error' : '' }}">
+                            <label for="phone_number" class="col-md-4 control-label">Phone number</label>
 
                             <div class="col-md-6">
-                                <input id="file" type="file"  name="file"  required >
+                                <input id="phone_number" type="text" class="form-control" name="phone_number" value="{{ old('phone_number') }}" required autofocus>
+
+                                @if ($errors->has('phone_number'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('phone_number') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
@@ -113,17 +114,11 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('phone_number') ? ' has-error' : '' }}">
-                            <label for="phone_number" class="col-md-4 control-label">Phone number</label>
+                        <div class="form-group">
+                            <label for="file" class="col-md-4 control-label">Profile picture</label>
 
                             <div class="col-md-6">
-                                <input id="phone_number" type="text" class="form-control" name="phone_number" value="{{ old('phone_number') }}" required autofocus>
-
-                                @if ($errors->has('phone_number'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('phone_number') }}</strong>
-                                    </span>
-                                @endif
+                                <input id="file" type="file"  name="file" value="{{old('file')}}" required >
                             </div>
                         </div>
 
@@ -163,7 +158,7 @@
                             <label for="hashtags" class="col-md-4 control-label">Hashtags</label>
 
                             <div class="col-md-6">
-                                <input id="hashtags" type="text" class="form-control" name="hashtags"  placeholder="Enter Hashtags that you would relate to your profile, content etc." required autofocus>
+                                <input id="hashtags" type="text" class="form-control" name="hashtags" value="{{ old('hashtags') }}"  placeholder="Enter Hashtags that you would relate to your profile, content etc." required autofocus>
 
                                 
                                 <!-- <select name="hashtags" class="form-control" id="hashtags"> -->
@@ -328,7 +323,7 @@
                             <label for="preferred_medium" class="col-md-4 control-label"></label>
                             <div class="col-md-6">
                                 @foreach($preferred_medium_value as $preferred_medium_value)
-                                    <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]"> {{ $preferred_medium_value->preferred_medium_title }}<br>
+                                    <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]" autofocus> {{ $preferred_medium_value->preferred_medium_title }}<br>
                                     <?php 
                                         if($preferred_medium_value->preferred_medium_title  == "Others"){
                                     ?>
