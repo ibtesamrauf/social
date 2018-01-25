@@ -124,10 +124,9 @@
 
                             <div class="col-md-6">
                                 <select name="countery" class="form-control" id="countery">
-                                    <option value="Pakistan">Pakistan</option>
-                                    <option value="India">India</option>
-                                    <option value="America">America</option>
-                                    <option value="Russia">Russia</option>
+                                    @foreach($country as $country_value)
+                                        <option value="{{ $country_value->id }}">{{ $country_value->country_name }}</option>
+                                    @endforeach
                                 </select>
                                 @if ($errors->has('countery'))
                                     <span class="help-block">
