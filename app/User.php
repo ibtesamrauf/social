@@ -34,6 +34,10 @@ class User extends Authenticatable
     public function Users_Roles_hashtags(){
         return $this->hasMany('App\User_roles_hashtags');
     }
+
+    public function Users_preferred_medium(){
+        return $this->hasMany('App\User_preferred_medium');
+    }
     // public function Users_Roles_hashtags_names(){
     //     $temp = $this->hasMany('App\Roles_hashtags');
     //     $hashtags_data = array();

@@ -7,13 +7,20 @@
 <div class="container target">
     <div class="row">
         <div class="col-sm-10">
-             <h1 class="">{{ Auth::user()->name }}</h1>
+             <h1 class="">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h1>
          
           <button type="button" class="btn btn-success">Book me!</button>  <button type="button" class="btn btn-info">Send me a message</button>
     <br>
         </div>
-      <div class="col-sm-2"><a href="#" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.rlsandbox.com/img/profile.jpg"></a>
 
+        <div class="col-sm-2">
+            <a href="#" class="pull-right">
+                @if (!empty(Auth::user()->profile_picture)) 
+                    <img title="profile image" class="img-circle img-responsive" src="uploads/{{Auth::user()->profile_picture }}">
+                @else
+                    <img title="profile image" class="img-responsive" src="img/default-profile.png">
+                @endif
+            </a>
         </div>
     </div>
     <br>
@@ -77,6 +84,25 @@
                         <span class="pull-left">
                             <strong class="">
                                 {!! \App\Hashtags::findOrFail($hashtags->hashtags_id)->tags; !!}
+                            </strong>
+                        </span> 
+                        .
+                    </li>
+                @endforeach
+            </ul>
+
+
+
+            <ul class="list-group">
+                <li class="list-group-item text-muted">Preferred Mediums 
+                    <i class="fa fa-dashboard fa-1x"></i>
+                </li>
+
+                @foreach(Auth::user()->Users_preferred_medium as $preferred_medium)
+                    <li class="list-group-item text-right">
+                        <span class="pull-left">
+                            <strong class="">
+                                {!! \App\Preferred_medium::findOrFail($preferred_medium->preferred_medium_id)->preferred_medium_title; !!}
                             </strong>
                         </span> 
                         .
