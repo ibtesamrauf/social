@@ -45,46 +45,18 @@
                     <!-- <form action="/findinfulencer"  method="GET"> -->
                         <div class="form-group">
                             <label for="exampleInputEmail1">Advanced Search</label>
-                            <?php
-                                $search_var = "";
-                                if ( isset( $_GET['search'] ) ) {
-                                    // check emptiness after triming whitespace.
-                                    $search_var = $_GET['search'];
-                                }
-                            ?>  
-                            <!-- <input type="text" class="form-control" name="search" value="{{ $search_var ?  $search_var : '' }}" id="search" placeholder="Search"> -->
-                            <select id="country" name="country" class="form-control">
-                                @foreach($country as $country_value)
-                                    <option value="{{ $country_value->id }}">{{ $country_value->country_name }}</option>
-                                @endforeach
-                            </select>
-                            <br>Prefered medium<br>
-                            @foreach($preferred_medium_value as $preferred_medium_value)
-                                <?php 
-                                    if($preferred_medium_value->id  == 8){
-                                ?>
-                                <?php
-                                    }else{
-                                ?>
-                                <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]"> {{ $preferred_medium_value->preferred_medium_title }}<br>
-                                <?php
-                                    }
-                                ?>
-                            @endforeach    
 
-                            <br>
-
-
+                            
                             <div id="div_criteria">
                                 <table class="table">
-                                    <th style="width: 7%;">Including</th>
-                                    <th style="width: 25%;">Traction</th>
-                                    <th style="width: 58%;">Range</th>
+                                    <!-- <th style="width: 7%;">Including</th> -->
+                                    <th style="width: 58%;">Traction</th>
+                                    <th style="width: 25%;">Medium</th>
                                     <th style="width: 10%;">Action</th>
                                     <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td>likes on Facebook</td>
+                                        <!-- <td><input type="checkbox"></td> -->
                                         <td><input type="text" class="form-control" id="likes_on_Facebook" placeholder="Enter number of likes"></td>
+                                        <td><input type="checkbox"> on Facebook</td>
                                         <td>
                                             <select name="action">
                                                 <option value="1">AND</option>
@@ -96,9 +68,9 @@
                                     </tr>
                                     
                                     <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td>followers on Twitter</td>
-                                        <td><input type="text" class="form-control" id="followers_on_Twitter" placeholder="Enter number of followers on Twitter"></td>
+                                        <!-- <td><input type="checkbox"></td> -->
+                                        <td><input type="text" class="form-control" id="followers_on_Twitter" placeholder="Enter number of followers "></td>
+                                        <td><input type="checkbox"> on Twitter</td>
                                         <td>
                                             <select name="action">
                                                 <option value="1">AND</option>
@@ -110,9 +82,9 @@
                                     </tr>
 
                                     <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td>followers on Instagram</td>
-                                        <td><input type="text" class="form-control" id="followers_on_Instagram" placeholder="Enter number of followers on Instagram"></td>
+                                        <!-- <td><input type="checkbox"></td> -->
+                                        <td><input type="text" class="form-control" id="followers_on_Instagram" placeholder="Enter number of followers"></td>
+                                        <td><input type="checkbox"> on Instagram</td>
                                         <td>
                                             <select name="action">
                                                 <option value="1">AND</option>
@@ -124,10 +96,10 @@
                                     </tr>
 
                                     <tr>
-                                        <td><input type="checkbox"></td>
+                                        <!-- <td><input type="checkbox"></td> -->
 
-                                        <td>Subscribers on Youtube</td>
-                                        <td><input type="text" class="form-control" id="subscribers_on_Youtube" placeholder="Enter number of Subscribers on Youtube"></td>
+                                        <td><input type="text" class="form-control" id="subscribers_on_Youtube" placeholder="Enter number of Subscribers"></td>
+                                        <td><input type="checkbox"> on Youtube</td>
                                         <td>
                                             <select name="action">
                                                 <option value="1">AND</option>
@@ -139,11 +111,11 @@
                                     </tr>
 
                                     <tr>
-                                        <td><input type="checkbox"></td>
+                                        <!-- <td><input type="checkbox"></td> -->
 
-                                        <td>Followers on Soundcloud</td>
+                                        <td><input type="text" class="form-control" id="followers_on_Soundcloud" placeholder="Enter number of Followers"></td>
+                                        <td><input type="checkbox"> on Soundcloud</td>
                                         
-                                        <td><input type="text" class="form-control" id="followers_on_Soundcloud" placeholder="Enter number of Followers on Soundcloud"></td>
                                         <td>
                                             <select name="action">
                                                 <option value="1">AND</option>
@@ -155,11 +127,11 @@
                                     </tr>
 
                                     <tr>
-                                        <td><input type="checkbox"></td>
+                                        <!-- <td><input type="checkbox"></td> -->
 
-                                        <td>Blog visitors per month</td>
+                                        <td><input type="text" class="form-control" id="Blog_visitors_per_month" placeholder="Enter number of "></td>
+                                        <td><input type="checkbox"> Blog visitors per month</td>
                                         
-                                        <td><input type="text" class="form-control" id="Blog_visitors_per_month" placeholder="Enter number of Blog visitors per month"></td>
                                         <td>
                                             <select name="action">
                                                 <option value="1">AND</option>
@@ -183,6 +155,36 @@
                                     <option>Blog visitors per month</option>
                                 </select> -->
                             </div>
+                            
+                            <?php
+                                $search_var = "";
+                                if ( isset( $_GET['search'] ) ) {
+                                    // check emptiness after triming whitespace.
+                                    $search_var = $_GET['search'];
+                                }
+                            ?>  
+                            <!-- <input type="text" class="form-control" name="search" value="{{ $search_var ?  $search_var : '' }}" id="search" placeholder="Search"> -->
+                            Country: <select id="country" name="country" class="form-control">
+                                    <option >Select</option>
+                                @foreach($country as $country_value)
+                                    <option value="{{ $country_value->id }}">{{ $country_value->country_name }}</option>
+                                @endforeach
+                            </select>
+                            <br>Prefered medium<br>
+                            @foreach($preferred_medium_value as $preferred_medium_value)
+                                <?php 
+                                    if($preferred_medium_value->id  == 8){
+                                ?>
+                                <?php
+                                    }else{
+                                ?>
+                                <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]"> {{ $preferred_medium_value->preferred_medium_title }}<br>
+                                <?php
+                                    }
+                                ?>
+                            @endforeach    
+
+                            <br>
 
 
 
