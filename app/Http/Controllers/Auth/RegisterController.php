@@ -192,7 +192,7 @@ class RegisterController extends Controller
 
         foreach ($hashtags_var as $key => $value) {
             $checking_exist = Hashtags::where('tags' , $value)->first();    
-            User_roles_hashtags::create([
+            User_roles_hashtags::insert([
                 'user_id'       => $user->id,
                 'hashtags_id'   => $checking_exist->id,
             ]);
