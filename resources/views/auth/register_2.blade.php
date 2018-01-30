@@ -52,7 +52,7 @@
                 <!-- <div class="panel-heading">Register as a Marketer</div> -->
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ url('/jobseeker_register') }}">
+                    <form class="form-horizontal" method="POST" action="{{ url('/jobseeker_register') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
