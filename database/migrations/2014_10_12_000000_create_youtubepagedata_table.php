@@ -13,16 +13,18 @@ class CreateYoutubepagedataTable extends Migration
      */
     public function up()
     {
-        Schema::create('youtube_page_data', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('page_id');
-            $table->string('name');
-            $table->string('subscriberCount');
-            $table->string('image', 500);
-            $table->string('description', 2000);
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('youtube_page_data')){
+            Schema::create('youtube_page_data', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id');
+                $table->integer('page_id');
+                $table->string('name');
+                $table->string('subscriberCount');
+                $table->string('image', 500);
+                $table->string('description', 2000);
+                $table->timestamps();
+            });
+        }
     }
 
     /**

@@ -13,16 +13,18 @@ class CreateInstagrampagedataTable extends Migration
      */
     public function up()
     {
-        Schema::create('instagram_page_data', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('page_id');
-            $table->string('name');
-            $table->string('followed_by');
-            $table->string('follows');
-            $table->string('image', 500);
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('instagram_page_data')){
+            Schema::create('instagram_page_data', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id');
+                $table->integer('page_id');
+                $table->string('name');
+                $table->string('followed_by');
+                $table->string('follows');
+                $table->string('image', 500);
+                $table->timestamps();
+            });
+        }
     }
 
     /**

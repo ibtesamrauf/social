@@ -13,12 +13,14 @@ class CreateUserpreferredmediumTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_preferred_medium', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('preferred_medium_id');
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('user_preferred_medium')){
+            Schema::create('user_preferred_medium', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id');
+                $table->integer('preferred_medium_id');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

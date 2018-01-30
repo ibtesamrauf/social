@@ -13,14 +13,16 @@ class CreateUserpreviouslycampaignTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_previously_campaign', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->string('client');
-            $table->string('link');
-            $table->string('details');
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('user_previously_campaign')){
+            Schema::create('user_previously_campaign', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id');
+                $table->string('client');
+                $table->string('link');
+                $table->string('details');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

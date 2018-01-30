@@ -13,12 +13,14 @@ class CreateUserroleshashtagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_roles_hashtags', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('hashtags_id');
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('user_roles_hashtags')){
+            Schema::create('user_roles_hashtags', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id');
+                $table->integer('hashtags_id');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

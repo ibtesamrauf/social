@@ -13,12 +13,14 @@ class CreateUservideosTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_videos', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->string('videos_url',500);
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('user_videos')){
+            Schema::create('user_videos', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id');
+                $table->string('videos_url',500);
+                $table->timestamps();
+            });
+        }
     }
 
     /**

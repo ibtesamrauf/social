@@ -13,18 +13,20 @@ class CreateUserpageTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_page', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->string('page_title');
-            $table->string('page_description', 500);
-            $table->string('page_about_your_self', 500);
-            $table->string('facebook_pagr_url');
-            $table->string('youtube_pagr_url');
-            $table->string('instagram_pagr_url');
-            // $table->rememberToken();
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('user_page')){
+            Schema::create('user_page', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id');
+                $table->string('page_title');
+                $table->string('page_description', 500);
+                $table->string('page_about_your_self', 500);
+                $table->string('facebook_pagr_url');
+                $table->string('youtube_pagr_url');
+                $table->string('instagram_pagr_url');
+                // $table->rememberToken();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

@@ -13,15 +13,17 @@ class CreateUsercompanyTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_company', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->string('company_name');
-            $table->string('logo' , 500);
-            $table->string('website');
-            $table->string('description' , 2000);
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('user_company')){
+            Schema::create('user_company', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id');
+                $table->string('company_name');
+                $table->string('logo' , 500);
+                $table->string('website');
+                $table->string('description' , 2000);
+                $table->timestamps();
+            });
+        }
     }
 
     /**

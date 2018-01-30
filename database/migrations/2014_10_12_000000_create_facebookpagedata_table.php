@@ -13,15 +13,17 @@ class CreateFacebookpagedataTable extends Migration
      */
     public function up()
     {
-        Schema::create('facebook_page_data', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('page_id');
-            $table->string('name');
-            $table->string('likes');
-            $table->string('image', 500);
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('facebook_page_data')){
+            Schema::create('facebook_page_data', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id');
+                $table->integer('page_id');
+                $table->string('name');
+                $table->string('likes');
+                $table->string('image', 500);
+                $table->timestamps();
+            });
+        }
     }
 
     /**

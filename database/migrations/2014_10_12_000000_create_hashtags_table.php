@@ -13,11 +13,13 @@ class CreateHashtagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('hashtags', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('tags');
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('hashtags')){
+            Schema::create('hashtags', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('tags');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
