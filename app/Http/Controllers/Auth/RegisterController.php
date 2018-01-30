@@ -96,9 +96,9 @@ class RegisterController extends Controller
             echo 'Uploaded';
             // $file = Input::file($data['file']);
             $file = $data['file'];
-            $file->move('uploads', $file->getClientOriginalName());
+            $file->move('uploads', time().$file->getClientOriginalName());
             echo '';
-            $image_name = $file->getClientOriginalName();
+            $image_name = time().$file->getClientOriginalName();
         }
         // die;
         // vv($data);
