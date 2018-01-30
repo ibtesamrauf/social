@@ -42,10 +42,11 @@ class LoginController extends Controller
      */
     protected function validateLogin(Request $request)
     {
-        $user = \App\User::where('email',$request->email)->first();
+        $user = \App\Admin::where('email',$request->email)->first();
         // vv($user);
         if(!empty($user)){
-            if($user->user_role == 'jobseeker' && Hash::check($request->password, $user->password)){
+            // if($user->user_role == 'jobseeker' && Hash::check($request->password, $user->password)){
+            if(Hash::check($request->password, $user->password)){
                     return TRUE;
 
             }

@@ -73,11 +73,15 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+            'table'  => 'users'
+
         ],
         //Jobseeker user provider
         'jobseekers' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Admin::class,
+            'table'  => 'admins'
+
         ],
 
         // 'users' => [

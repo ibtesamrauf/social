@@ -42,7 +42,7 @@
                             <?php if(Auth::guard('jobseeker')->check()){ ?>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                        {{ auth()->guard('jobseeker')->user()->name }}
+                                        {{ auth()->guard('jobseeker')->user()->first_name }}
                                         <span class="caret"></span>
                                     </a>
 

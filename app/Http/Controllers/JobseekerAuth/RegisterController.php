@@ -5,6 +5,7 @@ namespace App\Http\Controllers\JobseekerAuth;
 use Illuminate\Http\Request;
 use App\Jobseeker;
 use App\User;
+use App\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -38,15 +39,14 @@ class RegisterController extends Controller
     
     public function register(Request $request)
     {
-        vv($request->all());
+        // vv($request->all());
         //Validates data
         $this->validator($request->all())->validate();
         
        //Create seller
-        $user = User::create([
-            'name'          => $request->name,
-            'user_role'     => 'jobseeker',
-            'company_name'  => $request->company_name,
+        $user = Admin::create([
+            'first_name'    => $request->first_name,
+            'last_name'     => $request->last_name,
             'email'         => $request->email,
             'password'      => bcrypt($request->password)
         ]);
@@ -72,8 +72,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-                'name'          => 'required',
-                'company_name'  => 'required',
+                'first_name'    => 'required',
+                'last_name'     => 'required',
                 'email'         => 'required|email|unique:users',
                 'password'      => 'required|string|min:6|confirmed',
             ]);
