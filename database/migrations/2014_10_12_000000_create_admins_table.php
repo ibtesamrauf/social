@@ -23,8 +23,8 @@ class CreateAdminsTable extends Migration
                 // $table->string('company_name');
                 $table->string('email', 200)->unique();
                 // $table->integer('company_id');
-                // $table->string('phone_number');
-                // $table->string('country');
+                $table->string('phone_number');
+                $table->string('country');
                 // $table->string('title');
                 // $table->string('faebook_url');
                 // $table->string('instagram_url');
@@ -33,6 +33,11 @@ class CreateAdminsTable extends Migration
                 // $table->string('soundcloud_url');
                 // $table->string('website_blog');
                 // $table->string('monthly_visitors');
+                
+                
+                $table->tinyInteger('verified')->default(0);
+                $table->string('verification_token')->nullable();
+
                 $table->string('password');
                 $table->rememberToken();
                 $table->timestamps();
