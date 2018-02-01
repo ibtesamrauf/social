@@ -6,9 +6,18 @@ use Illuminate\Http\Request;
 // use Session;
 use App\Country;
 use App\Preferred_medium;
+use Illuminate\Support\Facades\Validator;
+use Jrean\UserVerification\Facades\UserVerification as UserVerificationFacade;
+use Jrean\UserVerification\Exceptions\UserNotFoundException;
+use Jrean\UserVerification\Exceptions\UserIsVerifiedException;
+use Jrean\UserVerification\Exceptions\TokenMismatchException;
+
+use Jrean\UserVerification\Traits\RedirectsUsers;
+
 
 class HomeController extends Controller
 {
+    use RedirectsUsers;
     /**
      * Create a new controller instance.
      *
@@ -249,5 +258,137 @@ class HomeController extends Controller
 
     }
     
+    public function email_verifications(Request $request, $token)
+    {
 
+        if (! $this->validateRequest($request)) {
+            return redirect($this->redirectIfVerificationFails());
+        }
+
+        try {
+            // $user = UserVerificationFacade::process($request->input('email'), $token, $this->userTable());
+            $user = UserVerificationFacade::process($request->input('email'), $token, $request->input('table'));
+        } catch (UserNotFoundException $e) {
+            return redirect($this->redirectIfVerificationFails());
+        } catch (UserIsVerifiedException $e) {
+            return redirect($this->redirectIfVerified());
+        } catch (TokenMismatchException $e) {
+            return redirect($this->redirectIfVerificationFails());
+        }
+
+        if (config('user-verification.auto-login') === true) {
+            auth()->loginUsingId($user->id);
+        }
+
+        return redirect($this->redirectAfterVerification());
+
+
+        // vv("ponka");
+
+        // $user = $this->getUserByEmail($email, $userTable);
+
+        // unset($user->{"password"});
+
+        // // Check if the given user is already verified.
+        // // If he is, we stop here.
+        // $this->isVerified($user);
+
+        // $this->verifyToken($user->verification_token, $token);
+
+        // $this->wasVerified($user);
+
+        // return $user;
+    }
+
+
+     /**
+     * Validate the verification link.
+     *
+     * @param  string  $token
+     * @return bool
+     */
+    protected function validateRequest(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email'
+        ]);
+
+        return $validator->passes();
+    }
+
+    /**
+     * Get the user by e-mail.
+     *
+     * @param  string  $email
+     * @param  string  $table
+     * @return stdClass
+     *
+     * @throws \Jrean\UserVerification\Exceptions\UserNotFoundException
+     */
+    protected function getUserByEmail($email, $table)
+    {
+        $user = DB::table($table)
+            ->where('email', $email)
+            ->first();
+
+        if ($user === null) {
+            throw new UserNotFoundException();
+        }
+
+        $user->table = $table;
+
+        return $user;
+    }
+
+
+    /**
+     * Check if the given user is verified.
+     *
+     * @param  stdClass  $user
+     * @return void
+     *
+     * @throws \Jrean\UserVerification\Exceptions\UserIsVerifiedException
+     */
+    protected function isVerified($user)
+    {
+        if ($user->verified == true) {
+            throw new UserIsVerifiedException();
+        }
+    }
+
+
+    /**
+     * Compare the two given tokens.
+     *
+     * @param  string  $storedToken
+     * @param  string  $requestToken
+     * @return void
+     *
+     * @throws \Jrean\UserVerification\Exceptions\TokenMismatchException
+     */
+    protected function verifyToken($storedToken, $requestToken)
+    {
+        if ($storedToken != $requestToken) {
+            throw new TokenMismatchException();
+        }
+    }
+
+
+    /**
+     * Update and save the given user as verified.
+     *
+     * @param  stdClass  $user
+     * @return void
+     */
+    protected function wasVerified($user)
+    {
+        $user->verification_token = null;
+
+        $user->verified = true;
+
+        $this->updateUser($user);
+
+        event(new UserVerified($user));
+    }
+    
 }

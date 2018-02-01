@@ -18,6 +18,7 @@ use App\User_portfolio;
 use App\Country;
 use Illuminate\Support\Facades\Input;
 use App\User_previously_campaign;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -63,7 +64,16 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'first_name' => 'required|string|max:255',
             'last_name'  => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                // Rule::unique('users')->where(function ($query) {
+                //     $query->where('user_role', 'influencer');
+                // }),
+                'unique:users',
+            ],
             'phone_number' => 'required',
             'country' => 'required|numeric',
             'title' => 'required',
@@ -72,6 +82,18 @@ class RegisterController extends Controller
             'country' => 'required',
             'password' => 'required|string|min:6|confirmed',
         ]);
+
+
+
+        $this->validate(request(), [
+            'song' => [function ($attribute, $value, $fail) {
+                            if ($value <= 10) {
+                                $fail(':attribute needs more cowbell!');
+                            }
+                        }]
+        ]);
+
+
         // vv("ppp");
     }
 
@@ -118,7 +140,7 @@ class RegisterController extends Controller
             'soundcloud_url'      => $data['soundcloud_url'],
             'website_blog'        => $data['website_blog'],
             'monthly_visitors'    => $data['monthly_visitors'],
-            'company_id' => 1,
+            'company_id'        => 1,
             'company_name'      => 'no',
             'password'          => bcrypt($data['password']),
         ]);

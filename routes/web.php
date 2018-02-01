@@ -101,3 +101,5 @@ Route::group(['middleware' => 'jobseeker_auth'], function() {
 
 // insert data i  countery table
 Route::get('/insert_data', 'HomeController@insert_country');
+
+Route::get('/email-verifications.custom/{token}', 'HomeController@email_verifications');

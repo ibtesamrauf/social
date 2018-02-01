@@ -17,6 +17,8 @@ use App\User_roles_hashtags;
 use Jrean\UserVerification\Traits\VerifiesUsers;
 use Jrean\UserVerification\Facades\UserVerification;
 use App\Country;
+use Illuminate\Validation\Rule;
+
 
 class RegisterController extends Controller
 {
@@ -52,7 +54,23 @@ class RegisterController extends Controller
             'email'         => $request->email,
             'phone_number'  => $request->phone_number,
             'country'       => $request->country,
-            'password'      => bcrypt($request->password)
+            'password'      => bcrypt($request->password),
+
+            // 'user_role'           => 'maketer',
+
+
+            // 'profile_picture'     => "",
+            // 'title'               => "",
+            // 'faebook_url'         => "",
+            // 'instagram_url'       => "",
+            // 'youtube_url'         => "",
+            // 'twitter_url'         => "",
+            // 'soundcloud_url'      => "",
+            // 'website_blog'        => "",
+            // 'monthly_visitors'    => "",
+            // 'company_id'          => 1,
+            // 'company_name'          => 'no',
+
         ]);
         // Agency / Company details
         if(!empty($request->company_name) || !empty($request->website) || !empty($request->facebook_url) 
@@ -107,7 +125,17 @@ class RegisterController extends Controller
         return Validator::make($data, [
                 'first_name'    => 'required',
                 'last_name'     => 'required',
-                'email'         => 'required|email|unique:admins',
+                'email' => [
+                    'required',
+                    'string',
+                    'email',
+                    'max:255',
+                    // Rule::unique('users')->where(function ($query) {
+                    //         $query->where('user_role', 'maketer');
+                    //     }),
+                    // ],
+                    'unique:admins',
+                ],
                 'phone_number'  => 'required',
                 'country'       => 'required',
                 'password'      => 'required|string|min:6|confirmed',
