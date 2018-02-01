@@ -127,6 +127,7 @@
 
                             <div class="col-md-6">
                                 <select name="country" class="form-control" id="country">
+                                    <option>Select</option>
                                     @foreach($country1 as $country_value)
                                         <option value="{{ $country_value->id }}">{{ $country_value->country_name }}</option>
                                     @endforeach
