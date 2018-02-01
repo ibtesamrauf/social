@@ -239,6 +239,7 @@ return [
 
         // 'Facebook' => SammyK\Facebook\Facebook::class,
         // 'Facebook' => facebook\Facebook\Facebook::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
         
 
     ],

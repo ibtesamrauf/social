@@ -137,7 +137,7 @@ class RegisterController extends Controller
                     'unique:admins',
                 ],
                 'phone_number'  => 'required',
-                'country'       => 'required',
+                'country'       => 'required|not_in:Select',
                 'password'      => 'required|string|min:6|confirmed',
             ]);
     }

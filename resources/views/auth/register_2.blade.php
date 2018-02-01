@@ -7,7 +7,7 @@
     $( document ).ready(function() {
         $( "#add_another" ).click(function() {
             console.log("asdasd");
-            $( "#previously_campaigns" ).append('<br><div class="form-group{{ $errors->has('influencer_used') ? ' has-error' : '' }}"><label for="influencer_used" class="col-md-4 control-label">Influencer used</label><div class="col-md-6"><input id="influencer_used" type="text" class="form-control" name="influencer_used" value="{{ old('influencer_used') }}" required autofocus>@if ($errors->has('influencer_used'))<span class="help-block"><strong>{{ $errors->first('influencer_used') }}</strong></span>@endif</div></div><div class="campaign_link_div1"><div class="form-group{{ $errors->has('link_p') ? ' has-error' : '' }}"><label for="link_p" class="col-md-4 control-label">Campaign Link</label><div class="col-md-6"><input id="link_p" type="text" class="form-control" placeholder="Please link to any relavant content" name="link_p" value="{{ old('link_p') }}" required autofocus><a id="add_another_link1"class="btn btn-primary" >+</a>@if ($errors->has('link_p'))<span class="help-block"><strong>{{ $errors->first('link_p') }}</strong></span>@endif</div></div></div><div class="form-group{{ $errors->has('description_p') ? ' has-error' : '' }}"><label for="description_p" class="col-md-4 control-label">Description</label><div class="col-md-6"><input id="description_p" type="text" class="form-control" name="description_p" value="{{ old('description_p') }}" required autofocus>@if ($errors->has('description_p'))<span class="help-block"><strong>{{ $errors->first('description_p') }}</strong></span>@endif</div></div>'); 
+            $( "#previously_campaigns" ).append('<br><div class="form-group{{ $errors->has('influencer_used') ? ' has-error' : '' }}"><label for="influencer_used" class="col-md-4 control-label">Influencer used</label><div class="col-md-6"><input id="influencer_used" type="text" class="form-control" name="influencer_used" value="{{ old('influencer_used') }}" autofocus>@if ($errors->has('influencer_used'))<span class="help-block"><strong>{{ $errors->first('influencer_used') }}</strong></span>@endif</div></div><div class="campaign_link_div1"><div class="form-group{{ $errors->has('link_p') ? ' has-error' : '' }}"><label for="link_p" class="col-md-4 control-label">Campaign Link</label><div class="col-md-6"><input id="link_p" type="text" class="form-control" placeholder="Please link to any relavant content" name="link_p" value="{{ old('link_p') }}"  autofocus><a id="add_another_link1"class="btn btn-primary" >+</a>@if ($errors->has('link_p'))<span class="help-block"><strong>{{ $errors->first('link_p') }}</strong></span>@endif</div></div></div><div class="form-group{{ $errors->has('description_p') ? ' has-error' : '' }}"><label for="description_p" class="col-md-4 control-label">Description</label><div class="col-md-6"><input id="description_p" type="text" class="form-control" name="description_p" value="{{ old('description_p') }}" autofocus>@if ($errors->has('description_p'))<span class="help-block"><strong>{{ $errors->first('description_p') }}</strong></span>@endif</div></div>'); 
         });
     
         $("#previously_campaigns_div").css("display" , "block");
@@ -282,7 +282,7 @@
                                     <label for="influencer_used" class="col-md-4 control-label">Influencer used</label>
 
                                     <div class="col-md-6">
-                                        <input id="influencer_used" type="text" class="form-control" name="influencer_used" value="{{ old('influencer_used') }}" required autofocus>
+                                        <input id="influencer_used" type="text" class="form-control" name="influencer_used" value="{{ old('influencer_used') }}" autofocus>
 
                                         @if ($errors->has('influencer_used'))
                                             <span class="help-block">
@@ -297,7 +297,7 @@
                                         <label for="link_p" class="col-md-4 control-label">Campaign Link</label>
 
                                         <div class="col-md-6">
-                                            <input id="link_p" type="text" class="form-control" placeholder="Please link to any relavant content" name="link_p" value="{{ old('link_p') }}" required autofocus>
+                                            <input id="link_p" type="text" class="form-control" placeholder="Please link to any relavant content" name="link_p" value="{{ old('link_p') }}" autofocus>
                                             <a class="add_another_link btn btn-primary" >+</a>
                                             @if ($errors->has('link_p'))
                                                 <span class="help-block">
@@ -312,7 +312,7 @@
                                     <label for="description_p" class="col-md-4 control-label">Description</label>
 
                                     <div class="col-md-6">
-                                        <input id="description_p" type="text" class="form-control" name="description_p" value="{{ old('description_p') }}" required autofocus>
+                                        <input id="description_p" type="text" class="form-control" name="description_p" value="{{ old('description_p') }}" autofocus>
 
                                         @if ($errors->has('description_p'))
                                             <span class="help-block">

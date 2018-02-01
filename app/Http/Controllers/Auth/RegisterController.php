@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Input;
 use App\User_previously_campaign;
 use Illuminate\Validation\Rule;
 
+
 class RegisterController extends Controller
 {
     /*
@@ -75,25 +76,13 @@ class RegisterController extends Controller
                 'unique:users',
             ],
             'phone_number' => 'required',
-            'country' => 'required|numeric',
+            'country' => 'required|not_in:Select',
             'title' => 'required',
             'hashtags' => 'required',
             'preferred_medium' => 'required',
-            'country' => 'required',
+            // 'country' => 'required',
             'password' => 'required|string|min:6|confirmed',
         ]);
-
-
-
-        $this->validate(request(), [
-            'song' => [function ($attribute, $value, $fail) {
-                            if ($value <= 10) {
-                                $fail(':attribute needs more cowbell!');
-                            }
-                        }]
-        ]);
-
-
         // vv("ppp");
     }
 
