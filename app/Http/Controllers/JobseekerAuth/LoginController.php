@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     
-    protected $redirectTo = '/findinfulencer';
+    protected $redirectTo = '/finde_influencer_test';
     
     public function __construct()
     {
