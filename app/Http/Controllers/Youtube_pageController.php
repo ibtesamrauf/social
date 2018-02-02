@@ -64,30 +64,31 @@ class Youtube_pageController extends Controller
         ]);
 
             
-            $youtube_url = explode("/", $request->page_url);
-            if(empty(last($youtube_url))){
-                unset($youtube_url[count($youtube_url) - 1]);
-                $youtube_url = last($youtube_url);
-            }else{
-                $youtube_url = last($youtube_url);
-            }
-            // vv($youtube_url);
-            $youtube_response = file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id='.$youtube_url.'&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE');
-            $youtube_response = json_decode($youtube_response);
-            $youtube_response = $youtube_response->items[0];
-            // vv($youtube_response);
-            if(empty($youtube_response->snippet->description)){
-                $youtube_response->snippet->description = 'null';
-            }
-            Youtube_page_data::create([
-                    'user_id'           => Auth::user()->id,
-                    'page_id'           => 0,
-                    'name'              => $youtube_response->snippet->title,
-                    'subscriberCount'   => $youtube_response->statistics->subscriberCount,
-                    'image'             => $youtube_response->snippet->thumbnails->medium->url,
-                    'description'       => $youtube_response->snippet->description,
-                ]);
-       
+        $youtube_url = explode("/", $request->page_url);
+        if(empty(last($youtube_url))){
+            unset($youtube_url[count($youtube_url) - 1]);
+            $youtube_url = last($youtube_url);
+        }else{
+            $youtube_url = last($youtube_url);
+        }
+        // vv($youtube_url);
+        $youtube_response = file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id='.$youtube_url.'&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE');
+        $youtube_response = json_decode($youtube_response);
+        $youtube_response = $youtube_response->items[0];
+        vv($youtube_response);
+        if(empty($youtube_response->snippet->description)){
+            $youtube_response->snippet->description = 'null';
+        }
+        Youtube_page_data::create([
+                'user_id'           => Auth::user()->id,
+                'page_id'           => 0,
+                'name'              => $youtube_response->snippet->title,
+                'name'              => $youtube_url,
+                'subscriberCount'   => $youtube_response->statistics->subscriberCount,
+                'image'             => $youtube_response->snippet->thumbnails->medium->url,
+                'description'       => $youtube_response->snippet->description,
+            ]);
+   
         return redirect('viewprofile')->with('status', 'Pages Added Succesfully!');
     }
 

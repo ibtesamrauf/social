@@ -27,7 +27,7 @@ class Youtube_page_data extends Model
      */
  
  
-    protected $fillable = ['user_id' , 'page_id', 'name' , 'subscriberCount' , 'image' , 'description'];
+    protected $fillable = ['user_id' , 'page_id', 'name' ,'keyword', 'subscriberCount' , 'image' , 'description'];
     
     // public function ImageDesc(){
     //     return $this->hasMany('App\Image_order');

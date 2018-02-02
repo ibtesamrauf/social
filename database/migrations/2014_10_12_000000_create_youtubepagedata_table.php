@@ -19,6 +19,7 @@ class CreateYoutubepagedataTable extends Migration
                 $table->integer('user_id');
                 $table->integer('page_id');
                 $table->string('name');
+                $table->string('keyword');
                 $table->string('subscriberCount');
                 $table->string('image', 500);
                 $table->string('description', 2000);
