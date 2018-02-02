@@ -78,7 +78,6 @@ class Facebook_pageController extends Controller
         
         $facebook_response = json_decode($response_2);
         $facebook_response_page_image = "https://graph.facebook.com/v2.11/".$facebook_url."/picture?type=large";
-        vv($facebook_response);
         Facebook_page_data::create([
                 'user_id'           => Auth::user()->id,
                 'page_id'           => 0,
