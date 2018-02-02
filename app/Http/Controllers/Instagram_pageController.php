@@ -80,16 +80,21 @@ class Instagram_pageController extends Controller
         $instagram_response = json_decode($response_22);     
         $instagram_response = $instagram_response->user;
         
-        Instagram_page_data::create([
-                'user_id'           => Auth::user()->id,
-                'page_id'           => 0,
-                'name'              => $instagram_response->full_name,
-                'keyword'           => $instagram_url,
-                'followed_by'       => $instagram_response->followed_by->count,
-                'follows'           => $instagram_response->follows->count,
-                'image'             => $instagram_response->profile_pic_url_hd,
-            ]);
-       
+        $count = Instagram_page_data::where('user_id', Auth::user()->id)->count();
+        // vv($count);
+        if($count > 4){
+            return redirect('viewprofile')->with('status', 'Max 5 Page limit');
+        }else{ 
+            Instagram_page_data::create([
+                    'user_id'           => Auth::user()->id,
+                    'page_id'           => 0,
+                    'name'              => $instagram_response->full_name,
+                    'keyword'           => $instagram_url,
+                    'followed_by'       => $instagram_response->followed_by->count,
+                    'follows'           => $instagram_response->follows->count,
+                    'image'             => $instagram_response->profile_pic_url_hd,
+                ]);
+        }
         return redirect('viewprofile')->with('status', 'Pages Added Succesfully!');
     }
 

@@ -79,15 +79,22 @@ class Youtube_pageController extends Controller
         if(empty($youtube_response->snippet->description)){
             $youtube_response->snippet->description = 'null';
         }
-        Youtube_page_data::create([
-                'user_id'           => Auth::user()->id,
-                'page_id'           => 0,
-                'name'              => $youtube_response->snippet->title,
-                'keyword'              => $youtube_url,
-                'subscriberCount'   => $youtube_response->statistics->subscriberCount,
-                'image'             => $youtube_response->snippet->thumbnails->medium->url,
-                'description'       => $youtube_response->snippet->description,
-            ]);
+
+        $count = Youtube_page_data::where('user_id', Auth::user()->id)->count();
+        // vv($count);
+        if($count > 4){
+            return redirect('viewprofile')->with('status', 'Max 5 Page limit');
+        }else{ 
+            Youtube_page_data::create([
+                    'user_id'           => Auth::user()->id,
+                    'page_id'           => 0,
+                    'name'              => $youtube_response->snippet->title,
+                    'keyword'              => $youtube_url,
+                    'subscriberCount'   => $youtube_response->statistics->subscriberCount,
+                    'image'             => $youtube_response->snippet->thumbnails->medium->url,
+                    'description'       => $youtube_response->snippet->description,
+                ]);
+        }
    
         return redirect('viewprofile')->with('status', 'Pages Added Succesfully!');
     }

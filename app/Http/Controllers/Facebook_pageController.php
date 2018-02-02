@@ -78,15 +78,21 @@ class Facebook_pageController extends Controller
         
         $facebook_response = json_decode($response_2);
         $facebook_response_page_image = "https://graph.facebook.com/v2.11/".$facebook_url."/picture?type=large";
-        Facebook_page_data::create([
-                'user_id'           => Auth::user()->id,
-                'page_id'           => 0,
-                'name'              => $facebook_response->name,
-                'link'              => $facebook_response->link,
-                'keyword'           => $facebook_url,
-                'likes'             => $facebook_response->fan_count,
-                'image'             => $facebook_response_page_image,
-            ]);
+        $count = Facebook_page_data::where('user_id', Auth::user()->id)->count();
+        // vv($count);
+        if($count > 4){
+            return redirect('viewprofile')->with('status', 'Max 5 Page limit');
+        }else{        
+            Facebook_page_data::create([
+                    'user_id'           => Auth::user()->id,
+                    'page_id'           => 0,
+                    'name'              => $facebook_response->name,
+                    'link'              => $facebook_response->link,
+                    'keyword'           => $facebook_url,
+                    'likes'             => $facebook_response->fan_count,
+                    'image'             => $facebook_response_page_image,
+                ]);
+        }
        
         return redirect('viewprofile')->with('status', 'Page Added Succesfully!');
     }
