@@ -27,7 +27,7 @@ class Facebook_page_data extends Model
      */
  
  
-    protected $fillable = ['user_id' , 'page_id', 'name' , 'link' , 'likes' , 'image'];
+    protected $fillable = ['user_id' , 'page_id', 'name' , 'link' , 'keyword' , 'likes' , 'image'];
     
     // public function ImageDesc(){
     //     return $this->hasMany('App\Image_order');

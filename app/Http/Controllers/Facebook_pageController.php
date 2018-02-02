@@ -83,6 +83,7 @@ class Facebook_pageController extends Controller
                 'page_id'           => 0,
                 'name'              => $facebook_response->name,
                 'link'              => $facebook_response->link,
+                'keyword'           => $facebook_url,
                 'likes'             => $facebook_response->fan_count,
                 'image'             => $facebook_response_page_image,
             ]);
