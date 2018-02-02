@@ -77,13 +77,14 @@ class Instagram_pageController extends Controller
         // $url_2 = "https://graph.facebook.com/".$instagram_url."/?fields=name,likes,link,fan_count,picture&access_token=1942200009377124|2aa44fec0382b4d5715af57be82779d2";
         $response_22 = file_get_contents($url_22);
         
-        $instagram_response = json_decode($response_22);            
+        $instagram_response = json_decode($response_22);     
         $instagram_response = $instagram_response->user;
         
         Instagram_page_data::create([
                 'user_id'           => Auth::user()->id,
                 'page_id'           => 0,
                 'name'              => $instagram_response->full_name,
+                'keyword'           => $instagram_url,
                 'followed_by'       => $instagram_response->followed_by->count,
                 'follows'           => $instagram_response->follows->count,
                 'image'             => $instagram_response->profile_pic_url_hd,
