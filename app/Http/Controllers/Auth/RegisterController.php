@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Input;
 use App\User_previously_campaign;
 use Illuminate\Validation\Rule;
 
+use App\Facebook_page_data;
+use App\Youtube_page_data;
+use App\Instagram_page_data;
 
 class RegisterController extends Controller
 {
@@ -134,7 +137,95 @@ class RegisterController extends Controller
             'password'          => bcrypt($data['password']),
         ]);
 
-        
+        // add facebook page data
+        if(!empty($data['faebook_url'])){
+            $facebook_url = explode("/", $data['faebook_url']);
+            if(empty(last($facebook_url))){
+                unset($facebook_url[count($facebook_url) - 1]);
+                $facebook_url = last($facebook_url);
+            }else{
+                $facebook_url = last($facebook_url);
+            }
+
+            // vv($facebook_url);
+            $url_2 = "https://graph.facebook.com/".$facebook_url."/?fields=name,likes,link,fan_count,picture&access_token=1942200009377124|2aa44fec0382b4d5715af57be82779d2";
+            $response_2 = file_get_contents($url_2);
+            
+            $facebook_response = json_decode($response_2);
+            $facebook_response_page_image = "https://graph.facebook.com/v2.11/".$facebook_url."/picture?type=large";
+            Facebook_page_data::create([
+                    'user_id'           => $user->id,
+                    'page_id'           => 0,
+                    'name'              => $facebook_response->name,
+                    'link'              => $facebook_response->link,
+                    'keyword'           => $facebook_url,
+                    'likes'             => $facebook_response->fan_count,
+                    'image'             => $facebook_response_page_image,
+                ]);
+        }
+
+
+        // add instagram page data
+        if(!empty($data['instagram_url'])){
+            $instagram_url = explode("/", $data['instagram_url']);
+            if(empty(last($instagram_url))){
+                unset($instagram_url[count($instagram_url) - 1]);
+                $instagram_url = last($instagram_url);
+            }else{
+                unset($instagram_url[count($instagram_url) - 1]);
+                $instagram_url = last($instagram_url);
+            }
+            // vv($instagram_url);
+            $url_22 = "https://www.instagram.com/".$instagram_url."/?__a=1";
+
+            // $url_2 = "https://graph.facebook.com/".$instagram_url."/?fields=name,likes,link,fan_count,picture&access_token=1942200009377124|2aa44fec0382b4d5715af57be82779d2";
+            $response_22 = file_get_contents($url_22);
+            
+            $instagram_response = json_decode($response_22);     
+            $instagram_response = $instagram_response->user;
+            
+            Instagram_page_data::create([
+                    'user_id'           => $user->id,
+                    'page_id'           => 0,
+                    'name'              => $instagram_response->full_name,
+                    'keyword'           => $instagram_url,
+                    'followed_by'       => $instagram_response->followed_by->count,
+                    'follows'           => $instagram_response->follows->count,
+                    'image'             => $instagram_response->profile_pic_url_hd,
+                ]);
+       
+        }
+
+
+        // add youtube page data
+        if(!empty($data['youtube_url'])){
+            $youtube_url = explode("/", $data['youtube_url']);
+            if(empty(last($youtube_url))){
+                unset($youtube_url[count($youtube_url) - 1]);
+                $youtube_url = last($youtube_url);
+            }else{
+                $youtube_url = last($youtube_url);
+            }
+            // vv($youtube_url);
+            $youtube_response = file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id='.$youtube_url.'&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE');
+            $youtube_response = json_decode($youtube_response);
+            $youtube_response = $youtube_response->items[0];
+            // vv($youtube_response);
+            if(empty($youtube_response->snippet->description)){
+                $youtube_response->snippet->description = 'null';
+            }
+            Youtube_page_data::create([
+                    'user_id'           => $user->id,
+                    'page_id'           => 0,
+                    'name'              => $youtube_response->snippet->title,
+                    'keyword'              => $youtube_url,
+                    'subscriberCount'   => $youtube_response->statistics->subscriberCount,
+                    'image'             => $youtube_response->snippet->thumbnails->medium->url,
+                    'description'       => $youtube_response->snippet->description,
+                ]);
+       
+        }
+
         if(!empty($data['description'])){
             $link_var = $data['link_p'];        
             foreach ($data['description'] as $key => $value) {  
