@@ -75,7 +75,7 @@ class Youtube_pageController extends Controller
         $youtube_response = file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id='.$youtube_url.'&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE');
         $youtube_response = json_decode($youtube_response);
         $youtube_response = $youtube_response->items[0];
-        vv($youtube_response);
+        // vv($youtube_response);
         if(empty($youtube_response->snippet->description)){
             $youtube_response->snippet->description = 'null';
         }
@@ -83,7 +83,7 @@ class Youtube_pageController extends Controller
                 'user_id'           => Auth::user()->id,
                 'page_id'           => 0,
                 'name'              => $youtube_response->snippet->title,
-                'name'              => $youtube_url,
+                'keyword'              => $youtube_url,
                 'subscriberCount'   => $youtube_response->statistics->subscriberCount,
                 'image'             => $youtube_response->snippet->thumbnails->medium->url,
                 'description'       => $youtube_response->snippet->description,
