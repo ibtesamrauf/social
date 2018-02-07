@@ -33,10 +33,17 @@ class Admin extends Authenticatable
         'password', 'remember_token',
     ];
 
-    // public function Users_Roles_hashtags(){
-    //     return $this->hasMany('App\User_roles_hashtags');
-    // }
+    public function Country_name(){
+        return $this->hasOne('App\Country' , 'id' , 'country');
+    }
 
+    public function Maeketer_company(){
+        return $this->hasOne('App\Marketer_company' , 'user_id' , 'id');
+    }
+
+    public function Maeketer_previously_campaign(){
+        return $this->hasMany('App\Marketer_previously_campaign' , 'user_id' , 'id');
+    }
     // public function Users_preferred_medium(){
     //     return $this->hasMany('App\User_preferred_medium');
     // }
