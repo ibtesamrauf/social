@@ -2925,3 +2925,14 @@ Google map
     width: 100%;
   }
 }
+
+
+.text-align-left{
+    text-align: left;
+}
+
+
+.marketer-company-image{
+    max-width: 200px;
+    max-height: 200px;
+}
