@@ -74,9 +74,6 @@ Route::resource('instagram_page_resource', 'Instagram_pageController');
 Route::resource('hashtags', 'HashtagsController');
 
 
-Route::get('finde_influencer_test', 'FindInfulencerController@finde_influencer_test');
-
-
 // Route::get('/register', 'Auth\RegisterController@getRegister');
 
 Route::group(['middleware' => 'jobseeker_guest'], function() {
@@ -93,6 +90,8 @@ Route::group(['middleware' => 'jobseeker_guest'], function() {
 
 Route::group(['middleware' => 'jobseeker_auth'], function() {
     Route::get('/findinfulencer', 'FindInfulencerController@index');
+    
+    Route::get('finde_influencer_test', 'FindInfulencerController@finde_influencer_test');
 
     Route::get('/viewprofile_marketer', 'Profile_page_marketerController@viewprofile_marketer');
 	// Route::get('/jobseeker_home', ['uses' => 'Jobseeker\JobseekerController@home']);
