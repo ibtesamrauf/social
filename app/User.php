@@ -41,6 +41,16 @@ class User extends Authenticatable
     public function Users_preferred_medium(){
         return $this->hasMany('App\User_preferred_medium');
     }
+    
+    public function Users_portfolio(){
+        return $this->hasMany('App\User_portfolio');
+    }
+    
+    public function User_previously_campaign(){
+        return $this->hasMany('App\User_previously_campaign');
+    }
+    
+    
     // public function Users_Roles_hashtags_names(){
     //     $temp = $this->hasMany('App\Roles_hashtags');
     //     $hashtags_data = array();
