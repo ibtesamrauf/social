@@ -134,41 +134,8 @@
                                         .
                                     </li>
                                     @endforeach
-                                    
-                                    
-                                    @foreach(Auth::user()->Users_portfolio as $preferred_medium)
-                                    <li class="list-group-item text-right">
-                                        <span class="pull-left">
-                                            <strong class="">
-                                                {{  $preferred_medium->link }}
-                                            </strong>
-                                        </span> 
-                                        .
-                                    </li>
-                                    @endforeach
                                 </ul>
                                 
-                                
-                                <ul class="list-group">
-                                    <li class="list-group-item text-muted">Portfolio 
-                                        <i class="fa fa-dashboard fa-1x"></i>
-                                    </li>
-                                    
-                                    @foreach(Auth::user()->Users_portfolio as $preferred_medium)
-                                    <li class="list-group-item text-right">
-                                        <span class="pull-left">
-                                            <strong class="">
-                                                Link
-                                                Description
-                                            </strong>
-                                        </span> 
-                                        <span>
-                                            {{  $preferred_medium->link }}
-                                            {{  $preferred_medium->description }}
-                                        </span>
-                                    </li>
-                                    @endforeach
-                                </ul>
                                 <!-- <div class="panel panel-default">
                                     <div class="panel-heading">Relevant hatags</div>
                                     <div class="panel-body"> 
@@ -281,7 +248,34 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">{{ Auth::user()->name }} Portfolio</div>
+                                    <div class="panel-body"> 
+                                        <?php 
+                                            if(Auth::user()->Users_portfolio->isEmpty()){
+                                                echo "No portfolio";
+                                            }else{
+                                        ?>
+                                        <table class="table">
+                                            <th>S.no</th>
+                                            <th>Link</th>
+                                            <th>Description</th>
+                                            @foreach(Auth::user()->Users_portfolio as $key => $portfolio)
+                                                <tr>
+                                                    <td>{{ $key+1 }}</td>
+                                                    <td>{{ $portfolio->link }}</td>
+                                                    <td><?php if (!empty($portfolio->description)){ echo $portfolio->description; }else { echo "empty"; } ?></td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
+                                        <?php    
+                                            } 
+                                        ?>
+                                    </div>
+                                </div>
+                                
+                                
                                 <div class="panel panel-default">
                                     <div class="panel-heading">{{ Auth::user()->name }} Previous Campaign</div>
                                     <div class="panel-body"> 
