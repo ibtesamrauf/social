@@ -134,6 +134,40 @@
                                         .
                                     </li>
                                     @endforeach
+                                    
+                                    
+                                    @foreach(Auth::user()->Users_portfolio as $preferred_medium)
+                                    <li class="list-group-item text-right">
+                                        <span class="pull-left">
+                                            <strong class="">
+                                                {{  $preferred_medium->link }}
+                                            </strong>
+                                        </span> 
+                                        .
+                                    </li>
+                                    @endforeach
+                                </ul>
+                                
+                                
+                                <ul class="list-group">
+                                    <li class="list-group-item text-muted">Portfolio 
+                                        <i class="fa fa-dashboard fa-1x"></i>
+                                    </li>
+                                    
+                                    @foreach(Auth::user()->Users_portfolio as $preferred_medium)
+                                    <li class="list-group-item text-right">
+                                        <span class="pull-left">
+                                            <strong class="">
+                                                Link
+                                                Description
+                                            </strong>
+                                        </span> 
+                                        <span>
+                                            {{  $preferred_medium->link }}
+                                            {{  $preferred_medium->description }}
+                                        </span>
+                                    </li>
+                                    @endforeach
                                 </ul>
                                 <!-- <div class="panel panel-default">
                                     <div class="panel-heading">Relevant hatags</div>
@@ -249,9 +283,30 @@
                                 </div>
 
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">{{ Auth::user()->name }} Bio</div>
-                                    <div class="panel-body"> A long description about me.
-
+                                    <div class="panel-heading">{{ Auth::user()->name }} Previous Campaign</div>
+                                    <div class="panel-body"> 
+                                        <?php 
+                                            if(Auth::user()->User_previously_campaign->isEmpty()){
+                                                echo "No previous campaign";
+                                            }else{
+                                        ?>
+                                        <table class="table">
+                                            <th>S.no</th>
+                                            <th>Client</th>
+                                            <th>link</th>
+                                            <th>details</th>
+                                            @foreach(Auth::user()->User_previously_campaign as $key => $previously_campaign)
+                                                <tr>
+                                                    <td>{{ $key+1 }}</td>
+                                                    <td>{{ $previously_campaign->client }}</td>
+                                                    <td>{{ $previously_campaign->link }}</td>
+                                                    <td>{{ $previously_campaign->details }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
+                                        <?php    
+                                            } 
+                                        ?>
                                     </div>
                                 </div>
                             </div>
