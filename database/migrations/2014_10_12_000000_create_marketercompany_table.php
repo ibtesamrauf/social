@@ -13,8 +13,8 @@ class CreateUsercompanyTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('user_company')){
-            Schema::create('user_company', function (Blueprint $table) {
+        if(!Schema::hasTable('marketer_company')){
+            Schema::create('marketer_company', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('user_id');
                 $table->string('company_name');
@@ -33,6 +33,6 @@ class CreateUsercompanyTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_company');
+        Schema::dropIfExists('marketer_company');
     }
 }
