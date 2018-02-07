@@ -17,8 +17,9 @@ use App\User_roles_hashtags;
 use Jrean\UserVerification\Traits\VerifiesUsers;
 use Jrean\UserVerification\Facades\UserVerification;
 use App\Country;
+use App\User_previously_campaign;
+use App\Marketer_previously_campaign;
 use Illuminate\Validation\Rule;
-
 
 class RegisterController extends Controller
 {
@@ -97,6 +98,32 @@ class RegisterController extends Controller
             
             
             // vv("pass");
+        }
+
+        if(!empty($request->influencer_used)){
+            $link_var = $request->campaign_link;       
+            $details_var = $request->description_p;       
+            foreach ($request->influencer_used as $key => $value) {  
+                if(empty($value)){
+                    $value = "";
+                    if(empty($link_var[$key])){
+                        $link_var[$key] = "";
+                    }
+                    if(empty($details_var[$key])){
+                        $details_var[$key] = "";
+                    }
+                }  
+                if(empty($value) && empty($link_var[$key]) && empty($details_var[$key]) ){
+                }else{
+                    // vv($link_var[$key]);
+                    Marketer_previously_campaign::create([
+                        'user_id'               => $user->id,
+                        'influencer_used'       => $value,
+                        'campaign_link'         => $link_var[$key],
+                        'description'           => $details_var[$key],
+                    ]);
+                }  
+            }  
         }
         // vv("fail");
 
