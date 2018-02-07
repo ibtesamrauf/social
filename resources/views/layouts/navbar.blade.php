@@ -33,22 +33,28 @@
                 <li class="dropdown">
                     <a class="" href="#" >Find Campaigns</a>
                 </li>
+                <?php 
+                  if(Auth::guest()){
+                    if (Auth::guard('jobseeker')->check()) { }else{
+                ?>
+                      <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Login</a>
+                          <ul class="dropdown-menu">
+                              <li><a href="{{ route('login') }}">Influencer</a></li>
+                              <li><a href="/jobseeker_login">Marketer</a></li>
 
-                <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Login</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ route('login') }}">Influencer</a></li>
-                        <li><a href="/jobseeker_login">Marketer</a></li>
+                          </ul>
+                      </li>
 
-                    </ul>
-                </li>
-
-                <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Register</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ route('register') }}">Influencer</a></li>
-                        <li><a href="/jobseeker_register">Marketer</a></li>
-                    </ul>
-                </li>
-
+                      <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Register</a>
+                          <ul class="dropdown-menu">
+                              <li><a href="{{ route('register') }}">Influencer</a></li>
+                              <li><a href="/jobseeker_register">Marketer</a></li>
+                          </ul>
+                      </li>
+                <?php
+                    }
+                  }
+                ?>
                 @if (Auth::guest())
                 <?php if (Auth::guard('jobseeker')->check()) { ?>
                     <li class="dropdown">
