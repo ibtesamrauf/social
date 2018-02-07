@@ -101,4 +101,33 @@ class LoginController extends Controller
        return ($this->guard()->loginUsingId($id)) ? true : false;
        
     }
+
+    /**
+     * Handle an authentication attempt.
+     *
+     * @return Response
+     */
+    public function authenticate() {
+        if ( Auth::attempt( ['email' => $email, 'password' => $password, 'verified' => 1] ) ) {
+            // Authentication passed...
+            return redirect()->intended( '/' );
+        }
+    }
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        // var_dump($request);
+        // die;
+        return [
+            'email' => $request->{$this->username()},
+            'password' => $request->password,
+            'verified' => '1',
+        ];
+    }
 }
