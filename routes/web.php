@@ -61,6 +61,8 @@ Route::get('/test', 'ViewpageController@test');
 
 Route::get('/viewprofile', 'ViewpageController@viewprofile');
 
+
+
 Route::get('/add_facebook_page', 'ViewpageController@add_facebook_page');
 Route::get('/add_youtube_page', 'ViewpageController@add_youtube_page');
 Route::get('/add_instagram_page', 'ViewpageController@add_instagram_page');
@@ -92,7 +94,7 @@ Route::group(['middleware' => 'jobseeker_guest'], function() {
 Route::group(['middleware' => 'jobseeker_auth'], function() {
     Route::get('/findinfulencer', 'FindInfulencerController@index');
 
-	
+    Route::get('/viewprofile_marketer', 'Profile_page_marketerController@viewprofile_marketer');
 	// Route::get('/jobseeker_home', ['uses' => 'Jobseeker\JobseekerController@home']);
  //    Route::post('/submitCV',['uses' => 'Jobseeker\JobseekerController@submitCV'] );
 
