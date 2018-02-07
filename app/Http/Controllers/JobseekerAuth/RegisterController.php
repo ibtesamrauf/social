@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Event;
 use App\Events\JobSeekerSignup;
 use App\Hashtags;
-use App\User_company;
+use App\Marketer_company;
 use App\User_roles_hashtags;
 use Jrean\UserVerification\Traits\VerifiesUsers;
 use Jrean\UserVerification\Facades\UserVerification;
@@ -85,7 +85,7 @@ class RegisterController extends Controller
                 $image_name = time().$file->getClientOriginalName();
             }
 
-            User_company::create([
+            Marketer_company::create([
                     'user_id'           => $user->id,
                     'company_name'      => $request->company_name,
                     'logo'              => $image_name,
