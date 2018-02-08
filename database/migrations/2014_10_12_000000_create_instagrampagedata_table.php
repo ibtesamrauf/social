@@ -20,8 +20,8 @@ class CreateInstagrampagedataTable extends Migration
                 $table->integer('page_id');
                 $table->string('name');
                 $table->string('keyword');
-                $table->string('followed_by');
-                $table->string('follows');
+                $table->integer('followed_by' , 255);
+                $table->integer('follows' , 255);
                 $table->string('image', 500);
                 $table->timestamps();
             });

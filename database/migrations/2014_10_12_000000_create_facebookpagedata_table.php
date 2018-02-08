@@ -21,7 +21,7 @@ class CreateFacebookpagedataTable extends Migration
                 $table->string('name');
                 $table->string('link');
                 $table->string('keyword');
-                $table->string('likes');
+                $table->integer('likes' , 255);
                 $table->string('image', 500);
                 $table->timestamps();
             });
