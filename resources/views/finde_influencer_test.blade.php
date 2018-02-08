@@ -2,7 +2,7 @@
 
 @section('content')
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
 
 <div class="main">
     <section class="module bg-dark-30" data-background="assets/images/section-4.jpg">
@@ -194,21 +194,24 @@
 
                         </div>
                         <div class="panel-body">
-                            <div class="container">
+                            <div class="container" style=" width: 100%; ">
                                 <div class="row">
                                     <h2>Results</h2>
                                     <!-- <h2> $user_page_data->search </h2> -->
                                     <!-- <h2>NO influencer is register yet</h2> -->
                                     <!-- <a href="/" class="btn btn-primary">Go back to home</a> -->
 
-                                    <table class="table">
-                                        <th>S.no</th>
-                                        <th>Page title</th>
-                                        <th>Facebook Likes</th>
-                                        <th>Image</th>
-                                        
-                                        <th>Add to favorite</th>
-                                        <th>Message</th>
+                                    <table id="example" cellspacing="0" width="100%" class="table table-borderless display">
+                                        <thead>
+                                            <th>S.no</th>
+                                            <th>Page title</th>
+                                            <th>Facebook Likes</th>
+                                            <th>Image</th>
+                                            <th>Add to favorite</th>
+                                            <th>Message</th>
+                                        </thead>
+                                        <tbody>
+                                            
                                         <?php 
                                         if(!empty($search_page_data)){
                                         ?>
@@ -257,6 +260,8 @@
                                             echo "Nothing";
                                         }
                                         ?>
+                                        </tbody>
+
                                     </table>
                                     <?php if(!empty($search_page_data)){ ?>
                                         <div class="pagination-wrapper"> {!! $search_page_data->appends(Input::except('page'))->render() !!} </div>
@@ -273,9 +278,11 @@
     @include('layouts.footer')
 </div>
 <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
-
-
-
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.noConflict();
+        $('#example').DataTable();
+    } );
+</script>
 
 @endsection
