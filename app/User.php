@@ -39,7 +39,7 @@ class User extends Authenticatable
     }
 
     public function Users_preferred_medium(){
-        return $this->hasMany('App\User_preferred_medium');
+        return $this->hasMany('App\User_preferred_medium' , 'user_id' , 'id');
     }
     
     public function Users_portfolio(){

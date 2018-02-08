@@ -34,28 +34,28 @@ class FindInfulencerController extends Controller
     public function index(Request $request)
     {
         $pageLimit = 15;
-    	if(isset($request->search)){
-	        $user_page_data = User_page::with('Users')
+        if(isset($request->search)){
+            $user_page_data = User_page::with('Users')
                         ->with('Facebook_page')
                         ->with('Youtube_page')
-	        			->where('page_title', 'like' , "%$request->search%")
-	        			->orWhere('page_description', 'like' , "%$request->search%")
-	        			->orWhere('page_about_your_self', 'like' , "%$request->search%")
-	        			->paginate($pageLimit);   
-			if($user_page_data->isEmpty()){
-				$user_page_data->search = "No match found. Search again!";
-			} 		    		
-    	}else{
-	        $user_page_data = User_page::with('Users')->with('Facebook_page')->with('Youtube_page')->paginate($pageLimit);    		
-    	}
+                        ->where('page_title', 'like' , "%$request->search%")
+                        ->orWhere('page_description', 'like' , "%$request->search%")
+                        ->orWhere('page_about_your_self', 'like' , "%$request->search%")
+                        ->paginate($pageLimit);   
+            if($user_page_data->isEmpty()){
+                $user_page_data->search = "No match found. Search again!";
+            }                   
+        }else{
+            $user_page_data = User_page::with('Users')->with('Facebook_page')->with('Youtube_page')->paginate($pageLimit);          
+        }
         // vv($user_page_data);
         return view('findinfluencer',compact('user_page_data'));
     }
 
     public function finde_influencer_test(Request $request)
     {
-        // vv("asdasd");
-        $search_page_data = array();
+        // $search_page_data = new \stdclass();
+        $search_page_data = "";
         $pageLimit = 25;
         if(isset($request->search)){
             $user_page_data = User_page::with('Users')
@@ -73,39 +73,132 @@ class FindInfulencerController extends Controller
         }
         
 //                1190547
-        if(isset($request->likes_on_Facebook)){
-            if($request->likes_on_Facebook_checkbox == 1){
-                $facebook_data = Facebook_page_data::where('likes' , '>=' ,  $request->likes_on_Facebook)
-                                        ->paginate($pageLimit);                
+        if(!empty($request->advance_search)){
+            // vv($request->advance_search);
+            if(empty($request->likes_on_Facebook) && empty($request->followers_on_Instagram) && 
+                empty($request->subscribers_on_Youtube)) {
+                $facebook_data = Facebook_page_data::get();  
+                // vv($facebook_data);              
+                $instagram_data = Instagram_page_data::get();
+                $youtube_data = Youtube_page_data::get();
                 $search_page_data = $facebook_data;
-                // vv($search_page_data);
-            }
-        }
-
-        if(isset($request->followers_on_Instagram)){
-            if($request->followers_on_Instagram_checkbox == 1){
-                $instagram_data = Instagram_page_data::where('followed_by' , '>=' ,  $request->followers_on_Instagram)->get();
-
                 foreach ($instagram_data as $key => $value) {
                     $search_page_data->push($value);
+                }foreach ($youtube_data as $key => $value2) {
+                    $search_page_data->push($value2);
                 }
             }
-        }
 
+            if(!empty($request->likes_on_Facebook)){
+                // v($request->country);
+                // if($request->country == 'Select'){
+                //     $request->country = 0;
+                // }
+                // $temp_country = $request->country;
+                // $temp_country = $temp_country+0;
+                // v($request->country);
+                if($request->likes_on_Facebook_checkbox == 1){
+                    // $facebook_data = Facebook_page_data::with(['User_details' => function ($query) use ($temp_country){
+                    //                     $query->where('country', $temp_country);
+                    //                 }])
+                    //                 ->join('contacts', 'users.id', '=', 'contacts.user_id')
+                    //                 ->where('likes' , '>=' ,  $request->likes_on_Facebook)
+                    //                 ->get();   
+                    
+                    $facebook_data = Facebook_page_data::join('users', 'users.id', '=', 'facebook_page_data.user_id')
+                                            ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
 
-        if(isset($request->subscribers_on_Youtube)){
-            if($request->subscribers_on_Youtube_checkbox == 1){
-                // v($request->subscribers_on_Youtube);
-                $youtube_data = Youtube_page_data::where('subscriberCount' , '>=' ,  $request->subscribers_on_Youtube)->get();
-                // vv($youtube_data);
-                foreach ($youtube_data as $key => $value) {
-                    $search_page_data->push($value);
+                        if(!empty($request->country)){
+                            if($request->country == 'Select'){
+                                $request->country = 0;
+                            }else{
+                                $facebook_data = $facebook_data->where('users.country', $request->country);
+                            }
+                        }
+                        $facebook_data = $facebook_data->where('likes' , '>=' ,  $request->likes_on_Facebook)->get();                   
+
+                    $search_page_data = $facebook_data;
+                    // vv($search_page_data);
                 }
             }
+
+            if(!empty($request->followers_on_Instagram)){
+                if($request->followers_on_Instagram_checkbox == 1){
+                    // $instagram_data = Instagram_page_data::with(['User_details_2' => function ($query1) {
+                    //                     $query1->where('country', $request->country);
+                    //                 }])
+                    //                 ->where('followed_by' , '>=' ,  $request->followers_on_Instagram)
+                    //                 ->get();
+                    $instagram_data = Instagram_page_data::join('users', 'users.id', '=', 'instagram_page_data.user_id');
+                        if(!empty($request->country)){
+                            if($request->country == 'Select'){
+                                $request->country = 0;
+                            }else{
+                                $instagram_data = $instagram_data->where('users.country', $request->country);
+                            }
+                        }
+                        $instagram_data =  $instagram_data->where('followed_by' , '>=' ,  $request->followers_on_Instagram)->get();  
+
+                    if (!is_object($search_page_data)) {
+                        $search_page_data = $instagram_data;
+                    }else{
+                        foreach ($instagram_data as $key => $value) {
+                            $search_page_data->push($value);
+                        }
+                    }
+                }
+            }
+
+            if(!empty($request->subscribers_on_Youtube)){
+                if($request->subscribers_on_Youtube_checkbox == 1){
+                    // v($request->subscribers_on_Youtube);
+                    // $youtube_data = Youtube_page_data::with(['User_details_3' => function ($query2) {
+                    //                     $query2->where('country', $request->country);
+                    //                 }])
+                    //                 ->where('subscriberCount' , '>=' ,  $request->subscribers_on_Youtube)
+                    //                 ->get();
+
+                    // $youtube_data = Youtube_page_data::with(['User_details_3' => function ($query) use ($temp_country){
+                    //                     $query->where('country', $temp_country);
+                    //                 }])
+                    //                 ->join('users', 'users.id', '=', 'youtube_page_data.user_id')
+                    //                 ->where('users.country', $temp_country)
+                    //                 ->where('subscriberCount' , '>=' ,  $request->subscribers_on_Youtube)
+                    //                 ->get();  
+
+
+                    $youtube_data = Youtube_page_data::join('users', 'users.id', '=', 'youtube_page_data.user_id')
+                                                ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
+                        
+                        if(!empty($Request->country)){
+                            if($request->country == 'Select'){
+                                $request->country = 0;
+                            }else{
+                                $youtube_data = $youtube_data->where('users.country', $request->country);
+                            }
+                        }
+                        $youtube_data = $youtube_data->where('subscriberCount' , '>=' ,  $request->subscribers_on_Youtube)->get();  
+
+                    if (!is_object($search_page_data)) {
+                        $search_page_data = $youtube_data;
+                    }else{
+                        foreach ($youtube_data as $key => $value) {
+                            $search_page_data->push($value);
+                        }
+                    }
+                }
+            }
+        }else{
+            $facebook_data = Facebook_page_data::get();                
+            $instagram_data = Instagram_page_data::get();
+            $youtube_data = Youtube_page_data::get();
+            $search_page_data = $facebook_data;
+            foreach ($instagram_data as $key => $value) {
+                $search_page_data->push($value);
+            }foreach ($youtube_data as $key => $value2) {
+                $search_page_data->push($value2);
+            }
         }
-
-        
-
         // vv($search_page_data);
         
         $preferred_medium_value = Preferred_medium::get();

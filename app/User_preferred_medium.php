@@ -29,9 +29,9 @@ class User_preferred_medium extends Model
  
     protected $fillable = ['user_id' , 'preferred_medium_id'];
     
-    // public function ImageDesc(){
-    //     return $this->hasMany('App\Image_order');
-    // }
+    public function Preferred_medium_data(){
+        return $this->hasMany('App\Preferred_medium' , 'id' , 'preferred_medium_id');
+    }
     
     // public function HotspotInfo(){
     //     return $this->hasMany('App\Hot_spot_info');

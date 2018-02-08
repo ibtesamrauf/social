@@ -29,6 +29,10 @@ class Instagram_page_data extends Model
  
     protected $fillable = ['user_id' , 'page_id', 'name' , 'keyword' , 'followed_by' , 'follows' , 'image'];
     
+    public function User_details_2(){
+        return $this->hasOne('App\User' , 'id' , 'user_id');
+    }
+
     // public function ImageDesc(){
     //     return $this->hasMany('App\Image_order');
     // }

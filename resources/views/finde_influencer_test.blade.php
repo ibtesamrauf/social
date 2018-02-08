@@ -44,6 +44,7 @@
                             </form>
                             <br><br>
                             <form action="/finde_influencer_test"  method="GET"> 
+                            <input type="hidden" id="advance_search" value="include" name="advance_search">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Advanced Search</label>
 
@@ -168,7 +169,7 @@
                                 Country: <select id="country" name="country" class="form-control">
                                     <option >Select</option>
                                     @foreach($country as $country_value)
-                                    <option value="{{ $country_value->id }}">{{ $country_value->country_name }}</option>
+                                    <option value="{{ $country_value->id }}" @if (Input::get('country') == $country_value->id) selected="selected" @endif >{{ $country_value->country_name }}</option>
                                     @endforeach
                                 </select>
                                 <br>Prefered medium<br>
@@ -245,11 +246,11 @@
                                                 
                                                 <td>
                                                     <a href="#">
-                                                        <span class="glyphicon glyphicon-star"></span>
+                                                        <span class="glyphicon glyphicon-star"></span> 
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a href="#">
+                                                    <a href="<?php if(Auth::guest()){if (Auth::guard('jobseeker')->check()) { }else{echo '/jobseeker_register';} } ?>">
                                                         <span class="glyphicon glyphicon-envelope"></span>
                                                     </a>
                                                 </td>
@@ -263,9 +264,7 @@
                                         </tbody>
 
                                     </table>
-                                    <?php if(!empty($search_page_data)){ ?>
-                                        <div class="pagination-wrapper"> {!! $search_page_data->appends(Input::except('page'))->render() !!} </div>
-                                    <?php } ?>
+                                    
                                 </div>
                             </div>
                         </div>

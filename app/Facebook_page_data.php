@@ -29,9 +29,9 @@ class Facebook_page_data extends Model
  
     protected $fillable = ['user_id' , 'page_id', 'name' , 'link' , 'keyword' , 'likes' , 'image'];
     
-    // public function ImageDesc(){
-    //     return $this->hasMany('App\Image_order');
-    // }
+    public function User_details(){
+        return $this->hasOne('App\User' , 'id' , 'user_id');
+    }
     
     // public function HotspotInfo(){
     //     return $this->hasMany('App\Hot_spot_info');
