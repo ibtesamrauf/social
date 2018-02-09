@@ -77,7 +77,8 @@ class FindInfulencerController extends Controller
             // vv($request->advance_search);
             if(empty($request->likes_on_Facebook) && empty($request->followers_on_Instagram) && 
                 empty($request->subscribers_on_Youtube)) {
-                if(!empty($request->country)){
+                if(!empty($request->country) && $request->country != 'Select'){
+                    vv($request->country);
                     $facebook_data = Facebook_page_data::join('users', 'users.id', '=', 'facebook_page_data.user_id');
                     if($request->country == 'Select'){
                         // $request->country = 0;
@@ -108,7 +109,28 @@ class FindInfulencerController extends Controller
                         $search_page_data->push($value2);
                     }
                     
-                }else{                
+                }elseif (!empty($request->preferred_medium)) {
+                    $preferred_medium_temp = implode(",", $request->preferred_medium);
+                    $facebook_data = Facebook_page_data::join('users', 'users.id', '=', 'facebook_page_data.user_id')
+                                            ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
+                    $facebook_data = $facebook_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get(); 
+                    $search_page_data = $facebook_data;
+
+                    $instagram_data = Instagram_page_data::join('users', 'users.id', '=', 'instagram_page_data.user_id')
+                                            ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
+                    $instagram_data = $instagram_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get(); 
+                   
+                    $youtube_data = Youtube_page_data::join('users', 'users.id', '=', 'youtube_page_data.user_id')
+                                            ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
+                    $youtube_data = $youtube_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get(); 
+
+                    foreach ($instagram_data as $key => $value) {
+                        $search_page_data->push($value);
+                    }foreach ($youtube_data as $key => $value2) {
+                        $search_page_data->push($value2);
+                    }
+                        
+                }else{ 
                     $facebook_data = Facebook_page_data::get();  
                     // vv($facebook_data);              
                     $instagram_data = Instagram_page_data::get();

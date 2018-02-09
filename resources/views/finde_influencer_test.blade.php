@@ -174,16 +174,8 @@
                                 </select>
                                 <br>Prefered medium<br>
                                 @foreach($preferred_medium_value as $preferred_medium_value)
-                                <?php
-                                if ($preferred_medium_value->id == 8) {
-                                    ?>
-                                    <?php
-                                } else {
-                                    ?>
-                                    <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]"> {{ $preferred_medium_value->preferred_medium_title }}<br>
-                                    <?php
-                                }
-                                ?>
+                                    <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]" 
+                                    @if (in_array( $preferred_medium_value->id, Input::get('preferred_medium'))) checked="checked" @endif > {{ $preferred_medium_value->preferred_medium_title }}<br>
                                 @endforeach    
 
                                 <br>
