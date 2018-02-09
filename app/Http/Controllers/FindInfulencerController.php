@@ -77,15 +77,48 @@ class FindInfulencerController extends Controller
             // vv($request->advance_search);
             if(empty($request->likes_on_Facebook) && empty($request->followers_on_Instagram) && 
                 empty($request->subscribers_on_Youtube)) {
-                $facebook_data = Facebook_page_data::get();  
-                // vv($facebook_data);              
-                $instagram_data = Instagram_page_data::get();
-                $youtube_data = Youtube_page_data::get();
-                $search_page_data = $facebook_data;
-                foreach ($instagram_data as $key => $value) {
-                    $search_page_data->push($value);
-                }foreach ($youtube_data as $key => $value2) {
-                    $search_page_data->push($value2);
+                if(!empty($request->country)){
+                    $facebook_data = Facebook_page_data::join('users', 'users.id', '=', 'facebook_page_data.user_id');
+                    if($request->country == 'Select'){
+                        // $request->country = 0;
+                    }else{
+                        $facebook_data = $facebook_data->where('users.country', $request->country);
+                    }
+                    $search_page_data = $facebook_data->get(); 
+
+                    $Instagram_data = Instagram_page_data::join('users', 'users.id', '=', 'instagram_page_data.user_id');
+                    if($request->country == 'Select'){
+                        // $request->country = 0;
+                    }else{
+                        $Instagram_data = $Instagram_data->where('users.country', $request->country);
+                    }
+                    $Instagram_data = $Instagram_data->get();
+
+                    $Youtube_data = Youtube_page_data::join('users', 'users.id', '=', 'youtube_page_data.user_id');
+                    if($request->country == 'Select'){
+                        // $request->country = 0;
+                    }else{
+                        $Youtube_data = $Youtube_data->where('users.country', $request->country);
+                    }
+                    $Youtube_data = $Youtube_data->get();                  
+
+                    foreach ($Instagram_data as $key => $value) {
+                        $search_page_data->push($value);
+                    }foreach ($Youtube_data as $key => $value2) {
+                        $search_page_data->push($value2);
+                    }
+                    
+                }else{                
+                    $facebook_data = Facebook_page_data::get();  
+                    // vv($facebook_data);              
+                    $instagram_data = Instagram_page_data::get();
+                    $youtube_data = Youtube_page_data::get();
+                    $search_page_data = $facebook_data;
+                    foreach ($instagram_data as $key => $value) {
+                        $search_page_data->push($value);
+                    }foreach ($youtube_data as $key => $value2) {
+                        $search_page_data->push($value2);
+                    }
                 }
             }
 
