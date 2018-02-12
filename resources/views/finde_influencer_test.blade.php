@@ -175,7 +175,7 @@
                                 <br>Prefered medium<br>
                                 @foreach($preferred_medium_value as $preferred_medium_value)
                                     <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]" 
-                                    @if (in_array( $preferred_medium_value->id, Input::get('preferred_medium'))) checked="checked" @endif > {{ $preferred_medium_value->preferred_medium_title }}<br>
+                                    @if (!empty(Input::get('preferred_medium'))) @if (in_array( $preferred_medium_value->id, Input::get('preferred_medium'))) checked="checked" @endif @endif > {{ $preferred_medium_value->preferred_medium_title }}<br>
                                 @endforeach    
 
                                 <br>
@@ -193,12 +193,13 @@
                                     <!-- <h2> $user_page_data->search </h2> -->
                                     <!-- <h2>NO influencer is register yet</h2> -->
                                     <!-- <a href="/" class="btn btn-primary">Go back to home</a> -->
-
+                                    <?php //vv($search_page_data); ?>
                                     <table id="example" cellspacing="0" width="100%" class="table table-borderless display">
                                         <thead>
                                             <th>S.no</th>
                                             <th>Page title</th>
-                                            <th>Facebook Likes</th>
+                                            <th>Likes & Subscribers</th>
+                                            <th>Social Media Platform</th>
                                             <th>Image</th>
                                             <th>Add to favorite</th>
                                             <th>Message</th>
@@ -229,6 +230,17 @@
                                                             echo $data->followed_by;
                                                         }elseif (isset($data->subscriberCount)) {
                                                             echo $data->subscriberCount;
+                                                        }
+                                                    ?> 
+                                                </td>
+                                                <td>
+                                                    <?php 
+                                                        if(isset($data->likes)){
+                                                            echo "Facebook"; 
+                                                        }else if (isset($data->followed_by)) {
+                                                            echo "Instagram";
+                                                        }elseif (isset($data->subscriberCount)) {
+                                                            echo "Youtube";
                                                         }
                                                     ?> 
                                                 </td>
