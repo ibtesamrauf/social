@@ -45,7 +45,11 @@
                             <br><br>
                             <form action="/finde_influencer_test"  method="GET"> 
                             <input type="hidden" id="advance_search" value="include" name="advance_search">
-                            <div class="form-group">
+                            <!-- <input type="button" id="hide" value="hide"> -->
+                            <h4 id="hide" value="hide">Advanced Search
+                                <span  id="advanced-search-span" class="fa fa-angle-down"></span>
+                            </h4>
+                            <div class="form-group Advance-search-class" style="display:none">
                                 <label for="exampleInputEmail1">Advanced Search</label>
 
 
@@ -179,8 +183,8 @@
                                 @endforeach    
 
                                 <br>
-                            </div>
                             <button type="submit" class="btn btn-primary">Advance Search</button>
+                            </div>
 
                             </form> 
 
@@ -285,6 +289,18 @@
     $(document).ready(function() {
         $.noConflict();
         $('#example').DataTable();
+        $("#hide").click(function(){
+            $(".Advance-search-class").toggle();
+            console.log($("#advanced-search-span").attr('class'));
+            if( $("#advanced-search-span").attr('class') == 'fa fa-angle-down'){
+
+                $( "#advanced-search-span" ).removeClass('fa fa-angle-down');
+                $( "#advanced-search-span" ).addClass('fa fa-angle-up');
+            }else{
+                $( "#advanced-search-span" ).removeClass('fa fa-angle-up');
+                $( "#advanced-search-span" ).addClass('fa fa-angle-down');
+            }
+        });
     } );
 </script>
 
