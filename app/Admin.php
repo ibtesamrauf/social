@@ -5,11 +5,13 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Hashtags;
+use Cmgmyr\Messenger\Traits\Messagable;
 
 class Admin extends Authenticatable
 {
     use Notifiable;
-
+    use Messagable;
+    
     /**
      * The attributes that are mass assignable.
      *

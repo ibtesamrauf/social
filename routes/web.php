@@ -113,3 +113,22 @@ Route::group(['middleware' => 'jobseeker_auth'], function() {
 Route::get('/insert_data', 'HomeController@insert_country');
 
 Route::get('/email-verifications.custom/{token}', 'HomeController@email_verifications');
+
+//messages
+Route::group(['prefix' => 'messages'], function () {
+    Route::get('/', ['as' => 'messages', 'uses' => 'MessagesController@index']);
+    Route::get('create', ['as' => 'messages.create', 'uses' => 'MessagesController@create']);
+    Route::post('/', ['as' => 'messages.store', 'uses' => 'MessagesController@store']);
+    Route::get('{id}', ['as' => 'messages.show', 'uses' => 'MessagesController@show']);
+    Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);
+});
+
+
+
+Route::group(['prefix' => 'messages_marketer'], function () {
+    Route::get('/', ['as' => 'messages_marketer', 'uses' => 'MessagesmarketerController@index']);
+    Route::get('create', ['as' => 'messages_marketer.create', 'uses' => 'MessagesmarketerController@create']);
+    Route::post('/', ['as' => 'messages_marketer.store', 'uses' => 'MessagesmarketerController@store']);
+    Route::get('{id}', ['as' => 'messages_marketer.show', 'uses' => 'MessagesmarketerController@show']);
+    // Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesmarketerController@update']);
+});
