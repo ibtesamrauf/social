@@ -223,7 +223,7 @@
                                                     <?php 
                                                         if(isset($data->name)){
                                                             echo $data->name; 
-                                                        }
+                                                        }                                                        
                                                     ?> 
                                                 </td>
                                                 <td>
@@ -258,7 +258,7 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a href="<?php if(Auth::guest()){if (Auth::guard('jobseeker')->check()) { }else{echo '/jobseeker_register';} } ?>">
+                                                    <a href="<?php if(Auth::guest()){if (Auth::guard('jobseeker')->check()) { if(isset($data->user_id)){ echo $data->user_id; } }else{echo '/jobseeker_register';} } ?>">
                                                         <span class="glyphicon glyphicon-envelope"></span>
                                                     </a>
                                                 </td>
