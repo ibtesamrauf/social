@@ -26,6 +26,9 @@ class MessagesmarketerController extends Controller
      */
     public function index()
     {
+// alert-info
+        // $count1 = \App\Exceptions\Handler::newMessageCount();
+        // vv($count1);
         // for user id
         // vv(Auth::guard('jobseeker')->user()->id);
 
@@ -35,14 +38,22 @@ class MessagesmarketerController extends Controller
 
         // $threads = Thread_marketer::with('participants.messages')->get();
         
-        $threads = Thread_marketer::with(['participants', 'messages'])->get();
+        $threads = Thread_marketer::with(['participants_only_influencer', 'messages'])
+                            ->orderBy('id' , 'DESC')
+                            ->get();
 
         // All threads that user is participating in
         // $threads = Thread::forUser(Auth::id())->latest('updated_at')->get();
 
         // All threads that user is participating in, with new messages
         // $threads = Thread::forUserWithNewMessages(Auth::id())->latest('updated_at')->get();
-        v($threads);
+        // vv($threads[0]->participants[0]->unread);
+        // foreach ($threads[0]->participants as $key => $value) {
+        //     v($value);
+        //     # code...
+        // }
+            // vv($threads);
+
         return view('messenger_marketer.index', compact('threads'));
     }
 
@@ -55,23 +66,33 @@ class MessagesmarketerController extends Controller
     public function show($id)
     {
         try {
-            $thread = Thread_marketer::findOrFail($id);
+            $thread = Thread_marketer::with('messages')->findOrFail($id);
         } catch (ModelNotFoundException $e) {
             Session::flash('error_message', 'The thread with ID: ' . $id . ' was not found.');
 
             return redirect()->route('messages');
         }
-
+        $users = "";
         // show current user in list if not a current participant
         // $users = User::whereNotIn('id', $thread->participantsUserIds())->get();
 
         // don't show the current user in list
-        $userId = Auth::id();
-        $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
-
-        $thread->markAsRead($userId);
-
-        return view('messenger.show', compact('thread', 'users'));
+        // $userId = Auth::id();
+        // $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
+        $date = new Carbon();
+        $participant = Participant_marketer::with('messages')
+                            ->where('thread_id', $id)
+                            // ->where('user_id' , Auth::guard('jobseeker')->user()->id)
+                            ->where('user_type' , 'influencer')
+                            ->update([
+                                'last_read' => $date,
+                                'unread' => 2,
+                                ]);
+                            // ->update([  ]);
+        
+        // $thread->markAsRead($userId);
+        // vv($thread);
+        return view('messenger_marketer.show', compact('thread', 'users'));
     }
 
     /**
@@ -93,7 +114,7 @@ class MessagesmarketerController extends Controller
      */
     public function store()
     {
-        vv("here");
+        // vv("here");
         $input = Input::all();
 
         $thread = Thread_marketer::create([
@@ -103,23 +124,34 @@ class MessagesmarketerController extends Controller
         // Message
         Message_marketer::create([
             'thread_id' => $thread->id,
-            'user_id' => Auth::guard('jobseeker')->user()->id,
-            'body' => $input['message'],
+            'user_id'   => Auth::guard('jobseeker')->user()->id,
+            'body'      => $input['message'],
+            'unread'    => 2,
+            'user_type' => 'marketer',
         ]);
 
         // Sender
         Participant_marketer::create([
             'thread_id' => $thread->id,
-            'user_id' => Auth::guard('jobseeker')->user()->id,
+            'user_id'   => Auth::guard('jobseeker')->user()->id,
             'last_read' => new Carbon,
+            'unread'    => 1,
+            'user_type' => 'marketer',
         ]);
 
         // Recipients
         if (Input::has('recipients')) {
-            $thread->addParticipant($input['recipients']);
+            Participant_marketer::create([
+                'thread_id' => $thread->id,
+                'user_id'   => $input['recipients'][0],
+                'last_read' => new Carbon,
+                'unread'    => 1,
+                'user_type' => 'influencer',
+            ]);
+            // $thread->addParticipant($input['recipients']);
         }
 
-        return redirect()->route('messages');
+        return redirect()->route('messages_marketer');
     }
 
     /**
@@ -135,24 +167,29 @@ class MessagesmarketerController extends Controller
         } catch (ModelNotFoundException $e) {
             Session::flash('error_message', 'The thread with ID: ' . $id . ' was not found.');
 
-            return redirect()->route('messages');
+            return redirect()->route('messages_marketer');
         }
 
-        $thread->activateAllParticipants();
+        // $thread->activateAllParticipants();
 
         // Message
         Message_marketer::create([
             'thread_id' => $thread->id,
-            'user_id' => Auth::id(),
+            'user_id' => Auth::guard('jobseeker')->user()->id,
+            'user_type' => 'marketer',
             'body' => Input::get('message'),
+            'unread' => 1,            
         ]);
 
         // Add replier as a participant
         $participant = Participant_marketer::firstOrCreate([
             'thread_id' => $thread->id,
-            'user_id' => Auth::id(),
+            'user_id' => Auth::guard('jobseeker')->user()->id,
+            'user_type' => 'marketer',
+
         ]);
         $participant->last_read = new Carbon;
+        $participant->unread = 1;
         $participant->save();
 
         // Recipients
@@ -160,6 +197,6 @@ class MessagesmarketerController extends Controller
             $thread->addParticipant(Input::get('recipients'));
         }
 
-        return redirect()->route('messages.show', $id);
+        return redirect()->route('messages_marketer.show', $id);
     }
 }
