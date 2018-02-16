@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Auth;
 
 class Handler extends ExceptionHandler
 {
@@ -61,5 +62,15 @@ class Handler extends ExceptionHandler
         }
 
         return redirect()->guest(route('login'));
+    }
+
+    // \App\Exceptions\Handler
+    public static function newMessageCount($user_type)
+    {
+        return \App\Participant_marketer::
+                            // where('user_id' , Auth::guard('jobseeker')->user()->id)
+                            where('user_type' , $user_type)
+                            ->where('unread' , 1)
+                            ->count();
     }
 }
