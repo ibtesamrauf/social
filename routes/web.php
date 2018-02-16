@@ -130,5 +130,14 @@ Route::group(['prefix' => 'messages_marketer'], function () {
     Route::get('create', ['as' => 'messages_marketer.create', 'uses' => 'MessagesmarketerController@create']);
     Route::post('/', ['as' => 'messages_marketer.store', 'uses' => 'MessagesmarketerController@store']);
     Route::get('{id}', ['as' => 'messages_marketer.show', 'uses' => 'MessagesmarketerController@show']);
-    // Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesmarketerController@update']);
+    Route::put('{id}', ['as' => 'messages_marketer.update', 'uses' => 'MessagesmarketerController@update']);
+});
+
+
+Route::group(['prefix' => 'messages_influencer'], function () {
+    Route::get('/', ['as' => 'messages_influencer', 'uses' => 'MessagesinfluencerController@index']);
+    Route::get('create', ['as' => 'messages_influencer.create', 'uses' => 'MessagesinfluencerController@create']);
+    Route::post('/', ['as' => 'messages_influencer.store', 'uses' => 'MessagesinfluencerController@store']);
+    Route::get('{id}', ['as' => 'messages_influencer.show', 'uses' => 'MessagesinfluencerController@show']);
+    Route::put('{id}', ['as' => 'messages_influencer.update', 'uses' => 'MessagesinfluencerController@update']);
 });
