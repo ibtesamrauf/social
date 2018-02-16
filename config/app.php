@@ -167,6 +167,7 @@ return [
         Ixudra\Curl\CurlServiceProvider::class,
         // SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
         // facebook\Facebook\Facebook::class,
+        Cmgmyr\Messenger\MessengerServiceProvider::class,
 
 
         /*
