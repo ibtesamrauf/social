@@ -33,7 +33,7 @@ class Message_marketer extends Eloquent
      *
      * @var array
      */
-    protected $fillable = ['thread_id', 'user_id', 'body'];
+    protected $fillable = ['thread_id', 'user_id', 'user_type', 'body', 'unread'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -74,6 +74,11 @@ class Message_marketer extends Eloquent
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id' , 'id');
+    }
+
+    public function marketer()
+    {
+        return $this->belongsTo('App\Admin', 'user_id' , 'id');
     }
 
     /**

@@ -50,11 +50,27 @@ class Thread_marketer extends Model
      *
      * @codeCoverageIgnore
      */
-    public function participants()
+    public function participants_only_marketer()
     {
-        return $this->hasMany('App\Participant_marketer', 'thread_id', 'id');
+        return $this->hasMany('App\Participant_marketer', 'thread_id', 'id')
+                        ->where('user_type', '=', 'marketer');
     }
 
+    public function participants_only_influencer()
+    {
+        return $this->hasMany('App\Participant_marketer', 'thread_id', 'id')
+                        ->where('user_type', '=', 'influencer');
+    }
+
+
+    public function users_id(){
+        return $this->belongsToMany('App\User', 'participants', 'thread_id', 'user_id')
+            ->select('first_name', 'email');
+    }
+
+    public function influencer_only(){
+        return $this->where('user_type' , 'influencer');
+    }
 
     /**
      * User's relationship.
