@@ -192,6 +192,7 @@ class MessagesmarketerController extends Controller
      */
     public function update($id)
     {
+        // vv('asdsad');
         try {
             $thread = Thread_marketer::findOrFail($id);
         } catch (ModelNotFoundException $e) {
@@ -226,7 +227,8 @@ class MessagesmarketerController extends Controller
         if (Input::has('recipients')) {
             $thread->addParticipant(Input::get('recipients'));
         }
-
-        return redirect()->route('messages_marketer.show', $id);
+        return redirect()->route('messages_marketer.show',['belongsto1' => $id, 'id' => $id]);
+        
+        // return redirect()->route('messages_marketer.show', $belongsto1,$id);
     }
 }
