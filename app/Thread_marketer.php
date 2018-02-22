@@ -27,7 +27,7 @@ class Thread_marketer extends Model
      */
  
  
-    protected $fillable = ['subject'];
+    protected $fillable = ['subject','belongs_to'];
     
     // public function ImageDesc(){
     //     return $this->hasMany('App\Image_order');
