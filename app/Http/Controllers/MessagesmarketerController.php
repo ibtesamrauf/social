@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Session;
 use App\Participant_marketer;
 use App\Thread_marketer;
 use App\Message_marketer;
-
+use App\Facebook_page_data;
+use App\Instagram_page_data;
+use App\Youtube_page_data;
 
 class MessagesmarketerController extends Controller
 {
@@ -63,8 +65,13 @@ class MessagesmarketerController extends Controller
      * @param $id
      * @return mixed
      */
-    public function show($id)
+    public function show($belongsto1 ,$id)
     {
+        $temp_data = Thread_marketer::where('belongs_to' , $belongsto1)->first();
+
+        if (count($temp_data)) {
+            $id = $temp_data->id;
+        }
         try {
             $thread = Thread_marketer::with('messages')->findOrFail($id);
         } catch (ModelNotFoundException $e) {
@@ -100,11 +107,32 @@ class MessagesmarketerController extends Controller
      *
      * @return mixed
      */
-    public function create()
+    public function create($belongsto1)
     {
-        $users = User::where('id', '!=', Auth::id())->get();
+        $temp_data = Thread_marketer::where('belongs_to' , $belongsto1)->first();
+        // vv($temp_data);
+        if(count($temp_data)){
+            // vv("pass");
+            
+            return redirect()->route('messages_marketer.show',['belongsto1' => $belongsto1, 'id' => $belongsto1]);
+        }else{
+            $data = $belongsto1;
+            $data = explode(",,", $data);
+            $platform   = $data[0];
+            $product_id = $data[1];
+            $user_id    = $data[2];
 
-        return view('messenger_marketer.create', compact('users'));
+            if($platform =='Facebook'){
+                $temp = Facebook_page_data::where('id' , $product_id)->first();
+            }elseif ($platform =='Instagram') {
+                $temp = Instagram_page_data::where('id' , $product_id)->first();
+            }elseif ($platform =='Youtube') {
+                $temp = Youtube_page_data::where('id' , $product_id)->first();
+            }
+            // vv($temp);
+            return view('messenger_marketer.create', compact('belongsto1', 'temp', 'platform', 'product_id', 'user_id'));
+        }
+
     }
 
     /**
@@ -118,7 +146,8 @@ class MessagesmarketerController extends Controller
         $input = Input::all();
 
         $thread = Thread_marketer::create([
-            'subject' => $input['subject'],
+            'subject'       => $input['subject'],
+            'belongs_to'    => $input['belongsto1'],
         ]);
 
         // Message
@@ -126,7 +155,7 @@ class MessagesmarketerController extends Controller
             'thread_id' => $thread->id,
             'user_id'   => Auth::guard('jobseeker')->user()->id,
             'body'      => $input['message'],
-            'unread'    => 2,
+            'unread'    => 1,
             'user_type' => 'marketer',
         ]);
 
@@ -145,13 +174,13 @@ class MessagesmarketerController extends Controller
                 'thread_id' => $thread->id,
                 'user_id'   => $input['recipients'][0],
                 'last_read' => new Carbon,
-                'unread'    => 1,
+                'unread'    => 2,
                 'user_type' => 'influencer',
             ]);
             // $thread->addParticipant($input['recipients']);
         }
 
-        return redirect()->route('messages_marketer');
+        return redirect('finde_influencer_test');
     }
 
     /**

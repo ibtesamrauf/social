@@ -68,6 +68,10 @@
                                 <a href="/viewprofile_marketer">View Profile</a>
                             </li>
                             <li>
+                                <a href="/messages_marketer">Inbox  @include('messenger_marketer.unread-count')</a>
+                            </li>
+                            
+                            <li>
                                 <a href="{{ url('jobseeker_logout') }}">
                                     Logout
                                 </a>
@@ -87,6 +91,9 @@
                     <ul class="dropdown-menu" role="menu">
                         <li>
                             <a href="/viewprofile">View Profile</a>
+                        </li>
+                        <li>
+                                <a href="/messages_influencer">Inbox  @include('messenger_influencer.unread-count')</a>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}"

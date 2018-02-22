@@ -5,7 +5,7 @@ $class = 'alert-info';
 
 <div class="media alert {{ $class }}">
     <h4 class="media-heading">
-        <a href="{{ route('messages_marketer.show', $thread->id) }}">{{ $thread->subject }}</a>
+        <a href="{{ route('messages_marketer.show', 'asdsad' ,$thread->id) }}">{{ $thread->subject }}</a>
         <!-- ( $thread->userUnreadMessagesCount(Auth::guard('jobseeker')->user()->id)  unread)</h4> -->
     <p>
          $thread->latestMessage->body 

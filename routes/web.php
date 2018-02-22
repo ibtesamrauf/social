@@ -126,11 +126,13 @@ Route::group(['prefix' => 'messages'], function () {
 
 
 Route::group(['prefix' => 'messages_marketer'], function () {
-    Route::get('/', ['as' => 'messages_marketer', 'uses' => 'MessagesmarketerController@index']);
-    Route::get('create', ['as' => 'messages_marketer.create', 'uses' => 'MessagesmarketerController@create']);
-    Route::post('/', ['as' => 'messages_marketer.store', 'uses' => 'MessagesmarketerController@store']);
-    Route::get('{id}', ['as' => 'messages_marketer.show', 'uses' => 'MessagesmarketerController@show']);
-    Route::put('{id}', ['as' => 'messages_marketer.update', 'uses' => 'MessagesmarketerController@update']);
+    // Route::group(['prefix' => '{belongsto}'], function () {
+        Route::get('/', ['as' => 'messages_marketer', 'uses' => 'MessagesmarketerController@index']);
+        Route::get('{belongsto1}/create', ['as' => 'messages_marketer.create', 'uses' => 'MessagesmarketerController@create']);
+        Route::post('/', ['as' => 'messages_marketer.store', 'uses' => 'MessagesmarketerController@store']);
+        Route::get('{belongsto1}/{id}', ['as' => 'messages_marketer.show', 'uses' => 'MessagesmarketerController@show']);
+        Route::put('{id}', ['as' => 'messages_marketer.update', 'uses' => 'MessagesmarketerController@update']);
+    // });
 });
 
 

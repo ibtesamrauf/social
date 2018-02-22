@@ -1,15 +1,17 @@
-@extends('layouts.master2')
+@extends('layouts.master2') 
 
 @section('content')
-    <h1>Create a new message</h1>
+    <h2>Create a new message</h2>
     <form action="{{ route('messages_marketer.store') }}" method="post">
         {{ csrf_field() }}
         <div class="col-md-6">
             <!-- Subject Form Input -->
             <div class="form-group">
                 <label class="control-label">Subject</label>
-                <input type="text" class="form-control" name="subject" placeholder="Subject"
-                       value="{{ old('subject') }}">
+                <h5>{{ $temp->name }}</h5>
+                <input style="display:none" type="text" class="form-control" name="subject" placeholder="Subject" value="{{ $temp->name }}">
+                <input style="display:none" type="text" class="form-control" name="belongsto1" placeholder="belongsto1" value="{{ $belongsto1 }}">
+                       
             </div>
 
             <!-- Message Form Input -->
@@ -18,16 +20,9 @@
                 <textarea name="message" class="form-control">{{ old('message') }}</textarea>
             </div>
 
-            @if($users->count() > 0)
-                <div class="checkbox">
-                    @foreach($users as $user)
-                        <label title="{{ $user->name }}">
-                            <input type="checkbox" name="recipients[]" value="{{ $user->id }}">
-                            {!!$user->first_name!!} {!!$user->last_name!!}
-                        </label>
-                    @endforeach
-                </div>
-            @endif
+            <label title="{{ $user_id }}">
+                <input style="display:none" type="checkbox" name="recipients[]" checked value="{{ $user_id }}">
+            </label>
     
             <!-- Submit Form Input -->
             <div class="form-group">

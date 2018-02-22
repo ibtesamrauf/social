@@ -239,12 +239,16 @@
                                                 </td>
                                                 <td>
                                                     <?php 
+                                                        $temp = ""; 
                                                         if(isset($data->likes)){
-                                                            echo "Facebook"; 
+                                                            echo "Facebook";
+                                                            $temp = "Facebook";
                                                         }else if (isset($data->followed_by)) {
                                                             echo "Instagram";
+                                                            $temp = "Instagram";
                                                         }elseif (isset($data->subscriberCount)) {
                                                             echo "Youtube";
+                                                            $temp = "Youtube";
                                                         }
                                                     ?> 
                                                 </td>
@@ -258,7 +262,16 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a href="<?php if(Auth::guest()){if (Auth::guard('jobseeker')->check()) { if(isset($data->user_id)){ echo $data->user_id; } }else{echo '/jobseeker_register';} } ?>">
+                                                    <a href="<?php  if(Auth::guest()){
+                                                                        if (Auth::guard('jobseeker')->check()) { 
+                                                                            if(isset($data->user_id)){ 
+                                                                                echo "/messages_marketer/". $temp.',,'.$data->id.',,'.$data->user_id ."/create"; 
+                                                                            } 
+                                                                        }else{
+                                                                            echo '/jobseeker_register';
+                                                                        } 
+                                                                    } 
+                                                            ?>">
                                                         <span class="glyphicon glyphicon-envelope"></span>
                                                     </a>
                                                 </td>
