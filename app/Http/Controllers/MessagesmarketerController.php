@@ -112,6 +112,7 @@ class MessagesmarketerController extends Controller
         $temp_data = Thread_marketer::where('belongs_to' , $belongsto1)->count();
         // vv($temp_data);
         if(($temp_data)){
+            
             // vv("pass");
             return redirect()->route('messages_marketer.show',['belongsto1' => $belongsto1, 'id' => $belongsto1]);
         }else{
