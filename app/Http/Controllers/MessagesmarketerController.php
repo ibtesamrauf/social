@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Admin;
 use Carbon\Carbon;
 use Cmgmyr\Messenger\Models\Message;
 use Cmgmyr\Messenger\Models\Participant;
@@ -180,6 +181,14 @@ class MessagesmarketerController extends Controller
             ]);
             // $thread->addParticipant($input['recipients']);
         }
+        
+        $user = User::findOrFail($input['recipients'][0]);
+        $admin = Admin::findOrFail(Auth::guard('jobseeker')->user()->id);
+
+        \Mail::send('email.new_messages', ['user' => $user , 'admin' => $admin], function ($m) use ($user) {
+            // $m->from('hello@app.com', 'Your Application');
+            $m->to($user->email, $user->name)->subject('You have New massage!');
+        });
 
         return redirect('finde_influencer_test');
     }
@@ -227,6 +236,8 @@ class MessagesmarketerController extends Controller
         if (Input::has('recipients')) {
             $thread->addParticipant(Input::get('recipients'));
         }
+
+
         return redirect()->route('messages_marketer.show',['belongsto1' => $id, 'id' => $id]);
         
         // return redirect()->route('messages_marketer.show', $belongsto1,$id);

@@ -59,7 +59,7 @@
                 <?php if (Auth::guard('jobseeker')->check()) { ?>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ auth()->guard('jobseeker')->user()->first_name }}
+                            {{ auth()->guard('jobseeker')->user()->first_name }}<span id="test_marketer_top"></span>
                             <!-- <span class="caret"></span> -->
                         </a>
 
@@ -68,7 +68,7 @@
                                 <a href="/viewprofile_marketer">View Profile</a>
                             </li>
                             <li>
-                                <a href="/messages_marketer">Inbox  @include('messenger_marketer.unread-count')</a>
+                                <a href="/messages_marketer">Inbox <span id="test_marketer"></span></a>
                             </li>
                             
                             <li>
@@ -84,7 +84,7 @@
                 @else
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        {{ Auth::user()->first_name }} {{ Auth::user()->last_name }} 
+                        {{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <span id="test_influencer_top"></span>
                         <!-- <span class="caret"></span> -->
                     </a>
 
@@ -93,7 +93,7 @@
                             <a href="/viewprofile">View Profile</a>
                         </li>
                         <li>
-                                <a href="/messages_influencer">Inbox  @include('messenger_influencer.unread-count')</a>
+                                <a href="/messages_influencer">Inbox <span id="test_influencer"></span></a>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}"
@@ -496,3 +496,19 @@
                 </div>
             </div>
         </nav> -->
+
+
+        <script type="text/javascript">
+          $( document ).ready(function() {
+            $( "#test_influencer" ).load( "/messages_count_influencer" );
+            $( "#test_influencer_top" ).load( "/messages_count_influencer" );
+            $( "#test_marketer" ).load( "/messages_count_marketer" );
+            $( "#test_marketer_top" ).load( "/messages_count_marketer" );
+            window.setInterval(function(){
+              $( "#test_influencer" ).load( "/messages_count_influencer" );
+              $( "#test_influencer_top" ).load( "/messages_count_influencer" );
+              $( "#test_marketer" ).load( "/messages_count_marketer" );
+              $( "#test_marketer_top" ).load( "/messages_count_marketer" );
+            }, 3000);
+          });
+        </script>

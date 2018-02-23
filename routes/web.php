@@ -80,10 +80,7 @@ Route::get('finde_influencer_test', 'FindInfulencerController@finde_influencer_t
 
 
 Route::group(['middleware' => 'jobseeker_guest'], function() {
-    // Route::get('/', function () {
-    //     return view('frontend.welcome');
-    // });
-//    Route::post('search', 'SearchController@search');
+
     Route::get('/jobseeker_register', 'JobseekerAuth\RegisterController@showRegistrationForm');
     Route::post('/jobseeker_register', 'JobseekerAuth\RegisterController@register');
     Route::get('jobseeker_login', 'JobseekerAuth\LoginController@showLoginForm');
@@ -93,20 +90,18 @@ Route::group(['middleware' => 'jobseeker_guest'], function() {
 
 Route::group(['middleware' => 'jobseeker_auth'], function() {
     Route::get('/findinfulencer', 'FindInfulencerController@index');
-    
-
     Route::get('/viewprofile_marketer', 'Profile_page_marketerController@viewprofile_marketer');
-	// Route::get('/jobseeker_home', ['uses' => 'Jobseeker\JobseekerController@home']);
- //    Route::post('/submitCV',['uses' => 'Jobseeker\JobseekerController@submitCV'] );
-
     Route::get('/jobseeker_logout', 'JobseekerAuth\LoginController@logout');
- //    Route::get('jobseeker_search', 'Jobseeker\JobseekerController@search');
-    
- //    Route::get('jobseeker_map', 'Jobseeker\JobseekerController@map');
- //    Route::get('job/{job_id}/apply', 'Jobseeker\JobseekerController@applyJob');
- //    Route::get('job/{job_id}/save', 'Jobseeker\JobseekerController@saveJob');
- //    Route::post('jobseeker/delete_license/{license_id}', 'Jobseeker\JobseekerController@deleteLicense');
 
+    //messages from marketer
+    Route::group(['prefix' => 'messages_marketer'], function () {
+            Route::get('/', ['as' => 'messages_marketer', 'uses' => 'MessagesmarketerController@index']);
+            Route::get('{belongsto1}/create', ['as' => 'messages_marketer.create', 'uses' => 'MessagesmarketerController@create']);
+            Route::post('/', ['as' => 'messages_marketer.store', 'uses' => 'MessagesmarketerController@store']);
+            Route::get('{belongsto1}/{id}', ['as' => 'messages_marketer.show', 'uses' => 'MessagesmarketerController@show']);
+            Route::put('{id}', ['as' => 'messages_marketer.update', 'uses' => 'MessagesmarketerController@update']);
+    });
+ 
 });
 
 // insert data i  countery table
@@ -125,17 +120,6 @@ Route::group(['prefix' => 'messages'], function () {
 
 
 
-Route::group(['prefix' => 'messages_marketer'], function () {
-    // Route::group(['prefix' => '{belongsto}'], function () {
-        Route::get('/', ['as' => 'messages_marketer', 'uses' => 'MessagesmarketerController@index']);
-        Route::get('{belongsto1}/create', ['as' => 'messages_marketer.create', 'uses' => 'MessagesmarketerController@create']);
-        Route::post('/', ['as' => 'messages_marketer.store', 'uses' => 'MessagesmarketerController@store']);
-        Route::get('{belongsto1}/{id}', ['as' => 'messages_marketer.show', 'uses' => 'MessagesmarketerController@show']);
-        Route::put('{id}', ['as' => 'messages_marketer.update', 'uses' => 'MessagesmarketerController@update']);
-    // });
-});
-
-
 Route::group(['prefix' => 'messages_influencer'], function () {
     Route::get('/', ['as' => 'messages_influencer', 'uses' => 'MessagesinfluencerController@index']);
     Route::get('create', ['as' => 'messages_influencer.create', 'uses' => 'MessagesinfluencerController@create']);
@@ -143,3 +127,14 @@ Route::group(['prefix' => 'messages_influencer'], function () {
     Route::get('{id}', ['as' => 'messages_influencer.show', 'uses' => 'MessagesinfluencerController@show']);
     Route::put('{id}', ['as' => 'messages_influencer.update', 'uses' => 'MessagesinfluencerController@update']);
 });
+
+
+Route::get('/messages_count_influencer', 'HomeController@messages_count_influencer');
+Route::get('/messages_count_marketer', 'HomeController@messages_count_marketer');
+
+
+Route::get('/email_test', 'HomeController@email_test');
+
+
+Route::get('/test_for_unread_email', 'HomeController@test_for_unread_email');
+
