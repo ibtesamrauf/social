@@ -11,9 +11,14 @@ use Jrean\UserVerification\Facades\UserVerification as UserVerificationFacade;
 use Jrean\UserVerification\Exceptions\UserNotFoundException;
 use Jrean\UserVerification\Exceptions\UserIsVerifiedException;
 use Jrean\UserVerification\Exceptions\TokenMismatchException;
-
+use Illuminate\Mail\Mailer;
 use Jrean\UserVerification\Traits\RedirectsUsers;
-
+use Mail;
+use App\User;
+use App\Admin;
+use App\Thread_marketer;
+use App\Participant_marketer;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -389,6 +394,58 @@ class HomeController extends Controller
         $this->updateUser($user);
 
         event(new UserVerified($user));
+    }
+
+    public function messages_count_influencer()
+    {
+        return view('messenger_influencer.unread-count');
+    }
+
+    public function messages_count_marketer()
+    {
+        return view('messenger_marketer.unread-count');
+    }
+
+    public function email_test()
+    {
+        $user = User::findOrFail(2);
+
+        \Mail::send('email.new_messages', ['user' => $user], function ($m) use ($user) {
+            // $m->from('hello@app.com', 'Your Application');
+            $m->to($user->email, $user->name)->subject('You have New massage!');
+        });
+    }
+
+    public function test_for_unread_email()
+    {
+        $users = Participant_marketer::where('unread' , 1)
+                                    ->where('user_type' , 'influencer')
+                                    ->get();
+        
+        foreach ($users as $key => $value) {
+            $temp_create_at = $value->created_at;
+            $created_at_user_two_hours = $value->created_at->addHour(2);
+            $created_at_user_three_hours = $temp_create_at->addHour(2)->addMinute();
+            // v(Carbon::now());
+            // v($created_at_user_two_hours);
+            // v($created_at_user_three_hours);
+
+            if(Carbon::now() > $created_at_user_two_hours){
+                if(Carbon::now() > $created_at_user_three_hours){
+
+                }else{
+                    $user = User::findOrFail($value->user_id);
+                    $admin_marketer = Participant_marketer::where('thread_id' , $value->thread_id)
+                                        ->where('user_type' , 'marketer')
+                                        ->first();  
+                    $admin = Admin::findOrFail($admin_marketer->user_id);
+
+                    \Mail::send('email.new_messages', ['user' => $user , 'admin' => $admin], function ($m) use ($user) {
+                        $m->to($user->email, $user->name)->subject('You have New massage!');
+                    });
+                }
+            }
+        }
     }
     
 }
