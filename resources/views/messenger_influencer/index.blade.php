@@ -66,7 +66,8 @@
 											        </small> -->
 
 											        <small><strong>From:</strong>
-								 			        	{!! \App\Admin::where(['id' => $user_data])->pluck('first_name')->first() !!}
+								 			        	{!! \App\Admin::where(['id' => $user_data])->pluck('first_name')->first() !!} 
+								 			        	{!! \App\Admin::where(['id' => $user_data])->pluck('last_name')->first() !!}
 											        </small>
 											    </p>
 											    <p>

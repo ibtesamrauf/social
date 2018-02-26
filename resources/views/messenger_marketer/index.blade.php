@@ -60,7 +60,7 @@
 
 											    <p>
 											        <small><strong>From:</strong>
-								 			        	{!! \App\User::where(['id' => $user_data])->pluck('first_name')->first() !!}
+								 			        	{!! \App\User::where(['id' => $user_data])->pluck('first_name')->first() !!} {!! \App\User::where(['id' => $user_data])->pluck('last_name')->first() !!}
 											        </small>
 											    </p>
 											</div>

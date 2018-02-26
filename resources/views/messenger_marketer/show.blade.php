@@ -36,11 +36,11 @@
 						        		$temp_user_data = "";
 						        ?>	
 								        <div class="media">
-										    <a class="pull-left" href="#">
+										    <a class="pull-left" >
 										    <?php 
 										    if($value->user_type == 'marketer'){
 										    	$temp_user_data = $value->marketer;
-										    	$profile_image = 'uploads/default-profile.png';
+										    	$profile_image = 'uploads/'.$temp_user_data->profile_picture;
 
 										    }elseif ($value->user_type == 'influencer') {
 										    	$temp_user_data = $value->user;
