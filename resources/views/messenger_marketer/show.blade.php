@@ -40,12 +40,18 @@
 										    <?php 
 										    if($value->user_type == 'marketer'){
 										    	$temp_user_data = $value->marketer;
+										    	$profile_image = 'uploads/default-profile.png';
+
 										    }elseif ($value->user_type == 'influencer') {
 										    	$temp_user_data = $value->user;
+										    	$profile_image = 'uploads/'.$temp_user_data->profile_picture;
 										    }
 									    	?> 
-										        <img src="//www.gravatar.com/avatar/{{ md5($temp_user_data->email) }} ?s=64"
-										             alt="{{ $temp_user_data->first_name }}" class="img-circle">
+									    		<img src="{{ asset($profile_image) }}"
+										             class="img-thumbnail img-circle" style="width: 95px;">
+
+										        <!-- <img src="//www.gravatar.com/avatar/{{ md5($temp_user_data->email) }} ?s=64"
+										             alt="{{ $temp_user_data->first_name }}" class="img-circle"> -->
 									    	
 										    </a>
 										    <div class="media-body">

@@ -27,7 +27,7 @@ class Participant_marketer extends Model
      * @var array
      */
  
-    protected $fillable = ['thread_id', 'user_id', 'user_type', 'unread' ,'last_read'];
+    protected $fillable = ['thread_id', 'user_id', 'user_type','to_user', 'unread' ,'last_read'];
     
     public function thread()
     {

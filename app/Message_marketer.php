@@ -90,7 +90,7 @@ class Message_marketer extends Eloquent
      */
     public function participants()
     {
-        return $this->hasMany('App\Participant_marketer', 'thread_id', 'thread_id');
+        return $this->hasMany('App\Participant_marketer', 'thread_id', 'thread_id')->orderBy('created_at', 'asc');
     }
 
     /**
