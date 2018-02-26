@@ -18,7 +18,7 @@ class CreateAdminsTable extends Migration
                 $table->increments('id');
                 $table->string('first_name');   
                 $table->string('last_name');
-                // $table->string('profile_picture' , 500);
+                $table->string('profile_picture' , 500);
                 // $table->string('user_role');
                 // $table->string('company_name');
                 $table->string('email', 200)->unique();
