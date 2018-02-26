@@ -46,24 +46,26 @@
 										}
 							    	}
 							    	if(!empty($user_data)){
+							    		if(!$value->participants_only_my_messages_marketer->isEmpty()){
 							?>	
-										<div class="media alert {{ $unread_var ? 'alert-info' : ''}} ">
-										    <h4 class="media-heading">
-										        <!-- $key+1 -->
-										        <a href="{{ route('messages_marketer.show',['belongsto1' => $value->id, 'id' => $value->id]) }}">{{ $value->subject }}</a>
-										        <!-- ( $value->userUnreadMessagesCount(Auth::guard('jobseeker')->user()->id)  unread)</h4> -->
-										    <p>
-										    <?php //var_dump(count($value->messages)); ?>
-										       {{ $value->messages[count($value->messages)-1]->body }} 
-										    </p>
+											<div class="media alert {{ $unread_var ? 'alert-info' : ''}} ">
+											    <h4 class="media-heading">
+											        <!-- $key+1 -->
+											        <a href="{{ route('messages_marketer.show',['belongsto1' => $value->id, 'id' => $value->id]) }}">{{ $value->subject }}</a>
+											        <!-- ( $value->userUnreadMessagesCount(Auth::guard('jobseeker')->user()->id)  unread)</h4> -->
+											    <p>
+											    <?php //var_dump(count($value->messages)); ?>
+											       {{ $value->messages[count($value->messages)-1]->body }} 
+											    </p>
 
-										    <p>
-										        <small><strong>From:</strong>
-							 			        	{!! \App\User::where(['id' => $user_data])->pluck('first_name')->first() !!}
-										        </small>
-										    </p>
-										</div>
+											    <p>
+											        <small><strong>From:</strong>
+								 			        	{!! \App\User::where(['id' => $user_data])->pluck('first_name')->first() !!}
+											        </small>
+											    </p>
+											</div>
 						  	<?php
+						  				}
 						  			}else{
 						  				{{ 'Empty inbox'; }}
 						  			}

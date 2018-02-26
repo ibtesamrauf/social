@@ -51,30 +51,32 @@
 										}
 							    	}
 							    	if(!empty($user_data)){
+							    		if(!$value->participants_only_my_messages_influencer->isEmpty()){
 							?>
-									<div class="media alert {{ $unread_var ? 'alert-info' : ''}} ">
-									    <h4 class="media-heading">
-									        <!-- $key+1 -->
-									        <a href="{{ route('messages_influencer.show', $value->id) }}">{{ $value->subject }}</a>
-									        <!-- ( $value->userUnreadMessagesCount(Auth::guard('jobseeker')->user()->id)  unread)</h4> -->
-									    <p>
-									       {{ $value->messages[0]->body }}
-									    <p>
-						<!-- 			    	<small><strong>Creator:</strong>
-						 			        	 \App\User::where(['id' => $user_influencer])->pluck('first_name')->first() 
-									        </small> -->
+											<div class="media alert {{ $unread_var ? 'alert-info' : ''}} ">
+											    <h4 class="media-heading">
+											        <!-- $key+1 -->
+											        <a href="{{ route('messages_influencer.show', $value->id) }}">{{ $value->subject }}</a>
+											        <!-- ( $value->userUnreadMessagesCount(Auth::guard('jobseeker')->user()->id)  unread)</h4> -->
+											    <p>
+											       {{ $value->messages[0]->body }}
+											    <p>
+								<!-- 			    	<small><strong>Creator:</strong>
+								 			        	 \App\User::where(['id' => $user_influencer])->pluck('first_name')->first() 
+											        </small> -->
 
-									        <small><strong>From:</strong>
-						 			        	{!! \App\Admin::where(['id' => $user_data])->pluck('first_name')->first() !!}
-									        </small>
-									    </p>
-									    <p>
-									        <!-- <small><strong>Participants:</strong> 
-									        	{!! \App\Admin::where(['id' => $user_data])->pluck('first_name')->first() !!}
-									        </small> -->
-									    </p>
-									</div>
+											        <small><strong>From:</strong>
+								 			        	{!! \App\Admin::where(['id' => $user_data])->pluck('first_name')->first() !!}
+											        </small>
+											    </p>
+											    <p>
+											        <!-- <small><strong>Participants:</strong> 
+											        	{!! \App\Admin::where(['id' => $user_data])->pluck('first_name')->first() !!}
+											        </small> -->
+											    </p>
+											</div>
 						  	<?php
+						  				}
 						  			}else{
 						  				{{ 'Empty inbox'; }}
 						  			}

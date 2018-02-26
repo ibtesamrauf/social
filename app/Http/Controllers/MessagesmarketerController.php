@@ -29,34 +29,11 @@ class MessagesmarketerController extends Controller
      */
     public function index()
     {
-// alert-info
-        // $count1 = \App\Exceptions\Handler::newMessageCount();
-        // vv($count1);
-        // for user id
-        // vv(Auth::guard('jobseeker')->user()->id);
-
-
-        // All threads, ignore deleted/archived participants
-        // $threads = Thread_marketer::getAllLatest()->get();
-
-        // $threads = Thread_marketer::with('participants.messages')->get();
-        
-        $threads = Thread_marketer::with(['participants_only_influencer', 'messages'])
+        $threads = Thread_marketer::with(['participants_only_influencer', 'participants_only_my_messages_marketer', 'messages'])
+                            // ->where('user_id' , Auth::guard('jobseeker')->user()->id)
                             ->orderBy('id' , 'DESC')
                             ->get();
-
-        // All threads that user is participating in
-        // $threads = Thread::forUser(Auth::id())->latest('updated_at')->get();
-
-        // All threads that user is participating in, with new messages
-        // $threads = Thread::forUserWithNewMessages(Auth::id())->latest('updated_at')->get();
-        // vv($threads[0]->participants[0]->unread);
-        // foreach ($threads[0]->participants as $key => $value) {
-        //     v($value);
-        //     # code...
-        // }
-            // vv($threads);
-
+        // vv($threads);
         return view('messenger_marketer.index', compact('threads'));
     }
 
@@ -166,6 +143,7 @@ class MessagesmarketerController extends Controller
             'thread_id' => $thread->id,
             'user_id'   => Auth::guard('jobseeker')->user()->id,
             'last_read' => new Carbon,
+            'to_user'   => $input['recipients'][0],
             'unread'    => 1,
             'user_type' => 'marketer',
         ]);
@@ -176,6 +154,7 @@ class MessagesmarketerController extends Controller
                 'thread_id' => $thread->id,
                 'user_id'   => $input['recipients'][0],
                 'last_read' => new Carbon,
+                'to_user'   => Auth::guard('jobseeker')->user()->id,
                 'unread'    => 2,
                 'user_type' => 'influencer',
             ]);

@@ -45,4 +45,9 @@ class Participant_marketer extends Model
     {
         return $this->belongsTo('App\User', 'user_id' , 'id');
     }
+
+    public function user_marketer()
+    {
+        return $this->belongsTo('App\Admin', 'user_id' , 'id');
+    }
 }

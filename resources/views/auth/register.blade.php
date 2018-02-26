@@ -254,7 +254,7 @@
                     
                     <div class="form-group{{ $errors->has('preferred_medium') ? ' has-error' : '' }}">
                             @foreach($preferred_medium_value as $preferred_medium_value)
-                                <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]" autofocus> {{ $preferred_medium_value->preferred_medium_title }}<br>
+                                <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]" autofocus @if (old('preferred_medium') == $preferred_medium_value->id) selected="selected" @endif> {{ $preferred_medium_value->preferred_medium_title }}<br>
                                 <?php 
                                     if($preferred_medium_value->preferred_medium_title  == "Others"){
                                 ?>

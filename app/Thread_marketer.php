@@ -62,6 +62,17 @@ class Thread_marketer extends Model
                         ->where('user_type', '=', 'influencer');
     }
 
+    public function participants_only_my_messages_marketer()
+    {
+        return $this->hasMany('App\Participant_marketer', 'thread_id', 'id')
+                        ->where('user_id', '=', \Auth::guard('jobseeker')->user()->id);
+    }
+
+    public function participants_only_my_messages_influencer()
+    {
+        return $this->hasMany('App\Participant_marketer', 'thread_id', 'id')
+                        ->where('user_id', '=', \Auth::user()->id);
+    }
 
     public function users_id(){
         return $this->belongsToMany('App\User', 'participants', 'thread_id', 'user_id')
