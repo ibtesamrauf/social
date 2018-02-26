@@ -282,7 +282,11 @@ class HomeController extends Controller
         }
 
         if (config('user-verification.auto-login') === true) {
-            auth()->loginUsingId($user->id);
+            if($request->input('table') == 'users'){
+                auth()->loginUsingId($user->id);
+            }else{
+                auth()->guard('jobseeker')->loginUsingId($user->id);
+            }   
         }
 
         return redirect($this->redirectAfterVerification());
