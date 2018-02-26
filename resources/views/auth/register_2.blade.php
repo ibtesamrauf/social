@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-
-
-      <div class="main">
+    
+    <div class="main">
         <section class="module bg-dark-30" data-background="assets/images/section-4.jpg">
           <div class="container">
             <div class="row">
@@ -126,7 +125,7 @@
 
                         <div class="form-group{{ $errors->has('logo') ? ' has-error' : '' }}">
 
-                                <input id="logo" type="file" class="form-control" name="logo" value="{{ old('logo') }}" required autofocus>
+                                <input id="logo" type="file" class="form-control" name="logo" required autofocus>
 
                                 @if ($errors->has('logo'))
                                     <span class="help-block">
@@ -271,7 +270,7 @@
     $( document ).ready(function() {
         $( "#add_another" ).click(function() {
             console.log("asdasd");
-            $( "#previously_campaigns" ).append('<br><div class="form-group{{ $errors->has('influencer_used') ? ' has-error' : '' }}"><input id="influencer_used[]" type="text" class="form-control" name="influencer_used[]" value="{{ old('influencer_used') }}" placeholder="Influencer used" autofocus>@if ($errors->has('influencer_used'))<span class="help-block"><strong>{{ $errors->first('influencer_used') }}</strong></span>@endif</div><div class="campaign_link_div1"><div class="form-group{{ $errors->has('campaign_link') ? ' has-error' : '' }}"><input id="campaign_link[]" type="text" class="form-control" placeholder="Campaign Link" name="campaign_link[]"   autofocus><a id="add_another_link1"class="btn btn-primary" >+</a>@if ($errors->has('campaign_link'))<span class="help-block"><strong>{{ $errors->first('campaign_link') }}</strong></span>@endif</div></div><div class="form-group{{ $errors->has('description_p') ? ' has-error' : '' }}"><input id="description_p[]" type="text" class="form-control" name="description_p[]" placeholder="Description" value="{{ old('description_p') }}" autofocus>@if ($errors->has('description_p'))<span class="help-block"><strong>{{ $errors->first('description_p') }}</strong></span>@endif</div>'); 
+            $( "#previously_campaigns" ).append('<br><div class="form-group{{ $errors->has('influencer_used') ? ' has-error' : '' }}"><input id="influencer_used[]" type="text" class="form-control" name="influencer_used[]" placeholder="Influencer used" autofocus>@if ($errors->has('influencer_used'))<span class="help-block"><strong>{{ $errors->first('influencer_used') }}</strong></span>@endif</div><div class="campaign_link_div1"><div class="form-group{{ $errors->has('campaign_link') ? ' has-error' : '' }}"><input id="campaign_link[]" type="text" class="form-control" placeholder="Campaign Link" name="campaign_link[]"   autofocus><a id="add_another_link1"class="btn btn-primary" >+</a>@if ($errors->has('campaign_link'))<span class="help-block"><strong>{{ $errors->first('campaign_link') }}</strong></span>@endif</div></div><div class="form-group{{ $errors->has('description_p') ? ' has-error' : '' }}"><input id="description_p[]" type="text" class="form-control" name="description_p[]" placeholder="Description" autofocus>@if ($errors->has('description_p'))<span class="help-block"><strong>{{ $errors->first('description_p') }}</strong></span>@endif</div>'); 
         });
     
         $("#previously_campaigns_div").css("display" , "block");
