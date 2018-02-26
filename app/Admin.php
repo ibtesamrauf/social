@@ -22,7 +22,7 @@ class Admin extends Authenticatable
 
 
     protected $fillable = [
-        'first_name', 'last_name' ,'email','phone_number' , 'country' , 
+        'first_name', 'last_name', 'profile_picture' ,'email' ,'phone_number' , 'country' , 
         'password' ,'remember_token','verified',
     ];
 

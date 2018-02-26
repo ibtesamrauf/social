@@ -50,28 +50,13 @@ class RegisterController extends Controller
 
         //Create seller
         $user = Admin::create([
-            'first_name'    => $request->first_name,
-            'last_name'     => $request->last_name,
-            'email'         => $request->email,
-            'phone_number'  => $request->phone_number,
-            'country'       => $request->country,
-            'password'      => bcrypt($request->password),
-
-            // 'user_role'           => 'maketer',
-
-
-            // 'profile_picture'     => "",
-            // 'title'               => "",
-            // 'faebook_url'         => "",
-            // 'instagram_url'       => "",
-            // 'youtube_url'         => "",
-            // 'twitter_url'         => "",
-            // 'soundcloud_url'      => "",
-            // 'website_blog'        => "",
-            // 'monthly_visitors'    => "",
-            // 'company_id'          => 1,
-            // 'company_name'          => 'no',
-
+            'first_name'        => $request->first_name,
+            'last_name'         => $request->last_name,
+            'email'             => $request->email,
+            'phone_number'      => $request->phone_number,
+            'country'           => $request->country,
+            'password'          => bcrypt($request->password),
+            'profile_picture'   => "",
         ]);
         // Agency / Company details
         if(!empty($request->company_name) || !empty($request->website) || !empty($request->facebook_url) 
