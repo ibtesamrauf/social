@@ -35,18 +35,11 @@ class MessagesinfluencerController extends Controller
      * @return mixed
      */
     public function index()
-    {
-        // All threads, ignore deleted/archived participants
-        // $threads = Thread_marketer::getAllLatest()->get();
-
-        // $threads = Thread_marketer::with('participants.messages')->get();
-        
-        $threads = Thread_marketer::with(['participants_only_marketer', 'messages'])
+    {     
+        $threads = Thread_marketer::with(['participants_only_marketer','participants_only_my_messages_influencer', 'messages'])
                     // ->where('participants.user_type' , 'influencer')
                     ->orderBy('id' , 'DESC')
                     ->get();
-        // $threads = Thread_marketer::with(['users_id'])->get();
-    
         // vv($threads);
         return view('messenger_influencer.index', compact('threads'));
     }
@@ -129,6 +122,8 @@ class MessagesinfluencerController extends Controller
             'thread_id' => $thread->id,
             'user_id'   => Auth::user()->id,
             'last_read' => new Carbon,
+            'to_user'   => $input['recipients'][0],
+
             'unread'    => 1,
             'user_type' => 'influencer',
         ]);
@@ -139,6 +134,8 @@ class MessagesinfluencerController extends Controller
                 'thread_id' => $thread->id,
                 'user_id'   => $input['recipients'][0],
                 'last_read' => new Carbon,
+                'to_user'   => Auth::user()->id,
+
                 'unread'    => 2,
                 'user_type' => 'marketer',
             ]);
