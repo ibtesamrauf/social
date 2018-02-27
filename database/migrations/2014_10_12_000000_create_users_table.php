@@ -36,6 +36,8 @@ class CreateUsersTable extends Migration
                 $table->string('monthly_visitors');
                 $table->string('password');
                 $table->rememberToken();
+                $table->tinyInteger('verified')->default(0);
+                $table->string('verification_token')->nullable();
                 $table->timestamps();
             });
         }
