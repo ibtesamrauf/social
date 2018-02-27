@@ -43,14 +43,14 @@
 										    	if(!empty($temp_user_data->profile_picture)){
 										    		$profile_image = 'uploads/'.$temp_user_data->profile_picture;
 										    	}else{
-										    		$profile_image = "uploads/default-profile-image.png";
+										    		$profile_image = "img/default-profile-image.png";
 										    	}
 										    }elseif ($value->user_type == 'influencer') {
 										    	$temp_user_data = $value->user;
 										    	if(!empty($temp_user_data->profile_picture)){
 										    		$profile_image = 'uploads/'.$temp_user_data->profile_picture;
 										    	}else{
-										    		$profile_image = "uploads/default-profile-image.png";
+										    		$profile_image = "img/default-profile-image.png";
 										    	}
 										    }
 									    	?> 
