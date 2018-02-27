@@ -40,11 +40,18 @@
 										    <?php 
 										    if($value->user_type == 'marketer'){
 										    	$temp_user_data = $value->marketer;
-										    	$profile_image = 'uploads/'.$temp_user_data->profile_picture;
-
+										    	if(!empty($temp_user_data->profile_picture)){
+										    		$profile_image = 'uploads/'.$temp_user_data->profile_picture;
+										    	}else{
+										    		$profile_image = "uploads/default-profile-image.png";
+										    	}
 										    }elseif ($value->user_type == 'influencer') {
 										    	$temp_user_data = $value->user;
-										    	$profile_image = 'uploads/'.$temp_user_data->profile_picture;
+										    	if(!empty($temp_user_data->profile_picture)){
+										    		$profile_image = 'uploads/'.$temp_user_data->profile_picture;
+										    	}else{
+										    		$profile_image = "uploads/default-profile-image.png";
+										    	}
 										    }
 									    	?> 
 									    		<img src="{{ asset($profile_image) }}"
