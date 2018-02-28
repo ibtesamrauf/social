@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="main">
-    <section class="module bg-dark-30" data-background="assets/images/section-4.jpg">
+    <section class="module bg-dark-30" data-background="{{ asset('assets/images/Cover_image.jpg') }}">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
@@ -12,7 +12,7 @@
             </div>
         </div>
     </section>
-    <section class="module">
+    <section class="module" style=" padding-top: 50px; ">
         <div class="container">
             @if(Session::has('alert'))
             <div class="alert alert-success">
@@ -34,8 +34,11 @@
                         <div class="row">
                             <div class="col-sm-10">
                                 <h1 class="">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h1>
-
-                                <button type="button" class="btn btn-success">Book me!</button>  <button type="button" class="btn btn-info">Send me a message</button>
+                                <!-- <button type="button" class="btn btn-success">Book me!</button>   -->
+                                <a href="\editprofile">
+                                    <button type="button" class="btn btn-success">Edit Profile</button>  
+                                </a>
+                                <button type="button" class="btn btn-info">Send me a message</button>
                                 <br>
                             </div>
 

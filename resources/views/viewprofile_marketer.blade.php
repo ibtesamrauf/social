@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="main">
-    <section class="module bg-dark-30" data-background="assets/images/section-4.jpg">
+    <section class="module bg-dark-30" data-background="{{ asset('assets/images/Cover_image.jpg') }}">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
@@ -12,7 +12,7 @@
             </div>
         </div>
     </section>
-    <section class="module">
+    <section class="module" style=" padding-top: 50px; ">
         <div class="container">
             @if(Session::has('alert'))
             <div class="alert alert-success">
