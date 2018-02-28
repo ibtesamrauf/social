@@ -253,16 +253,22 @@
                     <hr>
                     
                     <div class="form-group{{ $errors->has('preferred_medium') ? ' has-error' : '' }}">
+                        <table>
                             @foreach($preferred_medium_value as $preferred_medium_value)
-                                <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]" autofocus @if (old('preferred_medium') == $preferred_medium_value->id) selected="selected" @endif> {{ $preferred_medium_value->preferred_medium_title }}<br>
-                                <?php 
-                                    if($preferred_medium_value->preferred_medium_title  == "Others"){
-                                ?>
-                                    <span><input id="others" name="others" type="text"></span>
-                                <?php
-                                    }
-                                ?>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]" autofocus @if (old('preferred_medium') == $preferred_medium_value->id) selected="selected" @endif> {{ $preferred_medium_value->preferred_medium_title }}<br>
+                                    <?php 
+                                        if($preferred_medium_value->preferred_medium_title  == "Others"){
+                                    ?>
+                                        <span><input id="others" name="others" type="text"></span>
+                                    <?php
+                                        }
+                                    ?>
+                                </td>
+                            </tr>
                             @endforeach    
+                        </table>
                                 <!-- <input type="checkbox" value="other" name="preferred_medium[]" id="preferred_medium[]"> {{ $preferred_medium_value->preferred_medium_title }}<br> -->
 
                             @if ($errors->has('preferred_medium'))
@@ -275,7 +281,7 @@
                     <hr>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <p align="center" style=" font-size: 22px; ">Portfolio: <span style=" font-size: 18px; "> (optional)</span> </p>                               
+                            <p align="center" style=" font-size: 22px; ">Portfolio <span style=" font-size: 18px; "> optional</span> </p>                               
                         </div>
                     </div>
                     <hr>
