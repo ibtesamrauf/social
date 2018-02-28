@@ -215,7 +215,7 @@
                                         ?>
 
                                         @foreach($search_page_data as $key => $data)
-                                            <tr>        
+                                            <tr onclick="window.location='/viewprofile_from_find_influencer/{{ $data->user_id }}';">        
                                                 <td>
                                                     {{ $key + 1 }}
                                                 </td>
