@@ -286,7 +286,8 @@
                     </div>
                     <hr>
                     <div id="portfolio_div">
-                        <div class="form-group{{ $errors->has('link_p') ? ' has-error' : '' }}">    
+                        <div class="form-group{{ $errors->has('link_p') ? ' has-error' : '' }}"> 
+                            <span align="left" class="pull-left">No: 1</span>   
                             <input id="link_p[]" type="text" class="form-control" name="link_p[]"  placeholder="link" >
 
                             @if ($errors->has('link_p'))
@@ -305,7 +306,6 @@
                                 </span>
                             @endif
                         </div>
-                        <br>
                         
                     </div>
 
@@ -424,9 +424,10 @@
         });                                  
 
         $("#previously_campaigns_div").css("display" , "none");
-
+        var count = 1;
         $( "#add_another_portfolio" ).click(function() {
-            $( "#portfolio_div" ).append('<div class="form-group"><input id="link_p[]" type="text" class="form-control" name="link_p[]"  placeholder="link" ></div><div class="form-group"><input id="description[]" type="text" class="form-control" name="description[]" value="" placeholder="Description" ></div><br>'); 
+            count = count + 1;
+            $( "#portfolio_div" ).append('<div class="form-group"><span align="left" class="pull-left">No: '+count +'</span><input id="link_p[]" type="text" class="form-control" name="link_p[]"  placeholder="link" ></div><div class="form-group"><input id="description[]" type="text" class="form-control" name="description[]" value="" placeholder="Description" ></div>'); 
         });
     });
     
