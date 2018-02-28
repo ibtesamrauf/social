@@ -11,7 +11,7 @@
             </a>
         </div>
         <div class="collapse navbar-collapse" id="custom-collapse">
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" style=" font-size: 12px; ">
                 <!-- <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Home</a>
                   <ul class="dropdown-menu">
                     <li><a href="index_mp_fullscreen_video_background.html">Default</a></li>
