@@ -12,6 +12,7 @@ use App\Preferred_medium;
 use App\Facebook_page_data;
 use App\Instagram_page_data;
 use App\Youtube_page_data;
+use App\User;
 
 class FindInfulencerController extends Controller
 {
@@ -364,7 +365,19 @@ class FindInfulencerController extends Controller
         }else{
             return redirect('viewpage')->with('status', 'Havign some problem try again later!');
         }
-        # code...
+    }
+
+    public function viewprofile_from_find_influencer($user_id = 0)
+    {    
+        $temp_user_id = $user_id;
+        
+        $facebook_page_data = Facebook_page_data::where('user_id' , $temp_user_id)->get();
+        $youtube_page_data = Youtube_page_data::where('user_id' , $temp_user_id)->get();
+        $instagram_page_data = Instagram_page_data::where('user_id' , $temp_user_id)->get();
+        $user_data = User::where('id' , $temp_user_id)->first();
+        // vv($user_data);
+        return view('viewprofile_from_find_influencer' , compact('facebook_page_data' , 'youtube_page_data' , 
+            'instagram_page_data', 'user_data'));
     }
     
 
