@@ -32,7 +32,7 @@
                     <hr class="">
                     <div class="">
                         <div class="row">
-                            <div class="col-sm-10">
+                            <div class="text-align-left col-sm-10">
                                 <h1 class="">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h1>
                                 <!-- <button type="button" class="btn btn-success">Book me!</button>   -->
                                 <a href="\editprofile">
@@ -61,14 +61,20 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <!--left col-->
-                                <ul class="list-group">
+                                <ul class="list-group"> 
+                                    <li class="list-group-item text-muted" contenteditable="false">
+                                        @if (!empty(Auth::user()->profile_picture)) 
+                                            <img title="profile image" class="img-responsive" src="uploads/{{Auth::user()->profile_picture }}">
+                                        @else
+                                            <img title="profile image" class="img-responsive" src="img/default-profile.png">
+                                        @endif
+                                    </li>
+                                    
                                     <li class="list-group-item text-muted" contenteditable="false">Profile</li>
                                     <li class="list-group-item text-right"><span class="pull-left"><strong class="">Joined</strong></span>{{ Auth::user()->created_at }}</li>
                                     <!-- <li class="list-group-item text-right"><span class="pull-left"><strong class="">Last seen</strong></span> Yesterday</li> -->
                                     <li class="list-group-item text-right"><span class="pull-left"><strong class="">Email</strong></span> {{ Auth::user()->email }}</li>
-                                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Role: </strong></span> Infulencer
-
-                                    </li>
+                                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Role: </strong></span> Infulencer </li>
                                 </ul>
                                 <!-- <div class="panel panel-default">
                                  <div class="panel-heading">Insured / Bonded?
