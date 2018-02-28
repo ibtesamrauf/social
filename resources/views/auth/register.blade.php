@@ -30,27 +30,6 @@
                 <hr class="divider-w mb-10">
                 <form class="form" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                <!-- <form class="form"> -->
-                  
-                  <!-- <div class="form-group">
-                    <input class="form-control" id="E-mail" type="text" name="email" placeholder="Email"/>
-                  </div> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                         <input id="first_name" placeholder="First Name" type="text" class="form-control" name="first_name" value="{{ old('first_name') }}" required autofocus>
                         @if ($errors->has('first_name'))
@@ -96,7 +75,7 @@
                         <!-- <label for="file" class="col-md-4 control-label">Profile picture</label> -->
 
                         <!-- <div class="col-md-6"> -->
-                            <input id="file" placeholder="Profile Picture" class="form-control" type="file"  name="file" value="{{old('file')}}" required >
+                            <input id="file" placeholder="Profile Picture" class="form-control" type="file"  name="file" value="{{old('file')}}" >
                         <!-- </div> -->
                     </div>
 
@@ -378,16 +357,6 @@
 
                     </div>
                     <hr>
-
-
-
-
-
-
-
-
-
-                  
                   
                     <div class="form-group">                    
                         <button type="submit" class="btn btn-block btn-round btn-b">

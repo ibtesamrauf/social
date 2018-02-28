@@ -44,10 +44,14 @@
 
                             <div class="col-sm-2">
                                 <a href="#" class="pull-right">
-                                    @if (!empty(Auth::user()->profile_picture)) 
-                                    <img title="profile image" class="img-circle img-responsive" src="{{ asset('uploads/'.Auth::user()->profile_picture) }}">
+                                    @if (!empty(Auth::user()->profile_picture))
+                                        @if(strpos(Auth::user()->profile_picture,"http") !== false )
+                                            <img title="profile image" class="img-circle img-responsive" src="{{ Auth::user()->profile_picture }}">
+                                        @else
+                                            <img title="profile image" class="img-circle img-responsive" src="{{ asset('uploads/'.Auth::user()->profile_picture) }}">
+                                        @endif
                                     @else
-                                    <img title="profile image" class="img-responsive" src="{{ asset('img/default-profile.png') }}">
+                                    <img title="profile image" class="img-responsive" src="{{ asset('img/default-profile-image.png') }}">
                                     @endif
                                 </a>
                             </div>
@@ -64,9 +68,13 @@
                                 <ul class="list-group"> 
                                     <li class="list-group-item text-muted" contenteditable="false">
                                         @if (!empty(Auth::user()->profile_picture)) 
-                                            <img title="profile image" class="img-responsive" src="{{ asset('uploads/'.Auth::user()->profile_picture) }}">
+                                            @if(strpos(Auth::user()->profile_picture,"http") !== false )
+                                                <img title="profile image" class="img-responsive" src="{{ Auth::user()->profile_picture }}">
+                                            @else
+                                                <img title="profile image" class="img-responsive" src="{{ asset('uploads/'.Auth::user()->profile_picture) }}">
+                                            @endif
                                         @else
-                                            <img title="profile image" class="img-responsive" src="{{ asset('img/default-profile.png') }}">
+                                            <img title="profile image" class="img-responsive" src="{{ asset('img/default-profile-image.png') }}">
                                         @endif
                                     </li>
                                     

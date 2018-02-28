@@ -55,6 +55,8 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest',['except' => ['getVerification', 'getVerificationError']]);
+        $this->is_file = false;
+        $this->is_facebook = false;
     }
 
     /**
@@ -106,16 +108,31 @@ class RegisterController extends Controller
         // v('ads');
         // $data['file']->move('users',$data['file']->getClientOriginalName());
         // if(Input::hasFile($data['file'])){
-        if($data['file']){
-            echo 'Uploaded';
-            // $file = Input::file($data['file']);
-            $file = $data['file'];
-            $file->move('uploads', time().$file->getClientOriginalName());
-            echo '';
-            $image_name = time().$file->getClientOriginalName();
+        if($this->is_file){
+            if($data['file']){
+                echo 'Uploaded';
+                // $file = Input::file($data['file']);
+                $file = $data['file'];
+                $file->move('uploads', time().$file->getClientOriginalName());
+                echo '';
+                $image_name = time().$file->getClientOriginalName();
+            }
         }
-        // die;
-        // vv($data);
+ 
+        if($this->is_facebook){
+            if(!empty($data['faebook_url'])){
+                $facebook_url2 = explode("/", $data['faebook_url']);
+                if(empty(last($facebook_url2))){
+                    unset($facebook_url2[count($facebook_url2) - 1]);
+                    $facebook_url2 = last($facebook_url2);
+                }else{
+                    $facebook_url2 = last($facebook_url2);
+                }
+                $image_name = "https://graph.facebook.com/v2.11/".$facebook_url2."/picture?type=large";
+
+            }
+        }
+
         $user = User::create([
             'first_name'          => $data['first_name'],
             'last_name'           => $data['last_name'],
@@ -314,6 +331,15 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {   
+        if(empty($request->faebook_url)){
+            if($request->file){
+                $this->is_file = true;
+            }else{
+                return back()->withInput()->withAlert('Select Profile Image.');  
+            }
+        }else{
+            $this->is_facebook = true;
+        }
         // vv($request->all());
         $this->validator($request->all())->validate();
         $user = $this->create($request->all());
