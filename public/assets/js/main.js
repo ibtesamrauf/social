@@ -159,7 +159,7 @@ console.log('%c Proudly Crafted with ZiOn.', 'background: #222; color: #bada55')
                 if(topScroll >= navHeight) {
                     navbar.removeClass('navbar-transparent');
                 } else {
-                    navbar.addClass('navbar-transparent');
+                    // navbar.addClass('navbar-transparent');
                 }
             }
         }
