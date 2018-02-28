@@ -12,8 +12,8 @@
         </div>
         <div class="titan-caption">
           <div class="caption-content">
-            <div class="font-alt mb-30 titan-title-size-1">Hello &amp; welcome</div>
-            <div class="font-alt mb-40 titan-title-size-4">We are Influence</div><a class="section-scroll btn btn-border-w btn-round" href="#about">Learn More</a>
+            <div class="font-alt mb-30 titan-title-size-1" style="color: #111;">Hello &amp; welcome</div>
+            <div class="font-alt mb-40 titan-title-size-4" style="color: #111;">We are Influence</div><a class="section-scroll btn btn-border-w btn-round" href="#about">Learn More</a>
           </div>
         </div>
       </section>
@@ -22,7 +22,7 @@
           <div class="container">
             <div class="row">
               <div class="col-sm-6 col-sm-offset-3">
-                <h2 class="module-title font-alt">Our features</h2>
+                <h2 id="about" class="module-title font-alt">Our features</h2>
                 <div class="module-subtitle font-serif">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</div>
               </div>
             </div>
