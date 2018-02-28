@@ -7,13 +7,18 @@ use Illuminate\Http\Request;
 use App\User_videos;
 use Auth;
 use App\User_page;
+use App\User;
 use Ixudra\Curl\Facades\Curl;
 use Facebook\Facebook;
 use App\Facebook_page_data;
 use App\Youtube_page_data;
 use App\Instagram_page_data;
 use App\Hashtags;
+use App\Preferred_medium;
+use App\User_preferred_medium;
 // use SammyK;
+
+
 
 class ViewpageController extends Controller
 {
@@ -157,14 +162,50 @@ class ViewpageController extends Controller
         $facebook_page_data = Facebook_page_data::where('user_id' , Auth::user()->id)->get();
         $youtube_page_data = Youtube_page_data::where('user_id' , Auth::user()->id)->get();
         $instagram_page_data = Instagram_page_data::where('user_id' , Auth::user()->id)->get();
-        // $c = Hashtags::get();
-        // vv($c);
-        // v($facebook_page_data);
-        // vv(Auth::user()->Users_Roles_hashtags); 
-        // vv(Auth::user()->Users_Roles_hashtags_names); 
          
         return view('viewprofile' , compact('facebook_page_data' , 'youtube_page_data' , 
             'instagram_page_data' ));
+    }
+
+    public function editprofile()
+    {
+        $facebook_page_data = Facebook_page_data::where('user_id' , Auth::user()->id)->get();
+        $youtube_page_data = Youtube_page_data::where('user_id' , Auth::user()->id)->get();
+        $instagram_page_data = Instagram_page_data::where('user_id' , Auth::user()->id)->get();
+        $hashtags = hashtags::get();
+        $preferred_medium = Preferred_medium::get();
+        
+        return view('editprofile_test' , compact('facebook_page_data' , 'youtube_page_data' , 
+            'instagram_page_data' , 'hashtags', 'preferred_medium'));
+    }
+
+    public function editprofile_post(Request $request)
+    {
+        // $facebook_page_data = Facebook_page_data::where('user_id' , Auth::user()->id)->get();
+        // $youtube_page_data = Youtube_page_data::where('user_id' , Auth::user()->id)->get();
+        // $instagram_page_data = Instagram_page_data::where('user_id' , Auth::user()->id)->get();
+        // $hashtags = hashtags::get();
+        // $preferred_medium = Preferred_medium::get();
+
+        // $request->
+        
+        return redirect('editprofile')->with('status', 'Profile Updated'); 
+    }
+    
+
+    public function users_preferred_medium_add($preferred_medium_id)
+    {
+        User_preferred_medium::create([
+                'user_id' => Auth::user()->id,
+                'preferred_medium_id' => $preferred_medium_id,
+            ]);
+        return redirect('editprofile')->with('status', 'Prefered Medium Added'); 
+    } 
+
+    public function users_preferred_medium_remove($user_preferred_medium_table_id)
+    {
+        User_preferred_medium::where('id' , $user_preferred_medium_table_id)->delete();
+        return redirect('editprofile')->with('status', 'Prefered Medium Removed'); 
     }
     
     public function add_facebook_page($id)
