@@ -59,7 +59,18 @@ Route::get('/delete_youtube_video/{youtube_video_id}/{id}', 'ViewpageController@
 Route::get('/test', 'ViewpageController@test');
 
 
+// profile Show and edit -- START
+
+
 Route::get('/viewprofile', 'ViewpageController@viewprofile');
+Route::get('/editprofile', 'ViewpageController@editprofile');
+
+Route::post('/editprofile_post', 'ViewpageController@editprofile_post');
+
+Route::get('/users_preferred_medium_add/{preferred_medium_id}', 'ViewpageController@users_preferred_medium_add');
+Route::get('/users_preferred_medium_remove/{user_preferred_medium_table_id}', 'ViewpageController@users_preferred_medium_remove');
+
+// profile Show and edit -- END
 
 
 
@@ -79,7 +90,9 @@ Route::resource('hashtags', 'HashtagsController');
 Route::get('finde_influencer_test', 'FindInfulencerController@finde_influencer_test');
 
 
+    Route::get('/viewprofile_from_find_influencer/{user_id}', 'FindInfulencerController@viewprofile_from_find_influencer');
 Route::group(['middleware' => 'jobseeker_guest'], function() {
+    
 
     Route::get('/jobseeker_register', 'JobseekerAuth\RegisterController@showRegistrationForm');
     Route::post('/jobseeker_register', 'JobseekerAuth\RegisterController@register');
