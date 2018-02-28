@@ -45,9 +45,9 @@
                             <div class="col-sm-2">
                                 <a href="#" class="pull-right">
                                     @if (!empty(Auth::user()->profile_picture)) 
-                                    <img title="profile image" class="img-circle img-responsive" src="uploads/{{Auth::user()->profile_picture }}">
+                                    <img title="profile image" class="img-circle img-responsive" src="{{ asset('uploads/'.Auth::user()->profile_picture) }}">
                                     @else
-                                    <img title="profile image" class="img-responsive" src="img/default-profile.png">
+                                    <img title="profile image" class="img-responsive" src="{{ asset('img/default-profile.png') }}">
                                     @endif
                                 </a>
                             </div>
@@ -64,9 +64,9 @@
                                 <ul class="list-group"> 
                                     <li class="list-group-item text-muted" contenteditable="false">
                                         @if (!empty(Auth::user()->profile_picture)) 
-                                            <img title="profile image" class="img-responsive" src="uploads/{{Auth::user()->profile_picture }}">
+                                            <img title="profile image" class="img-responsive" src="{{ asset('uploads/'.Auth::user()->profile_picture) }}">
                                         @else
-                                            <img title="profile image" class="img-responsive" src="img/default-profile.png">
+                                            <img title="profile image" class="img-responsive" src="{{ asset('img/default-profile.png') }}">
                                         @endif
                                     </li>
                                     
