@@ -1,9 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-
-
       <div class="main">
         <section class="module bg-dark-30" data-background="assets/images/section-4.jpg">
           <div class="container">
@@ -224,7 +221,6 @@
                     <hr>
                     <div class="form-group">
                         <!-- <label for="" class="col-md-4 control-label"></label> -->
-
                         <div class="col-md-12">
                             <p align="center" style=" font-size: 22px; ">What is your preferred medium of content <span style=" font-size: 18px; "> (tick all that apply) </span></p>                               
                         </div>
@@ -232,7 +228,7 @@
                     <hr>
                     
                     <div class="form-group{{ $errors->has('preferred_medium') ? ' has-error' : '' }}">
-                        <table>
+                        <table align="left">
                             @foreach($preferred_medium_value as $preferred_medium_value)
                             <tr>
                                 <td>
