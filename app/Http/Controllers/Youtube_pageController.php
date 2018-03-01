@@ -74,6 +74,10 @@ class Youtube_pageController extends Controller
         // vv($youtube_url);
         $youtube_response = file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id='.$youtube_url.'&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE');
         $youtube_response = json_decode($youtube_response);
+        // vv($youtube_response);
+        if(empty($youtube_response->items)){
+            return back()->with('status', 'Page Not Found');
+        }
         $youtube_response = $youtube_response->items[0];
         // vv($youtube_response);
         if(empty($youtube_response->snippet->description)){

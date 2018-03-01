@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<br>
+<br>
+<br>
     <div class="container">
         <div class="row">
 
@@ -11,7 +14,11 @@
                         <a href="{{ url('/youtube_page_resource') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
-
+                        @if (session('status'))
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                            @endif
                         @if ($errors->any())
                             <ul class="alert alert-danger">
                                 @foreach ($errors->all() as $error)
