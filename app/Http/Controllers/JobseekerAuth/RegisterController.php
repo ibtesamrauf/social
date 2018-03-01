@@ -43,6 +43,19 @@ class RegisterController extends Controller
     
     public function register(Request $request)
     {
+        $email_array = array(
+                            'gmail',
+                            'hotmail',
+                            'yahoo',
+                            'live',
+                            'outlook'
+                        );
+
+        foreach ($email_array as $key => $value) {
+            if (strpos($request->email, $value) !== false) {
+                return back()->withInput()->withErrors(['email' => 'Email is not according to company email']); 
+            }
+        } 
         $image_name = "";
         // vv($request->all());
         //Validates data
