@@ -389,22 +389,22 @@
 </div>
 <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
 <script type="text/javascript">
-    // $(document).ready(function() {
-    //     $.noConflict();
-    //     $('#example').DataTable();
-    //     $("#hide").click(function(){
-    //         $(".Advance-search-class").toggle();
-    //         console.log($("#advanced-search-span").attr('class'));
-    //         if( $("#advanced-search-span").attr('class') == 'fa fa-angle-down'){
+    $(document).ready(function() {
+        // $.noConflict();
+        // $('#example').DataTable();
+        $("#hide").click(function(){
+            $(".Advance-search-class").toggle();
+            console.log($("#advanced-search-span").attr('class'));
+            if( $("#advanced-search-span").attr('class') == 'fa fa-angle-down'){
 
-    //             $( "#advanced-search-span" ).removeClass('fa fa-angle-down');
-    //             $( "#advanced-search-span" ).addClass('fa fa-angle-up');
-    //         }else{
-    //             $( "#advanced-search-span" ).removeClass('fa fa-angle-up');
-    //             $( "#advanced-search-span" ).addClass('fa fa-angle-down');
-    //         }
-    //     });
-    // } );
+                $( "#advanced-search-span" ).removeClass('fa fa-angle-down');
+                $( "#advanced-search-span" ).addClass('fa fa-angle-up');
+            }else{
+                $( "#advanced-search-span" ).removeClass('fa fa-angle-up');
+                $( "#advanced-search-span" ).addClass('fa fa-angle-down');
+            }
+        });
+    } );
 </script>
 
 @endsection

@@ -163,8 +163,8 @@ class FindInfulencerController extends Controller
                     //                 ->where('likes' , '>=' ,  $request->likes_on_Facebook)
                     //                 ->get();   
                     
-                    $facebook_data = Facebook_page_data::join('users', 'users.id', '=', 'facebook_page_data.user_id')
-                                            ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
+                    $facebook_data = Facebook_page_data::join('users', 'users.id', '=', 'facebook_page_data.user_id');
+                                            // ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
 
                         if(!empty($request->country)){
                             if($request->country == 'Select'){
@@ -174,6 +174,8 @@ class FindInfulencerController extends Controller
                             }
                         }
                         if (!empty($request->preferred_medium)) {
+                            $facebook_data = $facebook_data->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
+
                             $preferred_medium_temp = implode(",", $request->preferred_medium);
                             $facebook_data = $facebook_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp]); 
                         }
@@ -262,8 +264,8 @@ class FindInfulencerController extends Controller
                     //                 ->get();  
 
 
-                    $youtube_data = Youtube_page_data::join('users', 'users.id', '=', 'youtube_page_data.user_id')
-                                                ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
+                    $youtube_data = Youtube_page_data::join('users', 'users.id', '=', 'youtube_page_data.user_id');
+                                                // ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
                         
                         if(!empty($Request->country)){
                             if($request->country == 'Select'){
@@ -273,6 +275,7 @@ class FindInfulencerController extends Controller
                             }
                         }
                     if (!empty($request->preferred_medium)) {
+                        $youtube_data = $youtube_data->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
                         $preferred_medium_temp = implode(",", $request->preferred_medium);
                         $youtube_data = $youtube_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp]);       
                     }
@@ -314,7 +317,7 @@ class FindInfulencerController extends Controller
             }
         }
         $sorted = $search_page_data->sortBy('name');
-        // v($sorted);
+        // vv($sorted);
         $search_page_data = $sorted;
         $search_page_data = $search_page_data->toArray();
         
