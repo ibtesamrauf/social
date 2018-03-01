@@ -156,15 +156,10 @@
                                 @endif
                         </div>
 
-                        <div class="form-group{{ $errors->has('twitter_url') ? ' has-error' : '' }}">
-                                <input id="twitter_url" placeholder="Twitter.com" type="text" class="form-control" name="twitter_url" value="{{ old('twitter_url') }}" required autofocus>
+                        <!-- <div class="form-group{{ $errors->has('twitter_url') ? ' has-error' : '' }}"> -->
+                                <input id="twitter_url" placeholder="Twitter.com" type="hidden" class="form-control" name="twitter_url" value="tweet" autofocus>
 
-                                @if ($errors->has('twitter_url'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('twitter_url') }}</strong>
-                                    </span>
-                                @endif
-                        </div>
+                        <!-- </div> -->
 
                         <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                                 <input id="description" placeholder="Description" type="text" class="form-control" name="description" value="{{ old('description') }}" required autofocus>
