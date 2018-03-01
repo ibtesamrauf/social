@@ -390,8 +390,8 @@
 <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
 <script type="text/javascript">
     $(document).ready(function() {
-        // $.noConflict();
-        // $('#example').DataTable();
+        $.noConflict();
+        $('#example').DataTable();
         $("#hide").click(function(){
             $(".Advance-search-class").toggle();
             console.log($("#advanced-search-span").attr('class'));
