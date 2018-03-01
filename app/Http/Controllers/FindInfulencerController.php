@@ -313,8 +313,18 @@ class FindInfulencerController extends Controller
                 $search_page_data->push($value2);
             }
         }
-        // vv($search_page_data);
+        $sorted = $search_page_data->sortBy('name');
+        // v($sorted);
+        $search_page_data = $sorted;
+        $search_page_data = $search_page_data->toArray();
         
+        $search_page_data = array_filter($search_page_data);
+        $search_page_data = array_values($search_page_data);
+
+        $search_page_data = json_decode(json_encode($search_page_data), FALSE);
+        
+        // vv($search_page_data);
+
         $preferred_medium_value = Preferred_medium::get();
         $country = Country::orderBy('id' , 'asc')->get();
         return view('finde_influencer_test' , compact('country' , 'preferred_medium_value' , 'search_page_data'));

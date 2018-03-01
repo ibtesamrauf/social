@@ -203,7 +203,7 @@
                                             <th>S.no</th>
                                             <th>Page title</th>
                                             <th>Likes & Subscribers</th>
-                                            <th>Social Media Platform</th>
+                                            <!-- <th>Social Media Platform</th> -->
                                             <th>Image</th>
                                             <th>Add to favorite</th>
                                             <th>Message</th>
@@ -212,72 +212,162 @@
                                             
                                         <?php 
                                         if(!empty($search_page_data)){
-                                        ?>
+                                            $array_for_page_name = array();
+                                            $temp_count = 1;
+                                            $temp_name_array = array();
+                                            foreach ($search_page_data as $key => $value) {
+                                                $temp_name_array[] = $value->name;
+                                            }
+                                            $counter_for_loop = 0;
+                                            $y = 0; 
+                                            foreach ($search_page_data as $key => $data) {
+                                                if(isset($data->name)){
+                                                    $array_for_page_name[] = $data->name;
+                                                }   
+                                                $flag_to_break = false;
+                                                $temp_count = $temp_count + 1;
 
-                                        @foreach($search_page_data as $key => $data)
-                                            <tr onclick="window.location='/viewprofile_from_find_influencer/{{ $data->user_id }}';">        
-                                                <td>
-                                                    {{ $key + 1 }}
-                                                </td>
-                                                <td>
-                                                    <?php 
-                                                        if(isset($data->name)){
-                                                            echo $data->name; 
-                                                        }                                                        
-                                                    ?> 
-                                                </td>
-                                                <td>
-                                                    <?php 
-                                                        if(isset($data->likes)){
-                                                            echo $data->likes; 
-                                                        }else if (isset($data->followed_by)) {
-                                                            echo $data->followed_by;
-                                                        }elseif (isset($data->subscriberCount)) {
-                                                            echo $data->subscriberCount;
-                                                        }
-                                                    ?> 
-                                                </td>
-                                                <td>
-                                                    <?php 
-                                                        $temp = ""; 
-                                                        if(isset($data->likes)){
-                                                            echo "Facebook";
-                                                            $temp = "Facebook";
-                                                        }else if (isset($data->followed_by)) {
-                                                            echo "Instagram";
-                                                            $temp = "Instagram";
-                                                        }elseif (isset($data->subscriberCount)) {
-                                                            echo "Youtube";
-                                                            $temp = "Youtube";
-                                                        }
-                                                    ?> 
-                                                </td>
-                                                <td>
-                                                    <img src="{{ isset($data->image) ? $data->image : ''}}" style=" max-width: 190px; " class="img-thumbnail">
-                                                </td>
-                                                
-                                                <td>
-                                                    <a href="#">
-                                                        <span class="glyphicon glyphicon-star"></span> 
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a href="<?php  if(Auth::guest()){
-                                                                        if (Auth::guard('jobseeker')->check()) { 
-                                                                            if(isset($data->user_id)){ 
-                                                                                echo "/messages_marketer/". $temp.',,'.$data->id.',,'.$data->user_id ."/create"; 
+
+                                                if($y >=  $temp_count){
+                                                    continue;
+                                                }else{
+                                                    $y = 0;
+                                                    $counter_for_loop += 1;
+                                                }
+                                            ?>
+                                                <!-- onclick="window.location='/viewprofile_from_find_influencer/{{ $data->user_id }}';" -->
+                                                <tr>        
+                                                    <td>
+                                                        {{ $counter_for_loop }}
+                                                    </td>
+                                                    <td>
+                                                        <?php 
+                                                            if(isset($data->name)){
+                                                                echo $data->name; 
+                                                            }                                                        
+                                                        ?> 
+                                                    </td>
+                                                    <td>
+                                                        <?php 
+                                                            // $array =  (array) $array_for_page_name;
+                                                            $counts = array_count_values($temp_name_array);
+                                                            if($counts[$data->name] > 1){
+                                                                // echo ($counts[$data->name]);
+                                                                // v('in array'.$data->name);
+                                                                $key = $key+$counts[$data->name];
+                                                                $flag_to_break = true;
+                                                                if($y == 0){
+                                                                    $y = ($temp_count+$counts[$data->name])-1;
+                                                                }
+                                                                // if(isset($data->likes)){
+                                                                //     echo $data->likes."<br>"; 
+                                                                // }else if (isset($data->followed_by)) {
+                                                                //     echo $data->followed_by."<br>";
+                                                                // }elseif (isset($data->subscriberCount)) {
+                                                                //     echo $data->subscriberCount."<br>";
+                                                                // }
+                                                                // echo "<br>".($y-2)."<br>";
+                                                                // echo ($temp_count-1)."<br>";
+                                                                for ($i=$temp_count-2; $i <= $y-2 ; $i++) { 
+                                                                    $temp = ""; 
+                                                                    if(isset($search_page_data[$i]->likes)){
+                                                                        echo "Facebook likes: ";
+                                                                        $temp = "Facebook";
+                                                                        echo $search_page_data[$i]->likes."<br>"; 
+
+                                                                    }else if (isset($search_page_data[$i]->followed_by)) {
+                                                                        echo "Instagram Followers: ";
+                                                                        $temp = "Instagram";
+                                                                        echo $search_page_data[$i]->followed_by."<br>";
+
+                                                                    }elseif (isset($search_page_data[$i]->subscriberCount)) {
+                                                                        echo "Youtube Subscriber: ";
+                                                                        $temp = "Youtube";
+                                                                        echo $search_page_data[$i]->subscriberCount."<br>";
+
+                                                                    }
+
+                                                                    // if(isset($search_page_data[$i]->likes)){
+                                                                    //     echo $search_page_data[$i]->likes."<br>"; 
+                                                                    // }else if (isset($search_page_data[$i]->followed_by)) {
+                                                                    //     echo $search_page_data[$i]->followed_by."<br>";
+                                                                    // }elseif (isset($search_page_data[$i]->subscriberCount)) {
+                                                                    //     echo $search_page_data[$i]->subscriberCount."<br>";
+                                                                    // }
+                                                                }
+
+                                                            }else{
+                                                                $temp = ""; 
+                                                                if(isset($data->likes)){
+                                                                    echo "Facebook likes: ";
+                                                                    $temp = "Facebook";
+                                                                }else if (isset($data->followed_by)) {
+                                                                    echo "Instagram Followers: ";
+                                                                    $temp = "Instagram";
+                                                                }elseif (isset($data->subscriberCount)) {
+                                                                    echo "Youtube Subscriber: ";
+                                                                    $temp = "Youtube";
+                                                                }
+                                                                if(isset($data->likes)){
+                                                                    echo $data->likes; 
+                                                                }else if (isset($data->followed_by)) {
+                                                                    echo $data->followed_by;
+                                                                }elseif (isset($data->subscriberCount)) {
+                                                                    echo $data->subscriberCount;
+                                                                }
+                                                            }
+
+                                                            // if(isset($data->likes)){
+                                                            //     echo $data->likes; 
+                                                            // }else if (isset($data->followed_by)) {
+                                                            //     echo $data->followed_by;
+                                                            // }elseif (isset($data->subscriberCount)) {
+                                                            //     echo $data->subscriberCount;
+                                                            // }
+                                                        ?> 
+                                                    </td>
+                                                    <!-- <td> -->
+                                                        <?php 
+                                                            // $temp = ""; 
+                                                            // if(isset($data->likes)){
+                                                            //     echo "Facebook";
+                                                            //     $temp = "Facebook";
+                                                            // }else if (isset($data->followed_by)) {
+                                                            //     echo "Instagram";
+                                                            //     $temp = "Instagram";
+                                                            // }elseif (isset($data->subscriberCount)) {
+                                                            //     echo "Youtube";
+                                                            //     $temp = "Youtube";
+                                                            // }
+                                                        ?> 
+                                                    <!-- </td> -->
+                                                    <td>
+                                                        <img src="{{ isset($data->image) ? $data->image : ''}}" style=" max-width: 190px; " class="img-thumbnail">
+                                                    </td>
+
+                                                    <td>
+                                                        <a href="#">
+                                                            <span class="glyphicon glyphicon-star"></span> 
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="<?php  if(Auth::guest()){
+                                                                            if (Auth::guard('jobseeker')->check()) { 
+                                                                                if(isset($data->user_id)){ 
+                                                                                    echo "/messages_marketer/". $temp.',,'.$data->id.',,'.$data->user_id ."/create"; 
+                                                                                } 
+                                                                            }else{
+                                                                                echo '/jobseeker_register';
                                                                             } 
-                                                                        }else{
-                                                                            echo '/jobseeker_register';
                                                                         } 
-                                                                    } 
-                                                            ?>">
-                                                        <span class="glyphicon glyphicon-envelope"></span>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        <?php
+                                                                ?>">
+                                                            <span class="glyphicon glyphicon-envelope"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                        <?php    
+
+                                            }
                                         }else{
                                             echo "Nothing";
                                         }
@@ -299,22 +389,22 @@
 </div>
 <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $.noConflict();
-        $('#example').DataTable();
-        $("#hide").click(function(){
-            $(".Advance-search-class").toggle();
-            console.log($("#advanced-search-span").attr('class'));
-            if( $("#advanced-search-span").attr('class') == 'fa fa-angle-down'){
+    // $(document).ready(function() {
+    //     $.noConflict();
+    //     $('#example').DataTable();
+    //     $("#hide").click(function(){
+    //         $(".Advance-search-class").toggle();
+    //         console.log($("#advanced-search-span").attr('class'));
+    //         if( $("#advanced-search-span").attr('class') == 'fa fa-angle-down'){
 
-                $( "#advanced-search-span" ).removeClass('fa fa-angle-down');
-                $( "#advanced-search-span" ).addClass('fa fa-angle-up');
-            }else{
-                $( "#advanced-search-span" ).removeClass('fa fa-angle-up');
-                $( "#advanced-search-span" ).addClass('fa fa-angle-down');
-            }
-        });
-    } );
+    //             $( "#advanced-search-span" ).removeClass('fa fa-angle-down');
+    //             $( "#advanced-search-span" ).addClass('fa fa-angle-up');
+    //         }else{
+    //             $( "#advanced-search-span" ).removeClass('fa fa-angle-up');
+    //             $( "#advanced-search-span" ).addClass('fa fa-angle-down');
+    //         }
+    //     });
+    // } );
 </script>
 
 @endsection
