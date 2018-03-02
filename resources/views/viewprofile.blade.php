@@ -42,7 +42,7 @@
                                 <br>
                             </div>
 
-                            <div class="col-sm-2">
+                            <!-- <div class="col-sm-2">
                                 <a href="#" class="pull-right">
                                     @if (!empty(Auth::user()->profile_picture))
                                         @if(strpos(Auth::user()->profile_picture,"http") !== false )
@@ -54,7 +54,7 @@
                                     <img title="profile image" class="img-responsive" src="{{ asset('img/default-profile-image.png') }}">
                                     @endif
                                 </a>
-                            </div>
+                            </div> -->
                         </div>
                         <br>
                         @if (session('status'))
