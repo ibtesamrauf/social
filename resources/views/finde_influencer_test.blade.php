@@ -236,7 +236,7 @@
                                                 }
                                             ?>
                                                 <!-- onclick="window.location='/viewprofile_from_find_influencer/{{ $data->user_id }}';" -->
-                                                <tr>        
+                                                <tr onclick="window.location='/viewprofile_from_find_influencer/{{ $data->user_id }}';">        
                                                     <td>
                                                         {{ $counter_for_loop }}
                                                     </td>
