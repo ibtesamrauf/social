@@ -144,8 +144,8 @@
                     <div class="form-group{{ $errors->has('faebook_url') ? ' has-error' : '' }}">
 
                         <div class="input-group">
-                            <span class="input-group-addon">https://www.facebook.com/</span>
-                            <input id="faebook_url" placeholder="Page name" type="text" class="form-control" name="faebook_url" value="{{ old('faebook_url') }}" placeholder="Page url" autofocus>
+                            <span class="input-group-addon" style=" padding-right: 2px; ">https://www.facebook.com/</span>
+                            <input id="faebook_url" style="padding-left: 2px;" placeholder="Page name" type="text" class="form-control" name="faebook_url" value="{{ old('faebook_url') }}" placeholder="Page url" autofocus>
                         </div>
                         <div class="form-group hidden route_breakout_id">
                         </div>
@@ -158,8 +158,8 @@
 
                     <div class="form-group{{ $errors->has('instagram_url') ? ' has-error' : '' }}">
                         <div class="input-group">
-                            <span class="input-group-addon">https://www.instagram.com/</span>
-                            <input id="instagram_url" placeholder="Page name" type="text" class="form-control" name="instagram_url" value="{{ old('instagram_url') }}" placeholder="Profile url" autofocus>
+                            <span class="input-group-addon" style=" padding-right: 2px;">https://www.instagram.com/</span>
+                            <input id="instagram_url" style="padding-left: 2px;" placeholder="Page name" type="text" class="form-control" name="instagram_url" value="{{ old('instagram_url') }}" placeholder="Profile url" autofocus>
                         </div>
                         <div class="form-group hidden route_breakout_id">
                         </div>
@@ -172,8 +172,8 @@
 
                     <div class="form-group{{ $errors->has('youtube_url') ? ' has-error' : '' }}">
                         <div class="input-group">
-                            <span class="input-group-addon">https://www.youtube.com/channel/</span>
-                            <input id="youtube_url" placeholder="Page name" type="text" class="form-control" name="youtube_url" value="{{ old('youtube_url') }}" placeholder="channel url" autofocus>
+                            <span class="input-group-addon" style=" padding-right: 2px;">https://www.youtube.com/channel/</span>
+                            <input id="youtube_url" style="padding-left: 2px;" placeholder="Page name" type="text" class="form-control" name="youtube_url" value="{{ old('youtube_url') }}" placeholder="channel url" autofocus>
                         </div>
                         <div class="form-group hidden route_breakout_id">
                         </div>
@@ -186,8 +186,8 @@
 
                     <div class="form-group{{ $errors->has('twitter_url') ? ' has-error' : '' }}">
                         <div class="input-group">
-                            <span class="input-group-addon">https://twitter.com/</span>
-                            <input id="twitter_url" placeholder="Page name" type="text" class="form-control" name="twitter_url" value="{{ old('twitter_url') }}" placeholder="Profile url" autofocus>
+                            <span class="input-group-addon" style=" padding-right: 2px;">https://twitter.com/</span>
+                            <input id="twitter_url" style="padding-left: 2px;" placeholder="Page name" type="text" class="form-control" name="twitter_url" value="{{ old('twitter_url') }}" placeholder="Profile url" autofocus>
                         </div>
                         <div class="form-group hidden route_breakout_id">
                         </div>
@@ -201,8 +201,8 @@
 
                     <div class="form-group{{ $errors->has('soundcloud_url') ? ' has-error' : '' }}">
                         <div class="input-group">
-                            <span class="input-group-addon">https://soundcloud.com/</span>
-                            <input id="soundcloud_url" placeholder="Page name" type="text" class="form-control" name="soundcloud_url" value="{{ old('soundcloud_url') }}" placeholder="Profile url" autofocus>
+                            <span class="input-group-addon" style=" padding-right: 2px;">https://soundcloud.com/</span>
+                            <input id="soundcloud_url" style="padding-left: 2px;" placeholder="Page name" type="text" class="form-control" name="soundcloud_url" value="{{ old('soundcloud_url') }}" placeholder="Profile url" autofocus>
                         </div>
                         <div class="form-group hidden route_breakout_id">
                         </div>
@@ -215,8 +215,8 @@
 
                     <div class="form-group{{ $errors->has('website_blog') ? ' has-error' : '' }}">
                         <div class="input-group">
-                            <span class="input-group-addon">https://www.example.com/</span>
-                            <input id="website_blog" type="text" class="form-control" name="website_blog" value="{{ old('website_blog') }}" placeholder="Website / blog " autofocus>
+                            <span class="input-group-addon" style=" padding-right: 2px;">https://www.example.com/</span>
+                            <input id="website_blog" style="padding-left: 2px;" type="text" class="form-control" name="website_blog" value="{{ old('website_blog') }}" placeholder="Website / blog " autofocus>
                         </div>
                         <div class="form-group hidden route_breakout_id">
                         </div>
@@ -231,8 +231,8 @@
 
                     <div class="form-group{{ $errors->has('monthly_visitors') ? ' has-error' : '' }}">
                         <div class="input-group">
-                            <span class="input-group-addon">blog average monthly visitors</span>
-                            <input id="monthly_visitors" type="text" class="form-control" name="monthly_visitors" value="{{ old('monthly_visitors') }}" placeholder="Example" autofocus>
+                            <span class="input-group-addon" style=" padding-right: 2px;">blog average monthly visitors</span>
+                            <input id="monthly_visitors" style="padding-left: 2px;" type="text" class="form-control" name="monthly_visitors" value="{{ old('monthly_visitors') }}" placeholder="Example" autofocus>
                         </div>
                         <div class="form-group hidden route_breakout_id">
                         </div>
