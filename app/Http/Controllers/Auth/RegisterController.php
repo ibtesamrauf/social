@@ -105,9 +105,7 @@ class RegisterController extends Controller
                 $data[$key] = ""; 
             }
         }
-        // v('ads');
-        // $data['file']->move('users',$data['file']->getClientOriginalName());
-        // if(Input::hasFile($data['file'])){
+        
         if($this->is_file){
             if($data['file']){
                 echo 'Uploaded';

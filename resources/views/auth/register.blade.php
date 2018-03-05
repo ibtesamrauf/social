@@ -185,8 +185,12 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('twitter_url') ? ' has-error' : '' }}">
-                        
-                        <input id="twitter_url" placeholder="Twitter.com/" type="text" class="form-control" name="twitter_url" value="{{ old('twitter_url') }}" placeholder="Profile url" autofocus>
+                        <div class="input-group">
+                            <span class="input-group-addon">https://twitter.com/</span>
+                            <input id="twitter_url" placeholder="Page name" type="text" class="form-control" name="twitter_url" value="{{ old('twitter_url') }}" placeholder="Profile url" autofocus>
+                        </div>
+                        <div class="form-group hidden route_breakout_id">
+                        </div>
 
                         @if ($errors->has('twitter_url'))
                             <span class="help-block">
@@ -196,9 +200,12 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('soundcloud_url') ? ' has-error' : '' }}">
-                        
-                        <input id="soundcloud_url" placeholder="Soundcloud.com/" type="text" class="form-control" name="soundcloud_url" value="{{ old('soundcloud_url') }}" placeholder="Profile url" autofocus>
-
+                        <div class="input-group">
+                            <span class="input-group-addon">https://soundcloud.com/</span>
+                            <input id="soundcloud_url" placeholder="Page name" type="text" class="form-control" name="soundcloud_url" value="{{ old('soundcloud_url') }}" placeholder="Profile url" autofocus>
+                        </div>
+                        <div class="form-group hidden route_breakout_id">
+                        </div>
                         @if ($errors->has('soundcloud_url'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('soundcloud_url') }}</strong>
@@ -207,8 +214,13 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('website_blog') ? ' has-error' : '' }}">
-                        
-                        <input id="website_blog" type="text" class="form-control" name="website_blog" value="{{ old('website_blog') }}" placeholder="Website / blog" autofocus>
+                        <div class="input-group">
+                            <span class="input-group-addon">https://www.example.com/</span>
+                            <input id="website_blog" type="text" class="form-control" name="website_blog" value="{{ old('website_blog') }}" placeholder="Website / blog " autofocus>
+                        </div>
+                        <div class="form-group hidden route_breakout_id">
+                        </div>
+
 
                         @if ($errors->has('website_blog'))
                             <span class="help-block">
@@ -218,8 +230,13 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('monthly_visitors') ? ' has-error' : '' }}">
+                        <div class="input-group">
+                            <span class="input-group-addon">blog average monthly visitors</span>
+                            <input id="monthly_visitors" type="text" class="form-control" name="monthly_visitors" value="{{ old('monthly_visitors') }}" placeholder="Example" autofocus>
+                        </div>
+                        <div class="form-group hidden route_breakout_id">
+                        </div>
                         
-                        <input id="monthly_visitors" type="text" class="form-control" name="monthly_visitors" value="{{ old('monthly_visitors') }}" placeholder="blog average monthly visitors" autofocus>
 
                         @if ($errors->has('monthly_visitors'))
                             <span class="help-block">
@@ -243,7 +260,16 @@
                             @foreach($preferred_medium_value as $preferred_medium_value)
                             <tr>
                                 <td>
-                                    <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]" autofocus @if (old('preferred_medium') == $preferred_medium_value->id) selected="selected" @endif> {{ $preferred_medium_value->preferred_medium_title }}<br>
+                                    <input type="checkbox" value="{{ $preferred_medium_value->id }}" name="preferred_medium[]" id="preferred_medium[]" autofocus 
+                                    <?php 
+                                        $test = old('preferred_medium');
+                                        if(!empty($test)){
+                                            if (in_array($preferred_medium_value->id, $test)){
+                                                echo "Checked"; 
+                                            } 
+                                        }
+                                    ?>
+                                    > {{ $preferred_medium_value->preferred_medium_title }}<br>
                                     <?php 
                                         if($preferred_medium_value->preferred_medium_title  == "Others"){
                                     ?>
