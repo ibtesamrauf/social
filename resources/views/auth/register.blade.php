@@ -142,8 +142,13 @@
                     <hr>
                     
                     <div class="form-group{{ $errors->has('faebook_url') ? ' has-error' : '' }}">
-                        <input id="faebook_url" placeholder="Facebook.com/" type="text" class="form-control" name="faebook_url" value="{{ old('faebook_url') }}" placeholder="Page url" autofocus>
 
+                        <div class="input-group">
+                            <span class="input-group-addon">https://www.facebook.com/</span>
+                            <input id="faebook_url" placeholder="Page name" type="text" class="form-control" name="faebook_url" value="{{ old('faebook_url') }}" placeholder="Page url" autofocus>
+                        </div>
+                        <div class="form-group hidden route_breakout_id">
+                        </div>
                         @if ($errors->has('faebook_url'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('faebook_url') }}</strong>
@@ -152,9 +157,12 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('instagram_url') ? ' has-error' : '' }}">
-
-                        <input id="instagram_url" placeholder="Instagram.com/" type="text" class="form-control" name="instagram_url" value="{{ old('instagram_url') }}" placeholder="Profile url" autofocus>
-
+                        <div class="input-group">
+                            <span class="input-group-addon">https://www.instagram.com/</span>
+                            <input id="instagram_url" placeholder="Page name" type="text" class="form-control" name="instagram_url" value="{{ old('instagram_url') }}" placeholder="Profile url" autofocus>
+                        </div>
+                        <div class="form-group hidden route_breakout_id">
+                        </div>
                         @if ($errors->has('instagram_url'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('instagram_url') }}</strong>
@@ -163,9 +171,12 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('youtube_url') ? ' has-error' : '' }}">
-                       
-                        <input id="youtube_url" placeholder="Youtube.com/" type="text" class="form-control" name="youtube_url" value="{{ old('youtube_url') }}" placeholder="channel url" autofocus>
-
+                        <div class="input-group">
+                            <span class="input-group-addon">https://www.youtube.com/channel/</span>
+                            <input id="youtube_url" placeholder="Page name" type="text" class="form-control" name="youtube_url" value="{{ old('youtube_url') }}" placeholder="channel url" autofocus>
+                        </div>
+                        <div class="form-group hidden route_breakout_id">
+                        </div>
                         @if ($errors->has('youtube_url'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('youtube_url') }}</strong>

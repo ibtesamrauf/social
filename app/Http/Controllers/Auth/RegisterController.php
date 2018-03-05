@@ -184,15 +184,19 @@ class RegisterController extends Controller
 
         // add instagram page data
         if(!empty($data['instagram_url'])){
-            $instagram_url = explode("/", $data['instagram_url']);
-            if(empty(last($instagram_url))){
-                unset($instagram_url[count($instagram_url) - 1]);
-                $instagram_url = last($instagram_url);
+            if( strpos( $data['instagram_url'] , '/' ) !== false ) {
+                $instagram_url = explode("/", $data['instagram_url']);
+                if(empty(last($instagram_url))){
+                    unset($instagram_url[count($instagram_url) - 1]);
+                    $instagram_url = last($instagram_url);
+                }else{
+                    unset($instagram_url[count($instagram_url) - 1]);
+                    $instagram_url = last($instagram_url);
+                }
             }else{
-                unset($instagram_url[count($instagram_url) - 1]);
-                $instagram_url = last($instagram_url);
+                $instagram_url = $data['instagram_url'];
             }
-            // vv($instagram_url);
+            
             $url_22 = "https://www.instagram.com/".$instagram_url."/?__a=1";
 
             // $url_2 = "https://graph.facebook.com/".$instagram_url."/?fields=name,likes,link,fan_count,picture&access_token=1942200009377124|2aa44fec0382b4d5715af57be82779d2";
@@ -200,7 +204,7 @@ class RegisterController extends Controller
             
             $instagram_response = json_decode($response_22);     
             $instagram_response = $instagram_response->user;
-            
+            vv($instagram_response );
             Instagram_page_data::create([
                     'user_id'           => $user->id,
                     'page_id'           => 0,
