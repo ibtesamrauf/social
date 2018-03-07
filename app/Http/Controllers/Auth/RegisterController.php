@@ -150,6 +150,8 @@ class RegisterController extends Controller
             'company_id'        => 1,
             'company_name'      => 'no',
             'password'          => bcrypt($data['password']),
+            'provider'          => '',
+            'provider_id'       => '',
         ]);
 
         // add facebook page data

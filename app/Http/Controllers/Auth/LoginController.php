@@ -63,7 +63,12 @@ class LoginController extends Controller
         // vv($user);
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
-        return redirect($this->redirectTo);
+        // vv(Auth::user()->last_name);
+        if(empty(Auth::user()->last_name)){
+            return redirect('update_profile_login_with_social');
+        }else{
+            return redirect($this->redirectTo);
+        }
     }
 
     public function findOrCreateUser($user, $provider)
@@ -92,6 +97,7 @@ class LoginController extends Controller
             'website_blog'        => '',
             'monthly_visitors'    => '',
             'company_id'        => 1,
+            'verified'          => $user->verified,
             'company_name'      => 'no',
             'password'          => bcrypt($password_variable),
         ]);
