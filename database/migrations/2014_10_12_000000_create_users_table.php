@@ -35,6 +35,8 @@ class CreateUsersTable extends Migration
                 $table->string('website_blog');
                 $table->string('monthly_visitors');
                 $table->string('password');
+                $table->string('provider');
+                $table->string('provider_id');
                 $table->rememberToken();
                 $table->timestamps();
             });
