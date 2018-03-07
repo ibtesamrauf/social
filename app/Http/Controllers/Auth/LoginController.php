@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\User;
+use Socialite;
 
 class LoginController extends Controller
 {
@@ -39,6 +40,68 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     * Redirect the user to the OAuth Provider.
+     *
+     * @return Response
+     */
+    public function redirectToProvider($provider)
+    {
+        // vv("asd");
+        return Socialite::driver($provider)->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleProviderCallback($provider)
+    {
+        $user = Socialite::driver($provider)->user();
+        // vv($user);
+        $authUser = $this->findOrCreateUser($user, $provider);
+        Auth::login($authUser, true);
+        return redirect($this->redirectTo);
+    }
+
+    public function findOrCreateUser($user, $provider)
+    {
+        $authUser = User::where('provider_id', $user->id)->orwhere('email',$user->email)->first();
+        if ($authUser) {
+            return $authUser;
+        }
+        $password_variable = 'influencer2';
+        $user_created = User::create([
+            'first_name'     => $user->name,
+            'email'    => $user->email,
+            'provider' => $provider,
+            'provider_id' => $user->id,
+            'last_name'           => '',
+            'profile_picture'     => '',
+            'user_role'           => 'influencer',
+            'phone_number'        => '',
+            'country'             => '',
+            'title'               => '',
+            'faebook_url'         => '',
+            'instagram_url'       => '',
+            'youtube_url'         => '',
+            'twitter_url'         => '',
+            'soundcloud_url'      => '',
+            'website_blog'        => '',
+            'monthly_visitors'    => '',
+            'company_id'        => 1,
+            'company_name'      => 'no',
+            'password'          => bcrypt($password_variable),
+        ]);
+
+        \Mail::send('email.welcome_email', ['user' => $user_created , 'password_variable' => $password_variable], function ($m) use ($user_created) {
+            $m->to($user_created->email, $user_created->first_name)->subject('You have New massage!');
+        });
+        return $user_created;
+    }
+
 
     /**
      * Get the failed login response instance.

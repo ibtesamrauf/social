@@ -224,6 +224,13 @@ class ViewpageController extends Controller
     {
         $instagram_page_data = Instagram_page_data::where('id' , $id)->get();
         return view('add_instagram_page' , compact('instagram_page_data'));
-    }  
+    } 
+
+    public function update_profile_login_with_social()
+    {
+        return view('welcome');
+    }
+
+    
 
 }

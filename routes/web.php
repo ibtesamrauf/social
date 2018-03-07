@@ -151,3 +151,8 @@ Route::get('/email_test', 'HomeController@email_test');
 
 Route::get('/test_for_unread_email', 'HomeController@test_for_unread_email');
 
+// for social login and register
+Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
+
+Route::get('/update_profile_login_with_social', 'ViewpageController@update_profile_login_with_social');

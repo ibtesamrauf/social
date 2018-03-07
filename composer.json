@@ -12,6 +12,7 @@
         "ixudra/curl": "^6.16",
         "jrean/laravel-user-verification": "^4.1",
         "laravel/framework": "5.4.*",
+        "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
         "sammyk/laravel-facebook-sdk": "^3.5"

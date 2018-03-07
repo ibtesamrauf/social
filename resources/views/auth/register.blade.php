@@ -36,8 +36,6 @@
                         @endif
                     </div>
 
-
-
                     <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
                         <input id="last_name" placeholder="Last Name" type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" required autofocus>
 
@@ -397,6 +395,15 @@
                         </button>
                     </div>
                 </form>
+                <hr>
+                    
+                <div class="form-group">
+                    <div class="">
+                        <!-- <a href="{{ url('/auth/github') }}" class="btn btn-github"><i class="fa fa-github"></i> Github</a> -->
+                        <!-- <a href="{{ url('/auth/twitter') }}" class="btn btn-twitter"><i class="fa fa-twitter"></i> Twitter</a> -->
+                        <a href="{{ url('/auth/facebook') }}" class="btn btn-facebook"><i class="fa fa-facebook"></i> Facebook</a>
+                    </div>
+                </div>
               </div>
             </div>
           </div>
