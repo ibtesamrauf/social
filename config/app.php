@@ -168,6 +168,7 @@ return [
         // SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
         // facebook\Facebook\Facebook::class,
         Cmgmyr\Messenger\MessengerServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
 
 
         /*
@@ -236,6 +237,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Curl' => Ixudra\Curl\Facades\Curl::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         // 'Facebook' => SammyK\LaravelFacebookSdk\FacebookFacade::class,
 
         // 'Facebook' => SammyK\Facebook\Facebook::class,
