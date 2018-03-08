@@ -156,3 +156,4 @@ Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::get('/update_profile_login_with_social', 'ViewpageController@update_profile_login_with_social');
+Route::post('/update_profile_login_with_social_post', 'ViewpageController@update_profile_login_with_social_post');

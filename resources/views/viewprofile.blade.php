@@ -22,6 +22,11 @@
                 @endphp
             </div>
             @endif
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-sm-12" align="center">
                     <!-- <h3 class="font-alt">Register</h3> -->
@@ -57,11 +62,7 @@
                             </div> -->
                         </div>
                         <br>
-                        @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                        @endif
+                        
                         <div class="row">
                             <div class="col-sm-3">
                                 <!--left col-->

@@ -72,7 +72,13 @@ class Youtube_pageController extends Controller
             $youtube_url = last($youtube_url);
         }
         // vv($youtube_url);
-        $youtube_response = file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id='.$youtube_url.'&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE');
+        $arrContextOptions=array(
+            "ssl"=>array(
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ),
+        );  
+        $youtube_response = file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id='.$youtube_url.'&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE', false, stream_context_create($arrContextOptions));
         $youtube_response = json_decode($youtube_response);
         // vv($youtube_response);
         if(empty($youtube_response->items)){

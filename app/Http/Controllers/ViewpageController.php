@@ -17,8 +17,9 @@ use App\Hashtags;
 use App\Preferred_medium;
 use App\User_preferred_medium;
 // use SammyK;
-
-
+use App\Country;
+use App\User_roles_hashtags;
+use Illuminate\Support\Facades\Validator;
 
 class ViewpageController extends Controller
 {
@@ -228,7 +229,247 @@ class ViewpageController extends Controller
 
     public function update_profile_login_with_social()
     {
-        return view('welcome');
+        $user = User::findOrFail(Auth::user()->id);
+        $preferred_medium_value = Preferred_medium::get();
+        $country1 = Country::orderBy('id' , 'asc')->get();
+        return view('update_profile_login_with_social' , compact( 'preferred_medium_value' , 'country1' , 'user'));
+    }
+
+    public function update_profile_login_with_social_post(Request $request)
+    {   
+        $this->validator($request->all())->validate();
+        $user = $this->create($request->all());
+       
+        return redirect('viewprofile')->with('status', 'Prefered Medium Added');
+    }
+
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'required|string|max:255',
+            'phone_number' => 'required',
+            'country' => 'required|not_in:Select',
+            'title' => 'required',
+            'hashtags' => 'required',
+            'preferred_medium' => 'required',
+        ]);
+        // vv("ppp");
+    }
+
+    protected function create(array $data)
+    {
+
+        $image_name = "";
+        foreach ($data as $key => $value) {
+            if(empty($value)){
+                $data[$key] = ""; 
+            }
+        }
+        
+        if(array_key_exists("file",$data) ){
+            echo 'Uploaded';
+            // $file = Input::file($data['file']);
+            $file = $data['file'];
+            $file->move('uploads', time().$file->getClientOriginalName());
+            echo '';
+            $image_name = time().$file->getClientOriginalName();
+        }else{
+            $user_data = User::where('id',Auth::user()->id)->first();
+
+            if(!empty($user_data->profile_picture)){
+                $image_name = $user_data->profile_picture;
+            }
+        }
+        
+        $user = User::where('id',Auth::user()->id)
+            ->update([
+            'first_name'          => $data['first_name'],
+            'last_name'           => $data['last_name'],
+            'profile_picture'     => $image_name,
+            'phone_number'        => $data['phone_number'],
+            'country'             => $data['country'],
+            'title'               => $data['title'],
+            'faebook_url'         => $data['faebook_url'],
+            'instagram_url'       => $data['instagram_url'],
+            'youtube_url'         => $data['youtube_url'],
+            'twitter_url'         => $data['twitter_url'],
+            'soundcloud_url'      => $data['soundcloud_url'],
+            'website_blog'        => $data['website_blog'],
+            'monthly_visitors'    => $data['monthly_visitors'],
+            'company_id'        => 1,
+            'company_name'      => 'no',
+            'provider'          => '',
+            'provider_id'       => '',
+        ]);
+
+        // add facebook page data
+        if(!empty($data['faebook_url'])){
+            $facebook_url = explode("/", $data['faebook_url']);
+            if(empty(last($facebook_url))){
+                unset($facebook_url[count($facebook_url) - 1]);
+                $facebook_url = last($facebook_url);
+            }else{
+                $facebook_url = last($facebook_url);
+            }
+
+            // vv($facebook_url);
+            $url_2 = "https://graph.facebook.com/".$facebook_url."/?fields=name,likes,link,fan_count,picture&access_token=1942200009377124|2aa44fec0382b4d5715af57be82779d2";
+            $response_2 = file_get_contents($url_2);
+            
+            $facebook_response = json_decode($response_2);
+            $facebook_response_page_image = "https://graph.facebook.com/v2.11/".$facebook_url."/picture?type=large";
+            Facebook_page_data::create([
+                    'user_id'           => Auth::user()->id,
+                    'page_id'           => 0,
+                    'name'              => $facebook_response->name,
+                    'link'              => $facebook_response->link,
+                    'keyword'           => $facebook_url,
+                    'likes'             => $facebook_response->fan_count,
+                    'image'             => $facebook_response_page_image,
+                ]);
+        }
+
+
+        // add instagram page data
+        if(!empty($data['instagram_url'])){
+            if( strpos( $data['instagram_url'] , '/' ) !== false ) {
+                $instagram_url = explode("/", $data['instagram_url']);
+                if(empty(last($instagram_url))){
+                    unset($instagram_url[count($instagram_url) - 1]);
+                    $instagram_url = last($instagram_url);
+                }else{
+                    unset($instagram_url[count($instagram_url) - 1]);
+                    $instagram_url = last($instagram_url);
+                }
+            }else{
+                $instagram_url = $data['instagram_url'];
+            }
+            
+            $url_22 = "https://www.instagram.com/".$instagram_url."/?__a=1";
+
+            // $url_2 = "https://graph.facebook.com/".$instagram_url."/?fields=name,likes,link,fan_count,picture&access_token=1942200009377124|2aa44fec0382b4d5715af57be82779d2";
+            $response_22 = file_get_contents($url_22);
+            
+            $instagram_response = json_decode($response_22);     
+            $instagram_response = $instagram_response->user;
+            vv($instagram_response );
+            Instagram_page_data::create([
+                    'user_id'           => Auth::user()->id,
+                    'page_id'           => 0,
+                    'name'              => $instagram_response->full_name,
+                    'keyword'           => $instagram_url,
+                    'followed_by'       => $instagram_response->followed_by->count,
+                    'follows'           => $instagram_response->follows->count,
+                    'image'             => $instagram_response->profile_pic_url_hd,
+                ]);
+       
+        }
+
+
+        // add youtube page data
+        if(!empty($data['youtube_url'])){
+            $youtube_url = explode("/", $data['youtube_url']);
+            if(empty(last($youtube_url))){
+                unset($youtube_url[count($youtube_url) - 1]);
+                $youtube_url = last($youtube_url);
+            }else{
+                $youtube_url = last($youtube_url);
+            }
+            // vv($youtube_url);
+            $youtube_response = file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id='.$youtube_url.'&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE');
+            $youtube_response = json_decode($youtube_response);
+            $youtube_response = $youtube_response->items[0];
+            // vv($youtube_response);
+            if(empty($youtube_response->snippet->description)){
+                $youtube_response->snippet->description = 'null';
+            }
+            Youtube_page_data::create([
+                    'user_id'           => Auth::user()->id,
+                    'page_id'           => 0,
+                    'name'              => $youtube_response->snippet->title,
+                    'keyword'              => $youtube_url,
+                    'subscriberCount'   => $youtube_response->statistics->subscriberCount,
+                    'image'             => $youtube_response->snippet->thumbnails->medium->url,
+                    'description'       => $youtube_response->snippet->description,
+                ]);
+       
+        }
+
+        if(!empty($data['description'])){
+            $link_var = $data['link_p'];        
+            foreach ($data['description'] as $key => $value) {  
+                if(empty($value)){
+                    $value = "";
+                    if(empty($link_var[$key])){
+                        $link_var[$key] = "";
+                    }
+                }
+                if(empty($value) && empty($link_var[$key])){
+                }else{
+                    User_portfolio::create([
+                        'user_id'       => Auth::user()->id,
+                        'link'          => $link_var[$key],
+                        'description'   => $value,
+                    ]);
+                }  
+            }  
+        }
+
+        if(!empty($data['client'])){
+            $link_var = $data['link'];        
+            $details_var = $data['details'];        
+            foreach ($data['client'] as $key => $value) {  
+                if(empty($value)){
+                    $value = "";
+                    if(empty($link_var[$key])){
+                        $link_var[$key] = "";
+                    }
+                    if(empty($details_var[$key])){
+                        $details_var[$key] = "";
+                    }
+                }  
+                if(empty($value) && empty($link_var[$key]) && empty($details_var[$key]) ){
+                }else{
+                    User_previously_campaign::create([
+                        'user_id'       => Auth::user()->id,
+                        'client'        => $value,
+                        'link'          => $link_var[$key],
+                        'details'       => $details_var[$key],
+                    ]);
+                }  
+            }  
+        }
+
+        foreach ($data['preferred_medium'] as $key => $value) {    
+            User_preferred_medium::create([
+                'user_id'               => Auth::user()->id,
+                'preferred_medium_id'   => $value,
+            ]);
+        }  
+        $hashtags_var = $data['hashtags'];
+        $hashtags_var = explode("#", $hashtags_var);
+        $hashtags_var = array_filter($hashtags_var);
+        $hashtags_var = str_replace(' ', '', $hashtags_var);
+        foreach ($hashtags_var as $key => $value) {
+            # code...
+            $checking_exist = Hashtags::where('tags' , $value)->get();
+            if($checking_exist->isEmpty()){
+                // v($checking_exist);
+                Hashtags::create([
+                    'tags' => $value,
+                    ]);
+            }
+        }
+
+        foreach ($hashtags_var as $key => $value) {
+            $checking_exist = Hashtags::where('tags' , $value)->first();    
+            User_roles_hashtags::create([
+                'user_id'       => Auth::user()->id,
+                'hashtags_id'   => $checking_exist->id,
+            ]);
+        }  
+        return $user;
     }
 
     

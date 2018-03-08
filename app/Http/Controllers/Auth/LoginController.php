@@ -59,15 +59,19 @@ class LoginController extends Controller
      */
     public function handleProviderCallback($provider)
     {
-        $user = Socialite::driver($provider)->user();
-        // vv($user);
-        $authUser = $this->findOrCreateUser($user, $provider);
-        Auth::login($authUser, true);
-        // vv(Auth::user()->last_name);
-        if(empty(Auth::user()->last_name)){
-            return redirect('update_profile_login_with_social');
-        }else{
-            return redirect($this->redirectTo);
+        try {
+            $user = Socialite::driver($provider)->user();
+            // vv($user->avatar_original);
+            $authUser = $this->findOrCreateUser($user, $provider);
+            Auth::login($authUser, true);
+            // vv(Auth::user()->last_name);
+            if(empty(Auth::user()->last_name)){
+                return redirect('update_profile_login_with_social')->with('status', 'Register Successfully, Now Update Your profile');;
+            }else{
+                return redirect($this->redirectTo);
+            }
+        } catch (Exception $e) {
+            
         }
     }
 
@@ -84,7 +88,7 @@ class LoginController extends Controller
             'provider' => $provider,
             'provider_id' => $user->id,
             'last_name'           => '',
-            'profile_picture'     => '',
+            'profile_picture'     => $user->avatar_original,
             'user_role'           => 'influencer',
             'phone_number'        => '',
             'country'             => '',
@@ -97,7 +101,7 @@ class LoginController extends Controller
             'website_blog'        => '',
             'monthly_visitors'    => '',
             'company_id'        => 1,
-            'verified'          => $user->verified,
+            'verified'          => $user->user['verified'],
             'company_name'      => 'no',
             'password'          => bcrypt($password_variable),
         ]);
