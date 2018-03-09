@@ -149,7 +149,7 @@ class Facebook_pageController extends Controller
         $user = User_page::findOrFail($id);
         $user->update($requestData);
 
-        return redirect('buildpages')->with('status', 'Page Updated Succesfully!');
+        return redirect('viewprofile')->with('status', 'Page Updated Succesfully!');
     }
 
     /**
@@ -161,8 +161,9 @@ class Facebook_pageController extends Controller
      */
     public function destroy($id)
     {
-        User_page::destroy($id);
-        return redirect('buildpages')->with('status', 'Page Deleted Succesfully!');
+        // vv("here");
+        Facebook_page_data::destroy($id);
+        return redirect('viewprofile')->with('status', 'Facebook Page Deleted Succesfully!');
     }
 
     public function upload_youtube_video()
