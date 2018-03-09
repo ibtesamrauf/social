@@ -168,12 +168,12 @@
                             </div>
                             <!--/col-3-->
                             <div class="col-sm-9" style="" contenteditable="false">
-                                <div class="panel panel-default">
+                                <!-- <div class="panel panel-default">
                                     <div class="panel-heading"> {{ Auth::user()->name }} Bio</div>
                                     <div class="panel-body"> A long description about me.
 
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="panel panel-default target">
                                     <div class="panel-heading" contenteditable="false">Facebook Pages
                                         <span style=" /*padding-left: 76%;*/ "><a href="facebook_page_resource/create" style="display: inline-block;" class="btn btn-primary">Add +</a></span>
