@@ -204,7 +204,7 @@ class RegisterController extends Controller
             
             $instagram_response = json_decode($response_22);     
             $instagram_response = $instagram_response->user;
-            vv($instagram_response );
+            // vv($instagram_response );
             Instagram_page_data::create([
                     'user_id'           => $user->id,
                     'page_id'           => 0,

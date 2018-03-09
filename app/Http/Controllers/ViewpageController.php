@@ -240,7 +240,7 @@ class ViewpageController extends Controller
         $this->validator($request->all())->validate();
         $user = $this->create($request->all());
        
-        return redirect('viewprofile')->with('status', 'Prefered Medium Added');
+        return redirect('viewprofile')->with('status', 'Profile updated Successfully!');
     }
 
     protected function validator(array $data)
@@ -302,6 +302,10 @@ class ViewpageController extends Controller
             'provider'          => '',
             'provider_id'       => '',
         ]);
+        if(array_key_exists("password",$data) ){
+            $user = User::where('id',Auth::user()->id)
+                                ->update(['password' => bcrypt($data['password'])]);
+        }
 
         // add facebook page data
         if(!empty($data['faebook_url'])){
@@ -353,7 +357,7 @@ class ViewpageController extends Controller
             
             $instagram_response = json_decode($response_22);     
             $instagram_response = $instagram_response->user;
-            vv($instagram_response );
+            // vv($instagram_response );
             Instagram_page_data::create([
                     'user_id'           => Auth::user()->id,
                     'page_id'           => 0,
@@ -377,7 +381,13 @@ class ViewpageController extends Controller
                 $youtube_url = last($youtube_url);
             }
             // vv($youtube_url);
-            $youtube_response = file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id='.$youtube_url.'&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE');
+            $arrContextOptions=array(
+                "ssl"=>array(
+                    "verify_peer"=>false,
+                    "verify_peer_name"=>false,
+                ),
+            );  
+            $youtube_response = file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id='.$youtube_url.'&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE', false, stream_context_create($arrContextOptions));
             $youtube_response = json_decode($youtube_response);
             $youtube_response = $youtube_response->items[0];
             // vv($youtube_response);
