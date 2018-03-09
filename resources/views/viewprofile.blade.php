@@ -236,7 +236,18 @@
                                                             Subscriber: {{ $youtube_item->subscriberCount }} 
                                                         </p>
                                                         <p>
-
+                                                            {!! Form::open([
+                                                                'method'=>'DELETE',
+                                                                'url' => ['/youtube_page_resource', $youtube_item->id],
+                                                                'style' => 'display:inline'
+                                                            ]) !!}
+                                                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
+                                                                        'type' => 'submit',
+                                                                        'class' => 'btn btn-danger btn-xs',
+                                                                        'title' => 'Delete Activity',
+                                                                        'onclick'=>'return confirm("Confirm delete?")'
+                                                                )) !!}
+                                                            {!! Form::close() !!}
                                                         </p>
                                                     </div>
                                                 </div>

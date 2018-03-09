@@ -173,7 +173,7 @@ class Youtube_pageController extends Controller
      */
     public function destroy($id)
     {
-        User_page::destroy($id);
+        Youtube_page_data::destroy($id);
         return redirect('viewprofile')->with('status', 'Page Deleted Succesfully!');
     }
 
