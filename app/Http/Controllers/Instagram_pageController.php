@@ -162,8 +162,8 @@ class Instagram_pageController extends Controller
      */
     public function destroy($id)
     {
-        User_page::destroy($id);
-        return redirect('viewprofile')->with('status', 'Page Deleted Succesfully!');
+        Instagram_page_data::destroy($id);
+        return redirect('viewprofile')->with('status', 'Instagram Page Deleted Succesfully!');
     }
 
     public function upload_youtube_video()

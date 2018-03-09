@@ -269,6 +269,20 @@
                                                         <p>
                                                             following: {{ $instagram_item->follows }}
                                                         </p>
+                                                        <p>
+                                                            {!! Form::open([
+                                                                'method'=>'DELETE',
+                                                                'url' => ['/instagram_page_resource', $instagram_item->id],
+                                                                'style' => 'display:inline'
+                                                            ]) !!}
+                                                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
+                                                                        'type' => 'submit',
+                                                                        'class' => 'btn btn-danger btn-xs',
+                                                                        'title' => 'Delete Activity',
+                                                                        'onclick'=>'return confirm("Confirm delete?")'
+                                                                )) !!}
+                                                            {!! Form::close() !!}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
