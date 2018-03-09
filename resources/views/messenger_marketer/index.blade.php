@@ -28,6 +28,9 @@
                             </div>
                             @endif
                             <?php 
+                            	if($threads->isEmpty()){
+	                            	echo 'Empty inbox';
+	                            }
 							    foreach ($threads as $key => $value) {
 						    		$unread_var = false;
 						    		$user_data = "";
