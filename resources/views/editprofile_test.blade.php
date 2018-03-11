@@ -26,6 +26,7 @@
                             </ul>
                         @endif
                         <form action="editprofile_post" method="POST" class="form-horizontal">
+							{{ csrf_field() }}
 							<div class="form-group {{ $errors->has('first_name') ? 'has-error' : ''}}">
 							    {!! Form::label('first_name', 'first_name', ['class' => 'col-md-4 control-label']) !!}
 							    <div class="col-md-6">
@@ -42,12 +43,11 @@
 							    </div>
 							</div>
 
-							<div class="form-group {{ $errors->has('profile_picture') ? 'has-error' : ''}}">
-							    {!! Form::label('profile_picture', 'profile_picture', ['class' => 'col-md-4 control-label']) !!}
+							<div class="form-group {{ $errors->has('phone_number') ? 'has-error' : ''}}">
+							    {!! Form::label('phone_number', 'phone_number', ['class' => 'col-md-4 control-label']) !!}
 							    <div class="col-md-6">
-							    	<img src="{{ asset('uploads/'.Auth::user()->profile_picture) }}" style="width:150px">
-							        <input class="form-control" name="profile_picture" type="file" value="{{ Auth::user()->profile_picture }}" id="profile_picture">
-							        {!! $errors->first('profile_picture', '<p class="help-block">:message</p>') !!}
+							        <input class="form-control" name="phone_number" type="text" value="{{ Auth::user()->phone_number }}" id="phone_number">
+							        {!! $errors->first('phone_number', '<p class="help-block">:message</p>') !!}
 							    </div>
 							</div>
 
@@ -59,11 +59,59 @@
 							    </div>
 							</div>
 
-							<div class="form-group {{ $errors->has('role') ? 'has-error' : ''}}">
+							<?php 
+								
+							if(strpos(Auth::user()->profile_picture,'http') !== false){
+								$temp_image = Auth::user()->profile_picture;
+							}else{
+								$temp_image = asset('uploads/'.Auth::user()->profile_picture);
+							}
+							?>
+							<div class="form-group {{ $errors->has('profile_picture') ? 'has-error' : ''}}">
+							    {!! Form::label('profile_picture', 'profile_picture', ['class' => 'col-md-4 control-label']) !!}
+							    <div class="col-md-6">
+							    	<img src="{{ $temp_image }}" style="width:150px">
+							        <input class="form-control" name="profile_picture" type="file" value="{{ Auth::user()->profile_picture }}" id="profile_picture">
+							        {!! $errors->first('profile_picture', '<p class="help-block">:message</p>') !!}
+							    </div>
+							</div>
+
+							<!-- <div class="form-group {{ $errors->has('role') ? 'has-error' : ''}}">
 							    {!! Form::label('role', 'role', ['class' => 'col-md-4 control-label']) !!}
 							    <div class="col-md-6">
 							        <input class="form-control" readonly name="role" type="text" value="Infulencer" id="role">
 							        {!! $errors->first('role', '<p class="help-block">:message</p>') !!}
+							    </div>
+							</div> -->
+							<div class="form-group{{ $errors->has('hashtags') ? ' has-error' : '' }}">
+								{!! Form::label('hashtags', 'Hashtags', ['class' => 'col-md-4 control-label']) !!}
+							    <div class="col-md-6">
+			                        <input id="hashtags" placeholder="Hashtags" type="text" class="form-control" name="hashtags" value="{{ old('hashtags') }}" autofocus>
+							    </div>
+
+		                        @if ($errors->has('hashtags'))
+		                            <span class="help-block">
+		                                <strong>{{ $errors->first('hashtags') }}</strong>
+		                            </span>
+		                        @endif
+		                    </div>
+
+							<div class="form-group {{ $errors->has('preferred_medium') ? 'has-error' : ''}}">
+							    {!! Form::label('preferred_medium', 'Your hashtags', ['class' => 'col-md-4 control-label']) !!}
+							    <div class="col-md-6">
+								    <ul style="overflow-x: hidden; line-height: 2em; border: 1px solid #ccc; padding: 0; margin: 0; ">
+
+							    	@foreach(Auth::user()->Users_Roles_hashtags as $hashtags)
+	                                    <li class="list-group-item text-right">
+	                                        <span class="pull-left">
+	                                            <strong class="">
+	                                                {!! \App\Hashtags::findOrFail($hashtags->hashtags_id)->tags; !!}
+	                                            </strong>
+	                                        </span> 
+	                                        <a href="\users_preferred_medium_remove/{{ $hashtags->id }}" class="btn btn-danger">REMOVE</a>
+	                                    </li>
+                                    @endforeach
+								    </ul>
 							    </div>
 							</div>
 
@@ -95,9 +143,9 @@
 							</div>
 
 							<div class="form-group {{ $errors->has('preferred_medium') ? 'has-error' : ''}}">
-							    {!! Form::label('preferred_medium', 'User Prefered Medium', ['class' => 'col-md-4 control-label']) !!}
+							    {!! Form::label('preferred_medium', 'Your Prefered Medium', ['class' => 'col-md-4 control-label']) !!}
 							    <div class="col-md-6">
-								    <ul>
+								    <ul style="overflow-x: hidden; line-height: 2em; border: 1px solid #ccc; padding: 0; margin: 0; ">
 								    	@foreach(Auth::user()->Users_preferred_medium as $preferred_medium)
 								    		<li class="list-group-item text-right">
 			                                    <span class="pull-left">
@@ -105,15 +153,13 @@
 			                                        {!! \App\Preferred_medium::findOrFail($preferred_medium->preferred_medium_id)->preferred_medium_title; !!}
 			                                        </strong>
 			                                    </span>
-			                                    <a href="\users_preferred_medium_remove/{{ $preferred_medium->id }}" class="btn btn-primary">REMOVE</a>
+			                                    <a href="\users_preferred_medium_remove/{{ $preferred_medium->id }}" class="btn btn-danger">REMOVE</a>
 			                                </li>
 	                                    @endforeach
 								    </ul>
 							        {!! $errors->first('preferred_medium', '<p class="help-block">:message</p>') !!}
 							    </div>
 							</div>
-
-								
 
 							<div class="form-group {{ $errors->has('youtube_page_url') ? 'has-error' : ''}}">
 							    {!! Form::label('youtube_page_url', 'Portfolio', ['class' => 'col-md-4 control-label']) !!}
@@ -162,7 +208,7 @@
 
 							<div class="form-group">
 							    <div class="col-md-offset-4 col-md-4">
-							        {!! Form::submit(isset($submitButtonText) ? $submitButtonText : 'Create', ['class' => 'btn btn-primary']) !!}
+							        {!! Form::submit(isset($submitButtonText) ? $submitButtonText : 'Update', ['class' => 'btn btn-primary']) !!}
 							    </div>
 							</div>
 						</form>

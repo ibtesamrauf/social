@@ -189,6 +189,35 @@ class ViewpageController extends Controller
         // $preferred_medium = Preferred_medium::get();
 
         // $request->
+        User::where('id' , Auth::user()->id)->update([
+                        'first_name' => $request->first_name,
+                        'last_name' => $request->last_name,
+                        'phone_number' => $request->phone_number,
+                    ]);
+        if(!empty($request->hashtags)){        
+            $hashtags_var = $request->hashtags;
+            $hashtags_var = explode("#", $hashtags_var);
+            $hashtags_var = array_filter($hashtags_var);
+            $hashtags_var = str_replace(' ', '', $hashtags_var);
+            foreach ($hashtags_var as $key => $value) {
+                # code...
+                $checking_exist = Hashtags::where('tags' , $value)->get();
+                if($checking_exist->isEmpty()){
+                    // v($checking_exist);
+                    Hashtags::create([
+                        'tags' => $value,
+                        ]);
+                }
+            }
+
+            foreach ($hashtags_var as $key => $value) {
+                $checking_exist = Hashtags::where('tags' , $value)->first();    
+                User_roles_hashtags::create([
+                    'user_id'       => Auth::user()->id,
+                    'hashtags_id'   => $checking_exist->id,
+                ]);
+            }  
+        }
         
         return redirect('editprofile')->with('status', 'Profile Updated'); 
     }
