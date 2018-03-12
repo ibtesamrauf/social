@@ -21,6 +21,7 @@ use App\Country;
 use App\User_roles_hashtags;
 use Illuminate\Support\Facades\Validator;
 use App\User_previously_campaign;
+use App\user_portfolio;
 
 class ViewpageController extends Controller
 {
@@ -191,6 +192,27 @@ class ViewpageController extends Controller
         // $preferred_medium = Preferred_medium::get();
 
         // $request->
+
+        if(!empty($request->portfolio_description)){
+            $link_var = $request->portfolio_link;        
+            foreach ($request->portfolio_description as $key => $value) {  
+                if(empty($value)){
+                    $value = "";
+                }
+                if(empty($link_var[$key])){
+                    $link_var[$key] = "";
+                }
+                if(empty($value) && empty($link_var[$key])){
+                }else{
+                    User_portfolio::create([
+                        'user_id'       => Auth::user()->id,
+                        'link'          => $link_var[$key],
+                        'description'   => $value,
+                    ]);
+                }  
+            }  
+        }
+
         if(!empty($request->previously_campaign_client)){
             $link_var = $request->previously_campaign_link;        
             $details_var = $request->previously_campaign_details;        
@@ -566,6 +588,31 @@ class ViewpageController extends Controller
         return redirect('editprofile')->with('status', 'previous campaign Updated!');
     } 
 
+
+    public function delete_portfolio($portfolio)
+    {
+        user_portfolio::where('id' , $portfolio)->delete();
+        return redirect('editprofile')->with('status', 'previous campaign Deleted!');
+    } 
+
+    public function edit_portfolio($portfolio)
+    {
+        $data = user_portfolio::where('id' , $portfolio)->first();
+        return view('edit_portfolio' ,compact('data'));
+    } 
+
+    public function edit_portfolio_update($id,Request $request)
+    {
+        Validator::make($request->all(), [
+            'link'  => 'required',
+            'description' => 'required',
+        ])->validate();
+        user_portfolio::where('id' , $id)->update([
+                'link' => $request->link,
+                'description' => $request->description,
+            ]);
+        return redirect('editprofile')->with('status', 'previous campaign Updated!');
+    } 
 
     
 

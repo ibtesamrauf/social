@@ -75,6 +75,10 @@ Route::post('/edit_previous_campaign_update/{id}', 'ViewpageController@edit_prev
 
 Route::get('/delete_previous_campaign/{previous_campaign_id}', 'ViewpageController@delete_previous_campaign');
 
+Route::get('/edit_portfolio/{portfolio}', 'ViewpageController@edit_portfolio');
+Route::post('/edit_portfolio_update/{id}', 'ViewpageController@edit_portfolio_update');
+
+Route::get('/delete_portfolio/{portfolio}', 'ViewpageController@delete_portfolio');
 
 // profile Show and edit -- END
 

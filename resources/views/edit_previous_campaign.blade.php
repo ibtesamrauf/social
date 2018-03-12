@@ -7,7 +7,7 @@
         <br /><br /><br />
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Network</div>
+                    <div class="panel-heading">Previous Campaign</div>
                     <div class="panel-body">
 
                         @if ($errors->any())

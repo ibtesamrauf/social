@@ -252,9 +252,9 @@ class RegisterController extends Controller
             foreach ($data['description'] as $key => $value) {  
                 if(empty($value)){
                     $value = "";
-                    if(empty($link_var[$key])){
-                        $link_var[$key] = "";
-                    }
+                }
+                if(empty($link_var[$key])){
+                    $link_var[$key] = "";
                 }
                 if(empty($value) && empty($link_var[$key])){
                 }else{

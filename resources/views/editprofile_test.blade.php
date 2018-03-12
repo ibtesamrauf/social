@@ -174,7 +174,7 @@
 		                                            echo "No portfolio";
 		                                        }else{
 		                                    ?>
-			                                        <table class="table">
+			                                        <table class="table" id="table_portfolio">
 			                                            <th>S.no</th>
 			                                            <th>Link</th>
 			                                            <th>Description</th>
@@ -182,34 +182,38 @@
 			                                            @foreach(Auth::user()->Users_portfolio as $key => $portfolio)
 			                                                <tr>
 			                                                    <td>
-			                                                    	{{ $portfolio->id }}
+			                                                    	{{ $key + 1 }}
 			                                                    </td>
 			                                                    <td>
-			                                                    	<input type="text" value="{{ $portfolio->link }}" name="portfolio_link_{{ $portfolio->id }}" id="portfolio_link_{{ $portfolio->id }}" >
+				                                                    {{ $portfolio->link }}
+			                                                    	<!-- <input type="text" readonly value="{{ $portfolio->link }}" name="portfolio_link_{{ $portfolio->id }}" id="portfolio_link_{{ $portfolio->id }}" > -->
 		                                                    	</td>
 			                                                    <td>
-			                                                    	<input type="text" value="{{ $portfolio->description }}" name="portfolio_description_{{ $portfolio->id }}" id="portfolio_description_{{ $portfolio->id }}" >
+				                                                    {{ $portfolio->description }}
+			                                                    	<!-- <input type="text" readonly value="{{ $portfolio->description }}" name="portfolio_description_{{ $portfolio->id }}" id="portfolio_description_{{ $portfolio->id }}" > -->
 		                                                    	</td>
 		                                                    	<td>
-			                                                    	<input type="text" value="{{ $portfolio->description }}" name="portfolio_description_{{ $portfolio->id }}" id="portfolio_description_{{ $portfolio->id }}" >
-		                                                    	</td>
+						                                            <a href="{{ url('/edit_portfolio/' . $portfolio->id) }}" title="Edit User" class="btn btn-primary btn-xs" >
+						                                            	<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+					                                            	</a>
+						                                            <a href="{{ url('/delete_portfolio/' . $portfolio->id) }}" class="btn btn-danger btn-xs" title="Delete User">
+							                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Delete
+						                                            </a>
+		                                                    	</td> 
 			                                                </tr>
 			                                            @endforeach
 			                                        </table>
+			                                        <div class="col-md-9">
+			                                        </div>
+													<div class="col-md-2">
+														<input class="btn btn-secondary" id="add_portfolio" name="add_portfolio" type="button" value="Add">
+													</div>
 		                                    <?php    
 		                                        } 
 		                                    ?>
 									        {!! $errors->first('youtube_page_url', '<p class="help-block">:message</p>') !!}
 									    </div>
 									</div>
-
-									<!-- <div class="form-group {{ $errors->has('instagram_page_url') ? 'has-error' : ''}}">
-									    {!! Form::label('instagram_page_url', 'Previous Campaign', ['class' => 'col-md-4 control-label']) !!}
-									    <div class="col-md-6">
-									        {!! Form::text('instagram_page_url', null, ['class' => 'form-control']) !!}
-									        {!! $errors->first('instagram_page_url', '<p class="help-block">:message</p>') !!}
-									    </div>
-									</div> -->
 
 									<div class="form-group {{ $errors->has('youtube_page_url') ? 'has-error' : ''}}">
 									    {!! Form::label('youtube_page_url', 'Previous Campaign', ['class' => 'col-md-4 control-label']) !!}
@@ -231,13 +235,16 @@
 			                                                    	{{ $key+1 }}
 			                                                    </td>
 		                                                    	<td>
-			                                                    	<input type="text" readonly value="{{ $previously_campaign->client }}" name="previously_campaign_client_{{ $previously_campaign->id }}" id="previously_campaign_client_{{ $previously_campaign->id }}" >
+		                                                    		{{ $previously_campaign->client }}
+			                                                    	<!-- <input type="text" readonly value="{{ $previously_campaign->client }}" name="previously_campaign_client_{{ $previously_campaign->id }}" id="previously_campaign_client_{{ $previously_campaign->id }}" > -->
 		                                                    	</td>
 			                                                    <td>
-			                                                    	<input type="text" readonly value="{{ $previously_campaign->link }}" name="previously_campaign_link_{{ $previously_campaign->id }}" id="previously_campaign_link_{{ $previously_campaign->id }}" >
+				                                                    {{ $previously_campaign->link }}
+			                                                    	<!-- <input type="text" readonly value="{{ $previously_campaign->link }}" name="previously_campaign_link_{{ $previously_campaign->id }}" id="previously_campaign_link_{{ $previously_campaign->id }}" > -->
 		                                                    	</td>
 			                                                    <td>
-			                                                    	<input type="text" readonly value="{{ $previously_campaign->details }}" name="previously_campaign_details_{{ $previously_campaign->id }}" id="previously_campaign_details_{{ $previously_campaign->id }}" >
+				                                                    {{ $previously_campaign->details }}
+			                                                    	<!-- <input type="text" readonly value="{{ $previously_campaign->details }}" name="previously_campaign_details_{{ $previously_campaign->id }}" id="previously_campaign_details_{{ $previously_campaign->id }}" > -->
 		                                                    	</td>
 		                                                    	<td>
 						                                            <a href="{{ url('/edit_previous_campaign/' . $previously_campaign->id) }}" title="Edit User" class="btn btn-primary btn-xs" >
@@ -253,7 +260,7 @@
 													<div class="col-md-9">
 			                                        </div>
 													<div class="col-md-2">
-														<input class="btn btn-primary" id="add_previous_campaign" name="add_previous_campaign" type="button" value="Add">
+														<input class="btn btn-secondary" id="add_previous_campaign" name="add_previous_campaign" type="button" value="Add">
 													</div>
 		                                    <?php    
 		                                        } 
@@ -297,6 +304,18 @@
                                 '<td><input type="text" name="previously_campaign_details[]" id="previously_campaign_details[]" ></td>'+
                                 '</tr'); 
 	        });
+
+	        var rowCount_portfolio = $('#table_portfolio tr').length;
+			var count_portfolio = rowCount_portfolio-1;
+	        $( "#add_portfolio" ).click(function() {
+	        	count_portfolio = count_portfolio + 1;
+	          	$( "#table_portfolio" ).append('<tr>'+
+	          					'<td>'+count_portfolio+'</td>'+
+                                '<td><input type="text" name="portfolio_link[]" id="portfolio_link[]" ></td>'+
+                                '<td><input type="text" name="portfolio_description[]" id="portfolio_description[]" ></td>'+
+                                '</tr'); 
+	        });
+	        
 	    });
 	</script>
 
