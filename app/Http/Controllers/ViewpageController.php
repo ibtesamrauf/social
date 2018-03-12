@@ -283,7 +283,7 @@ class ViewpageController extends Controller
 
     public function users_preferred_medium_remove($user_preferred_medium_table_id)
     {
-        User_preferred_medium::where('id' , $user_preferred_medium_table_id)->delete();
+        User_roles_hashtags::where('id' , $user_preferred_medium_table_id)->delete();
         return redirect('editprofile')->with('status', 'Prefered Medium Removed'); 
     }
     
