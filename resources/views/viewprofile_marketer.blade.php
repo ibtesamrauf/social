@@ -34,8 +34,11 @@
                         <div class="row">
                             <div class="text-align-left col-sm-10">
                                 <h1 class="">{{ Auth::guard('jobseeker')->user()->first_name  }} {{ Auth::guard('jobseeker')->user()->last_name }}</h1>
-                                <button type="button" class="btn btn-success">Book me!</button>  
-                                <button type="button" class="btn btn-info">Send me a message</button>
+                                <a href="\editprofile_marketer">
+                                    <button type="button" class="btn btn-success">Edit Profile</button>  
+                                </a>
+                                <!-- <button type="button" class="btn btn-success">Book me!</button>   -->
+                                <!-- <button type="button" class="btn btn-info">Send me a message</button> -->
                                 <a href="/finde_influencer_test" class="btn btn-primary">
                                     Find Infulencers
                                 </a>
@@ -75,13 +78,13 @@
                             </div>
                             <!--/col-3-->
                             <div class="col-sm-9" style="" contenteditable="false">
-                                <div class="panel panel-default">
+                                <!-- <div class="panel panel-default">
                                     <div class="panel-heading"> {{ Auth::guard('jobseeker')->user()->name }} Bio</div>
                                     <div class="panel-body"> A long description about me.
 
                                     </div>
                                 </div>
-
+ -->
                                 <div class="panel panel-default target">
                                     <div class="panel-heading" contenteditable="false">
                                         Agency / Company details
