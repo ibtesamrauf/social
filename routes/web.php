@@ -124,6 +124,16 @@ Route::group(['middleware' => 'jobseeker_auth'], function() {
             Route::get('{belongsto1}/{id}', ['as' => 'messages_marketer.show', 'uses' => 'MessagesmarketerController@show']);
             Route::put('{id}', ['as' => 'messages_marketer.update', 'uses' => 'MessagesmarketerController@update']);
     });
+
+    Route::get('/editprofile_marketer', 'Profile_page_marketerController@editprofile_marketer');
+
+    Route::post('/editprofile_marketer_post', 'Profile_page_marketerController@editprofile_marketer_post');
+
+
+    Route::get('/edit_previous_campaign_marketer/{previous_campaign_id}', 'Profile_page_marketerController@edit_previous_campaign_marketer');
+    Route::post('/edit_previous_campaign_update_marketer/{id}', 'Profile_page_marketerController@edit_previous_campaign_update_marketer');
+
+    Route::get('/delete_previous_campaign_marketer/{previous_campaign_id}', 'Profile_page_marketerController@delete_previous_campaign_marketer');
  
 });
 

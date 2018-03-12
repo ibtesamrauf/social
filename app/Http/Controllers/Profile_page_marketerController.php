@@ -18,6 +18,7 @@ use App\Country;
 use App\Marketer_previously_campaign;
 use Illuminate\Support\Facades\Validator;
 use App\Admin;
+use App\Marketer_company;
 use Illuminate\Support\Facades\Input;
 
 class Profile_page_marketerController extends Controller
@@ -62,6 +63,7 @@ class Profile_page_marketerController extends Controller
     public function editprofile_marketer_post(Request $request)
     {
         $image_name = "";
+        $image_name_logo = "";
         // vv($request->all());
         Validator::make($request->all(), [
             'first_name' => 'required',
@@ -69,6 +71,9 @@ class Profile_page_marketerController extends Controller
             'phone_number' => 'required',
             'email' => 'required',
             'country' => 'required',
+            'company_name' => 'required',
+            'website' => 'required',
+            'description' => 'required',
         ])->validate();
 
         if(array_key_exists("file",$request->all()) ){
@@ -83,12 +88,55 @@ class Profile_page_marketerController extends Controller
                 ]);
         }
 
+        if(array_key_exists("logo",$request->all()) ){
+            echo 'Uploaded';
+            // $file = Input::file($request->file);
+            $file = $request->logo;
+            $file->move('uploads', time().$file->getClientOriginalName());
+            echo '';
+            $image_name_logo = time().$file->getClientOriginalName();
+            Marketer_company::where('user_id' , Auth::guard('jobseeker')->user()->id)->update([
+                'logo' => $image_name_logo,
+            ]);
+        }
+
+        Marketer_company::where('user_id' , Auth::guard('jobseeker')->user()->id)->update([
+                'company_name' => $request->company_name,
+                'website' => $request->website,
+                'description' => $request->description,
+            ]);
+
         Admin::where('id' , Auth::guard('jobseeker')->user()->id)->update([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'phone_number' => $request->phone_number,
                 'country' => $request->country,
             ]);
+
+        if(!empty($request->previously_campaign_client)){
+            $link_var = $request->previously_campaign_link;        
+            $details_var = $request->previously_campaign_details;        
+            foreach ($request->previously_campaign_client as $key => $value) {  
+                if(empty($value)){
+                    $value = "";
+                }  
+                if(empty($details_var[$key])){
+                    $details_var[$key] = "";
+                }
+                if(empty($link_var[$key])){
+                    $link_var[$key] = "";
+                }
+                if(empty($value) && empty($link_var[$key]) && empty($details_var[$key]) ){
+                }else{
+                    Marketer_previously_campaign::create([
+                        'user_id'       => Auth::guard('jobseeker')->user()->id,
+                        'influencer_used'        => $value,
+                        'campaign_link'          => $link_var[$key],
+                        'description'       => $details_var[$key],
+                    ]);
+                }  
+            }  
+        }
         return redirect('viewprofile_marketer')->with('status', 'Profile Updated!');
     } 
 

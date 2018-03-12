@@ -84,7 +84,7 @@
 									<div class="form-group {{ $errors->has('profile_picture') ? 'has-error' : ''}}">
 									    {!! Form::label('profile_picture', 'profile_picture', ['class' => 'col-md-4 control-label']) !!}
 									    <div class="col-md-6">
-									    	<img src="{{ $temp_image }}" style="width:150px">
+									    	<img src="{{ $temp_image }}" class="img-thumbnail" style="width:150px">
 									        <input class="form-control" type="file" id="file" name="file">
 									        {!! $errors->first('profile_picture', '<p class="help-block">:message</p>') !!}
 									    </div>
@@ -101,9 +101,9 @@
 		                                    ?>
 			                                        <table class="table" id="table_previous_campaign">
 			                                            <th>S.no</th>
-			                                            <th>Client</th>
-			                                            <th>link</th>
-			                                            <th>details</th>
+			                                            <th>Influencer Used</th>
+			                                            <th>Campaign Link</th>
+			                                            <th>Description</th>
 			                                            <th>Action</th>
 			                                            @foreach(Auth::guard('jobseeker')->user()->Maeketer_previously_campaign as $key => $previously_campaign)
 			                                                <tr>
@@ -133,7 +133,43 @@
 									        {!! $errors->first('youtube_page_url', '<p class="help-block">:message</p>') !!}
 									    </div>
 									</div>
-							
+									<hr>
+									<h2 class="col-md-6 col-md-offset-4">Agency / Company details</h2>
+									<hr>
+									
+									<div class="form-group {{ $errors->has('logo') ? 'has-error' : ''}}">
+									    {!! Form::label('logo', 'Logo', ['class' => 'col-md-4 control-label']) !!}
+									    <div class="col-md-6">
+									    	<img style="width:150px" class="img-thumbnail" src="{{ asset('uploads/'.Auth::guard('jobseeker')->user()->Maeketer_company->logo) }}">
+									        <input class="form-control" type="file" name="logo"  id="logo">
+									        {!! $errors->first('logo', '<p class="help-block">:message</p>') !!}
+									    </div>
+									</div>
+
+									<div class="form-group {{ $errors->has('company_name') ? 'has-error' : ''}}">
+									    {!! Form::label('company_name', 'Company Name', ['class' => 'col-md-4 control-label']) !!}
+									    <div class="col-md-6">
+									        <input class="form-control" name="company_name" type="text" value="{{ Auth::guard('jobseeker')->user()->Maeketer_company->company_name }}" id="company_name">
+									        {!! $errors->first('company_name', '<p class="help-block">:message</p>') !!}
+									    </div>
+									</div>
+
+									<div class="form-group {{ $errors->has('website') ? 'has-error' : ''}}">
+									    {!! Form::label('website', 'Website', ['class' => 'col-md-4 control-label']) !!}
+									    <div class="col-md-6">
+									        <input class="form-control" name="website" type="text" value="{{ Auth::guard('jobseeker')->user()->Maeketer_company->website }}" id="website">
+									        {!! $errors->first('website', '<p class="help-block">:message</p>') !!}
+									    </div>
+									</div>
+
+									<div class="form-group {{ $errors->has('description') ? 'has-error' : ''}}">
+									    {!! Form::label('description', 'Description', ['class' => 'col-md-4 control-label']) !!}
+									    <div class="col-md-6">
+									        <input class="form-control" name="description" type="text" value="{{ Auth::guard('jobseeker')->user()->Maeketer_company->description }}" id="description">
+									        {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
+									    </div>
+									</div>
+
 									<hr>
 									<div class="form-group">
 									    <div class="col-md-offset-4 col-md-4">
