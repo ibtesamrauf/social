@@ -70,6 +70,12 @@ Route::post('/editprofile_post', 'ViewpageController@editprofile_post');
 Route::get('/users_preferred_medium_add/{preferred_medium_id}', 'ViewpageController@users_preferred_medium_add');
 Route::get('/users_preferred_medium_remove/{user_preferred_medium_table_id}', 'ViewpageController@users_preferred_medium_remove');
 
+Route::get('/edit_previous_campaign/{previous_campaign_id}', 'ViewpageController@edit_previous_campaign');
+Route::post('/edit_previous_campaign_update/{id}', 'ViewpageController@edit_previous_campaign_update');
+
+Route::get('/delete_previous_campaign/{previous_campaign_id}', 'ViewpageController@delete_previous_campaign');
+
+
 // profile Show and edit -- END
 
 

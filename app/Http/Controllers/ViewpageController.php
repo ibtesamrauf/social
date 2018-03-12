@@ -20,6 +20,7 @@ use App\User_preferred_medium;
 use App\Country;
 use App\User_roles_hashtags;
 use Illuminate\Support\Facades\Validator;
+use App\User_previously_campaign;
 
 class ViewpageController extends Controller
 {
@@ -182,6 +183,7 @@ class ViewpageController extends Controller
 
     public function editprofile_post(Request $request)
     {
+        // vv($request->all());
         // $facebook_page_data = Facebook_page_data::where('user_id' , Auth::user()->id)->get();
         // $youtube_page_data = Youtube_page_data::where('user_id' , Auth::user()->id)->get();
         // $instagram_page_data = Instagram_page_data::where('user_id' , Auth::user()->id)->get();
@@ -189,6 +191,31 @@ class ViewpageController extends Controller
         // $preferred_medium = Preferred_medium::get();
 
         // $request->
+        if(!empty($request->previously_campaign_client)){
+            $link_var = $request->previously_campaign_link;        
+            $details_var = $request->previously_campaign_details;        
+            foreach ($request->previously_campaign_client as $key => $value) {  
+                if(empty($value)){
+                    $value = "";
+                }  
+                if(empty($details_var[$key])){
+                    $details_var[$key] = "";
+                }
+                if(empty($link_var[$key])){
+                    $link_var[$key] = "";
+                }
+                if(empty($value) && empty($link_var[$key]) && empty($details_var[$key]) ){
+                }else{
+                    User_previously_campaign::create([
+                        'user_id'       => Auth::user()->id,
+                        'client'        => $value,
+                        'link'          => $link_var[$key],
+                        'details'       => $details_var[$key],
+                    ]);
+                }  
+            }  
+        }
+
         User::where('id' , Auth::user()->id)->update([
                         'first_name' => $request->first_name,
                         'last_name' => $request->last_name,
@@ -219,7 +246,7 @@ class ViewpageController extends Controller
             }  
         }
         
-        return redirect('editprofile')->with('status', 'Profile Updated'); 
+        return redirect('viewprofile')->with('status', 'Profile Updated'); 
     }
     
 
@@ -510,6 +537,35 @@ class ViewpageController extends Controller
         }  
         return $user;
     }
+
+
+    public function delete_previous_campaign($previous_campaign_id)
+    {
+        User_previously_campaign::where('id' , $previous_campaign_id)->delete();
+        return redirect('editprofile')->with('status', 'previous campaign Deleted!');
+    } 
+
+    public function edit_previous_campaign($previous_campaign_id)
+    {
+        $data = User_previously_campaign::where('id' , $previous_campaign_id)->first();
+        return view('edit_previous_campaign' ,compact('data'));
+    } 
+
+    public function edit_previous_campaign_update($id,Request $request)
+    {
+        Validator::make($request->all(), [
+            'client' => 'required',
+            'link'  => 'required',
+            'details' => 'required',
+        ])->validate();
+        User_previously_campaign::where('id' , $id)->update([
+                'client' => $request->client,
+                'link' => $request->link,
+                'details' => $request->details,
+            ]);
+        return redirect('editprofile')->with('status', 'previous campaign Updated!');
+    } 
+
 
     
 

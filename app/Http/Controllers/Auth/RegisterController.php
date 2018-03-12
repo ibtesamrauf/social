@@ -273,13 +273,13 @@ class RegisterController extends Controller
             foreach ($data['client'] as $key => $value) {  
                 if(empty($value)){
                     $value = "";
-                    if(empty($link_var[$key])){
-                        $link_var[$key] = "";
-                    }
-                    if(empty($details_var[$key])){
-                        $details_var[$key] = "";
-                    }
                 }  
+                if(empty($details_var[$key])){
+                    $details_var[$key] = "";
+                }
+                if(empty($link_var[$key])){
+                    $link_var[$key] = "";
+                }
                 if(empty($value) && empty($link_var[$key]) && empty($details_var[$key]) ){
                 }else{
                     User_previously_campaign::create([
