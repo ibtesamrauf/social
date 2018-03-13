@@ -1,3 +1,4 @@
+<h1>{{ $thread->subject }}</h1>
 <!-- each('messenger_marketer.partials.messages', $thread->messages, 'message') -->
 
 <?php 
@@ -14,6 +15,7 @@
 		    	}else{
 		    		$profile_image = "img/default-profile-image.png";
 		    	}
+
 		    }elseif ($value->user_type == 'influencer') {
 		    	$temp_user_data = $value->user;
 		    	if(!empty($temp_user_data->profile_picture)){
@@ -23,10 +25,11 @@
 		    	}
 		    }
 	    	?> 
-	    		<img src="{{ asset($profile_image) }}"
+	    	
+		        <img src="{{ asset($profile_image) }}"
 		             class="img-thumbnail img-circle" style="width: 95px;">
-
-		        <!-- <img src="//www.gravatar.com/avatar/{{ md5($temp_user_data->email) }} ?s=64"
+	    	
+	    		<!-- <img src="//www.gravatar.com/avatar/{{ md5($temp_user_data->email) }} ?s=64"
 		             alt="{{ $temp_user_data->first_name }}" class="img-circle"> -->
 	    	
 		    </a>

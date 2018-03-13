@@ -79,7 +79,7 @@ class MessagesinfluencerController extends Controller
         
         // $thread->markAsRead($userId);
         // vv($thread);
-        return view('messenger_influencer.show', compact('thread', 'users'));
+        return view('messenger_influencer.show', compact('thread', 'users' , 'id'));
     }
 
     /**
@@ -189,5 +189,38 @@ class MessagesinfluencerController extends Controller
         }
 
         return redirect()->route('messages_influencer.show', $id);
+    }
+
+
+    public function messages_influencer_show_ajax($id)
+    {
+        try {
+            $thread = Thread_marketer::with('messages')->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            Session::flash('error_message', 'The thread with ID: ' . $id . ' was not found.');
+
+            return redirect()->route('messages');
+        }
+        $users = "";
+        // show current user in list if not a current participant
+        // $users = User::whereNotIn('id', $thread->participantsUserIds())->get();
+
+        // don't show the current user in list
+        // $userId = Auth::id();
+        // $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
+        $date = new Carbon();
+        $participant = Participant_marketer::with('messages')
+                            ->where('thread_id', $id)
+                            // ->where('user_id' , Auth::guard('jobseeker')->user()->id)
+                            ->where('user_type' , 'marketer')
+                            ->update([
+                                'last_read' => $date,
+                                'unread' => 2,
+                                ]);
+                            // ->update([  ]);
+        
+        // $thread->markAsRead($userId);
+        // vv($thread);
+        return view('messenger_influencer.show_2', compact('thread', 'users'));
     }
 }

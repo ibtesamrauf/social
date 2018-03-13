@@ -21,12 +21,39 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">Inbox</div>
 
-                        <div id="ajax_call_data">
-                        </div>
+
+                        <div class="panel-body">
+						    @if (session('status'))
+						    <div class="alert alert-success">
+						        {{ session('status') }}
+						    </div>
+						    @endif
+						    <div class="col-md-12">
+						        <h1>{{ $thread->subject }}</h1>
+					        	
+					        	<div id="ajax_call_data">
+		                        </div>
+						        
+						        <h4>Add a new message</h4>
+								<form action="{{ route('messages_marketer.update', $thread->id) }}" method="post">
+								    {{ method_field('put') }}
+								    {{ csrf_field() }}
+								        
+								    <!-- Message Form Input -->
+								    <div class="form-group">
+								        <textarea name="message" rows="6" class="form-control">{{ old('message') }}</textarea>
+								    </div>
+
+								    <!-- Submit Form Input -->
+								    <div class="col-md-2 form-group">
+								        <button type="submit" class="btn btn-primary form-control">Submit</button>
+								    </div>
+								</form>
+						    </div>
+						</div>
 
                         <input type="hidden" id="belongsto1_var" value="{{ $belongsto1 }}"></span>
                         <input type="hidden" id="id_var" value="{{ $id }}"></span>
-
                         
                     </div>
                 </div>

@@ -162,6 +162,7 @@ Route::group(['prefix' => 'messages_influencer'], function () {
     Route::get('{id}', ['as' => 'messages_influencer.show', 'uses' => 'MessagesinfluencerController@show']);
     Route::put('{id}', ['as' => 'messages_influencer.update', 'uses' => 'MessagesinfluencerController@update']);
 });
+Route::get('/messages_influencer_show_ajax/{id}', 'MessagesinfluencerController@messages_influencer_show_ajax');
 
 
 Route::get('/messages_count_influencer', 'HomeController@messages_count_influencer');
