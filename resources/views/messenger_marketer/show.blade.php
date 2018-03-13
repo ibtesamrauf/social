@@ -35,13 +35,13 @@
 		                        </div>
 						        
 						        <h4>Add a new message</h4>
-								<form action="{{ route('messages_marketer.update', $thread->id) }}" method="post">
+								<form action="{{ route('messages_marketer.update', $thread->id) }}" id="message_form" method="post">
 								    {{ method_field('put') }}
 								    {{ csrf_field() }}
 								        
 								    <!-- Message Form Input -->
 								    <div class="form-group">
-								        <textarea name="message" rows="6" class="form-control">{{ old('message') }}</textarea>
+								        <textarea name="message" rows="6" id="message" class="form-control">{{ old('message') }}</textarea>
 								    </div>
 
 								    <!-- Submit Form Input -->
@@ -54,6 +54,8 @@
 
                         <input type="hidden" id="belongsto1_var" value="{{ $belongsto1 }}"></span>
                         <input type="hidden" id="id_var" value="{{ $id }}"></span>
+                        <input type="hidden" id="thread_id_var" value="{{ $thread->id }}"></span>
+
                         
                     </div>
                 </div>
@@ -71,10 +73,27 @@
 	$( document ).ready(function() {
 		var belongsto1_var = $('#belongsto1_var').val();
 		var id_var = $('#id_var').val();
+		var baseUrl = document.location.origin;
+		
 		$( "#ajax_call_data" ).load( "/messages_marketer_show_ajax/"+belongsto1_var+"/"+id_var );
 		window.setInterval(function(){
 			$( "#ajax_call_data" ).load( "/messages_marketer_show_ajax/"+belongsto1_var+"/"+id_var );
-		}, 3000);
+		}, 1500);
+
+		$('#message_form').on('submit', function(e) {
+	       	e.preventDefault(); 
+	       	var message = $('#message').val();
+	       	$('#message').val("");
+	       	var thread_id_var = $('#thread_id_var').val();
+	       	$.ajax({
+				type: "PUT",
+				url: baseUrl+'/messages_marketer/'+thread_id_var,
+				data: { "_token": "{{ csrf_token() }}", "message":message},
+				success: function( msg ) {
+				   // alert( msg );
+				}
+	       	});
+	   	});
 	});
 </script>
 

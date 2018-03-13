@@ -18,6 +18,7 @@ use App\Message_marketer;
 use App\Facebook_page_data;
 use App\Instagram_page_data;
 use App\Youtube_page_data;
+use Illuminate\Http\Request;
 
 class MessagesmarketerController extends Controller
 {
@@ -178,7 +179,7 @@ class MessagesmarketerController extends Controller
      * @param $id
      * @return mixed
      */
-    public function update($id)
+    public function update($id, Request $request)
     {
         // vv('asdsad');
         try {
@@ -196,7 +197,8 @@ class MessagesmarketerController extends Controller
             'thread_id' => $thread->id,
             'user_id' => Auth::guard('jobseeker')->user()->id,
             'user_type' => 'marketer',
-            'body' => Input::get('message'),
+            // 'body' => Input::get('message'),
+            'body' => $request->message,
             'unread' => 1,            
         ]);
 
@@ -217,7 +219,7 @@ class MessagesmarketerController extends Controller
         }
 
 
-        return redirect()->route('messages_marketer.show',['belongsto1' => $id, 'id' => $id]);
+        // return redirect()->route('messages_marketer.show',['belongsto1' => $id, 'id' => $id]);
         
         // return redirect()->route('messages_marketer.show', $belongsto1,$id);
     }

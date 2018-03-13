@@ -70,7 +70,6 @@
 	$( document ).ready(function() {
 		var id_var = $('#id_var').val();
 		var baseUrl = document.location.origin;
-		console.log(baseUrl);
 
 		$( "#ajax_call_data" ).load( "/messages_influencer_show_ajax/"+id_var );
 		window.setInterval(function(){
