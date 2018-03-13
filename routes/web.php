@@ -125,6 +125,8 @@ Route::group(['middleware' => 'jobseeker_auth'], function() {
             Route::put('{id}', ['as' => 'messages_marketer.update', 'uses' => 'MessagesmarketerController@update']);
     });
 
+    Route::get('/messages_marketer_show_ajax/{belongsto1}/{id}', 'MessagesmarketerController@messages_marketer_show_ajax');
+    
     Route::get('/editprofile_marketer', 'Profile_page_marketerController@editprofile_marketer');
 
     Route::post('/editprofile_marketer_post', 'Profile_page_marketerController@editprofile_marketer_post');

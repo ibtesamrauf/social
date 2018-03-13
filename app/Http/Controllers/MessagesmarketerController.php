@@ -78,7 +78,7 @@ class MessagesmarketerController extends Controller
         
         // $thread->markAsRead($userId);
         // vv($thread);
-        return view('messenger_marketer.show', compact('thread', 'users'));
+        return view('messenger_marketer.show', compact('thread', 'users' , 'belongsto1' , 'id'));
     }
 
     /**
@@ -221,4 +221,44 @@ class MessagesmarketerController extends Controller
         
         // return redirect()->route('messages_marketer.show', $belongsto1,$id);
     }
+
+    public function messages_marketer_show_ajax($belongsto1 ,$id)
+    {
+        $temp_data = Thread_marketer::where('belongs_to' , $belongsto1)->count();
+
+        if (($temp_data)) {
+            $temp_data = Thread_marketer::where('belongs_to' , $belongsto1)->first();
+            $id = $temp_data->id;
+        }
+        try {
+            $thread = Thread_marketer::with('messages')->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            Session::flash('error_message', 'The thread with ID: ' . $id . ' was not found.');
+
+            return redirect()->route('messages');
+        }
+        $users = "";
+        // show current user in list if not a current participant
+        // $users = User::whereNotIn('id', $thread->participantsUserIds())->get();
+
+        // don't show the current user in list
+        // $userId = Auth::id();
+        // $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
+        $date = new Carbon();
+        $participant = Participant_marketer::with('messages')
+                            ->where('thread_id', $id)
+                            // ->where('user_id' , Auth::guard('jobseeker')->user()->id)
+                            ->where('user_type' , 'influencer')
+                            ->update([
+                                'last_read' => $date,
+                                'unread' => 2,
+                                ]);
+                            // ->update([  ]);
+        
+        // $thread->markAsRead($userId);
+        // vv($thread);
+        return view('messenger_marketer.show_2', compact('thread', 'users'));
+    }
+
+
 }
