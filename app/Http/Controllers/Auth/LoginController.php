@@ -61,7 +61,7 @@ class LoginController extends Controller
     {
         try {
             $user = Socialite::driver($provider)->user();
-            // vv($user->avatar_original);
+            // vv($user);
             $authUser = $this->findOrCreateUser($user, $provider);
             Auth::login($authUser, true);
             // vv(Auth::user()->last_name);
@@ -101,7 +101,7 @@ class LoginController extends Controller
             'website_blog'        => '',
             'monthly_visitors'    => '',
             'company_id'        => 1,
-            'verified'          => $user->user['verified'],
+            'verified'          => 1,
             'company_name'      => 'no',
             'password'          => bcrypt($password_variable),
         ]);
