@@ -33,13 +33,13 @@
 		                        </div>
 
 						        <h2>Add a new message</h2>
-								<form action="{{ route('messages_influencer.update', $thread->id) }}" method="post">
+								<form action="{{ route('messages_influencer.update', $thread->id) }}" id="message_form" method="post">
 								    {{ method_field('put') }}
 								    {{ csrf_field() }}
 								        
 								    <!-- Message Form Input -->
 								    <div class="form-group">
-								        <textarea name="message" rows="6" class="form-control">{{ old('message') }}</textarea>
+								        <textarea name="message" id="message" rows="6" class="form-control">{{ old('message') }}</textarea>
 								    </div>
 
 
@@ -52,6 +52,8 @@
 						</div>
 
                         <input type="hidden" id="id_var" value="{{ $id }}"></span>
+                        <input type="hidden" id="thread_id_var" value="{{ $thread->id }}"></span>
+
                     </div>
                 </div>
             </div>
@@ -67,11 +69,30 @@
 <script type="text/javascript">
 	$( document ).ready(function() {
 		var id_var = $('#id_var').val();
-		console.log(id_var);
+		var baseUrl = document.location.origin;
+		console.log(baseUrl);
+
 		$( "#ajax_call_data" ).load( "/messages_influencer_show_ajax/"+id_var );
 		window.setInterval(function(){
 			$( "#ajax_call_data" ).load( "/messages_influencer_show_ajax/"+id_var );
-		}, 3000);
+		}, 1500);
+
+
+		$('#message_form').on('submit', function(e) {
+	       	e.preventDefault(); 
+	       	var message = $('#message').val();
+	       	$('#message').val("");
+	       	var thread_id_var = $('#thread_id_var').val();
+	       	$.ajax({
+				type: "PUT",
+				url: baseUrl+'/messages_influencer/'+thread_id_var,
+				data: { "_token": "{{ csrf_token() }}", "message":message},
+				success: function( msg ) {
+				   // alert( msg );
+				}
+	       	});
+	   	});
+
 	});
 </script>
 

@@ -15,6 +15,8 @@ use App\Participant_marketer;
 use App\Thread_marketer;
 use App\Message_marketer;
 use App\Admin;
+use Illuminate\Http\Request;
+
 
 class MessagesinfluencerController extends Controller
 {
@@ -151,8 +153,9 @@ class MessagesinfluencerController extends Controller
      * @param $id
      * @return mixed
      */
-    public function update($id)
+    public function update($id,Request $request)
     {
+        // vv($request->message);
         try {
             $thread = Thread_marketer::findOrFail($id);
         } catch (ModelNotFoundException $e) {
@@ -168,7 +171,8 @@ class MessagesinfluencerController extends Controller
             'thread_id' => $thread->id,
             'user_id' => Auth::user()->id,
             'user_type' => 'influencer',
-            'body' => Input::get('message'),
+            // 'body' => Input::get('message'),
+            'body' => $request->message,
             'unread' => 1,            
         ]);
 
@@ -188,7 +192,7 @@ class MessagesinfluencerController extends Controller
             $thread->addParticipant(Input::get('recipients'));
         }
 
-        return redirect()->route('messages_influencer.show', $id);
+        // return redirect()->route('messages_influencer.show', $id);
     }
 
 
