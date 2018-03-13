@@ -63,10 +63,13 @@ class LoginController extends Controller
             $user = Socialite::driver($provider)->user();
             // vv($user);
             $authUser = $this->findOrCreateUser($user, $provider);
+            if($authUser == 'no_email_found'){
+                return redirect('register')->with('alert', 'Email not found try again later or use another platform');
+            }
             Auth::login($authUser, true);
             // vv(Auth::user()->last_name);
             if(empty(Auth::user()->last_name)){
-                return redirect('update_profile_login_with_social')->with('status', 'Register Successfully, Now Update Your profile');;
+                return redirect('update_profile_login_with_social')->with('status', 'Register Successfully, Now Update Your profile');
             }else{
                 return redirect($this->redirectTo);
             }
@@ -80,6 +83,9 @@ class LoginController extends Controller
         $authUser = User::where('provider_id', $user->id)->orwhere('email',$user->email)->first();
         if ($authUser) {
             return $authUser;
+        }
+        if(empty($user->email)){
+            return "no_email_found";
         }
         $password_variable = 'influencer2';
         $user_created = User::create([
