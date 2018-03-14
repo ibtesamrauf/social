@@ -157,7 +157,42 @@ class ViewpageController extends Controller
 
     public function test()
     {
-        return view('test');
+        
+        $settings = array(
+            'oauth_access_token' => env('TWITTER_OAUTH_ACCESS_TOKEN'),
+            'oauth_access_token_secret' => env('TWITTER_OAUTH_ACCESS_TOKEN_SECRET'),
+            'consumer_key' => env('TWITTER_KEY'),
+            'consumer_secret' => env('TWITTER_SECRET')
+        );
+
+        $url = 'https://api.twitter.com/1.1/users/show.json';
+        $getfield = '?screen_name=bogomep';
+        $requestMethod = 'GET';
+
+        $twitter = new \App\Helpers\TwitterAPIExchange($settings);
+        // $twitter = new TwitterAPIExchange($settings);
+        $output =  $twitter->setGetfield($getfield)
+            ->buildOauth($url, $requestMethod)
+            ->performRequest();
+            
+            
+        $rs = json_decode($output, true);
+        vv($rs);
+        echo $rs['followers_count'];
+        // statuses_count = tweeks count
+        // friends_count = following
+        // favourites_count = likes
+
+        die;
+        $url = "https://twitter.com/Janiux";
+        $response = file_get_contents ( $url );
+        $t_profile = new SimpleXMLElement ( $response );
+        vv($t_profile);
+        $count = $t_profile->followers_count;
+
+        echo "Expert Developer Twitter Followers : ".$count;
+
+        // return view('test');
     }
 
     public function viewprofile()
