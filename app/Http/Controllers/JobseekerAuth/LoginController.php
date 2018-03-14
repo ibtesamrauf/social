@@ -140,7 +140,15 @@ class LoginController extends Controller
      */
     public function redirectToProvider_marketer($provider)
     {
-        return Socialite::with($provider)->redirectUrl(env('FACEBOOK_REDIRECT_URL_2'))->redirect();
+        $redirect_url_variable = "";
+        if($provider == "facebook"){
+            $redirect_url_variable = env('FACEBOOK_REDIRECT_URL_2');
+        }if($provider == "google"){
+            $redirect_url_variable = env('GOOGLE_REDIRECT_URI_2');
+        }if($provider == "twitter"){
+            $redirect_url_variable = env('TWITTER_REDIRECT_URI_2');
+        }
+        return Socialite::with($provider)->redirectUrl($redirect_url_variable)->redirect();
     }
 
     /**
@@ -150,8 +158,16 @@ class LoginController extends Controller
      */
     public function handleProviderCallback_marketer($provider)
     {
+        $redirect_url_variable = "";
+        if($provider == "facebook"){
+            $redirect_url_variable = env('FACEBOOK_REDIRECT_URL_2');
+        }if($provider == "google"){
+            $redirect_url_variable = env('GOOGLE_REDIRECT_URI_2');
+        }if($provider == "twitter"){
+            $redirect_url_variable = env('TWITTER_REDIRECT_URI_2');
+        }
         try {
-            $user = Socialite::driver($provider)->redirectUrl(env('FACEBOOK_REDIRECT_URL_2'))->user();
+            $user = Socialite::driver($provider)->redirectUrl($redirect_url_variable)->user();
             // vv($user);
             $authUser = $this->findOrCreateUser($user, $provider);
             if($authUser == 'no_email_found'){
