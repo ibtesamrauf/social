@@ -136,7 +136,11 @@ Route::group(['middleware' => 'jobseeker_auth'], function() {
     Route::post('/edit_previous_campaign_update_marketer/{id}', 'Profile_page_marketerController@edit_previous_campaign_update_marketer');
 
     Route::get('/delete_previous_campaign_marketer/{previous_campaign_id}', 'Profile_page_marketerController@delete_previous_campaign_marketer');
- 
+    
+    Route::get('/update_profile_login_with_social_marketer', 'Profile_page_marketerController@update_profile_login_with_social_marketer');
+    Route::post('/update_profile_login_with_social_marketer_post', 'Profile_page_marketerController@update_profile_login_with_social_marketer_post');
+
+
 });
 
 // insert data i  countery table
@@ -187,3 +191,7 @@ Route::get('auth_marketer/{provider}/callback', 'JobseekerAuth\LoginController@h
 
 Route::get('/update_profile_login_with_social', 'ViewpageController@update_profile_login_with_social');
 Route::post('/update_profile_login_with_social_post', 'ViewpageController@update_profile_login_with_social_post');
+
+
+
+

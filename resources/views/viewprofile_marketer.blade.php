@@ -54,7 +54,7 @@
                                             <img title="profile image" class="img-circle img-responsive" src="{{ asset('uploads/'.Auth::guard('jobseeker')->user()->profile_picture) }}">
                                         @endif
                                     @else
-                                    <img title="profile image" class="img-responsive" src="img/default-profile.png">
+                                    <img title="profile image" class="img-responsive" src="{{ asset('img/default-profile.png') }}">
                                     @endif
                                 </a>
                             </div>

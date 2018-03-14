@@ -167,6 +167,89 @@ class Profile_page_marketerController extends Controller
         return redirect('editprofile_marketer')->with('status', 'previous campaign Updated!');
     } 
 
+
+    public function update_profile_login_with_social_marketer()
+    {
+        $user = Admin::findOrFail(Auth::guard('jobseeker')->user()->id);
+        $country1 = Country::orderBy('id' , 'asc')->get();
+        return view('update_profile_login_with_social_marketer' , compact('country1' , 'user'));
+    }
+
+    public function update_profile_login_with_social_marketer_post(Request $request)
+    {
+        $image_name = "";
+        // vv($request->all());
+        //Validates data       
+        Validator::make($request->all(), [
+            'first_name'    => 'required',
+            'last_name'     => 'required',
+            'phone_number'  => 'required',
+            'country'       => 'required|not_in:Select',
+            'password'      => 'required|string|min:6|confirmed',
+        ])->validate();
+
+        //Create seller
+        $user = Admin::where('id', Auth::guard('jobseeker')->user()->id)->update([
+            'first_name'        => $request->first_name,
+            'last_name'         => $request->last_name,
+            'phone_number'      => $request->phone_number,
+            'country'           => $request->country,
+            'password'          => bcrypt($request->password),
+            'profile_picture'   => "",
+        ]);
+        // Agency / Company details
+        if(!empty($request->company_name) || !empty($request->website) || !empty($request->facebook_url) 
+            || !empty($request->description ))
+        {
+            if($request->logo){
+                echo 'Uploaded';
+                // $file = Input::file($data['file']);
+                $file = $request->logo;
+                $file->move('uploads', time().$file->getClientOriginalName());
+                echo '';
+                $image_name = time().$file->getClientOriginalName();
+            }
+
+            Marketer_company::create([
+                    'user_id'           => Auth::guard('jobseeker')->user()->id,
+                    'company_name'      => $request->company_name,
+                    'logo'              => $image_name,
+                    'website'           => $request->website,
+                    'facebook_url'      => $request->facebook_url,
+                    'description'       => $request->description,
+                ]);
+        }
+
+        if(!empty($request->influencer_used)){
+            $link_var = $request->campaign_link;       
+            $details_var = $request->description_p;       
+            foreach ($request->influencer_used as $key => $value) {  
+                if(empty($value)){
+                    $value = "";
+                    if(empty($link_var[$key])){
+                        $link_var[$key] = "";
+                    }
+                    if(empty($details_var[$key])){
+                        $details_var[$key] = "";
+                    }
+                }  
+                if(empty($value) && empty($link_var[$key]) && empty($details_var[$key]) ){
+                }else{
+                    // vv($link_var[$key]);
+                    Marketer_previously_campaign::create([
+                        'user_id'               => Auth::guard('jobseeker')->user()->id,
+                        'influencer_used'       => $value,
+                        'campaign_link'         => $link_var[$key],
+                        'description'           => $details_var[$key],
+                    ]);
+                }  
+            }  
+        }
+        return redirect('viewprofile_marketer')->with('alert', 'Profile updated Successfully!');
+    }
+    
+    
+
     
     
 }

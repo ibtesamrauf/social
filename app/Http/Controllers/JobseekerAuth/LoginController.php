@@ -161,11 +161,12 @@ class LoginController extends Controller
 
             // vv(Auth::guard('jobseeker')->user()->last_name);
             if(empty(Auth::guard('jobseeker')->user()->last_name)){
-                return redirect('update_profile_login_with_social')->with('status', 'Register Successfully, Now Update Your profile');
+
+                return redirect('update_profile_login_with_social_marketer')->with('status', 'Register Successfully, Now Update Your profile');
             }else{
                 return redirect($this->redirectTo);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return redirect('jobseeker_register')->with('alert', 'Something Wrong try again');
         }
     }

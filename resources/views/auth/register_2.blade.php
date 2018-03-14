@@ -184,8 +184,8 @@
                             <label for="campaigns" class="col-md-4 control-label">Option</label>
 
                             <div class="col-md-6">
-                                <input id="campaigns" type="radio" name="campaigns" value="yes{{ old('campaigns') }}" placeholder="" autofocus>Yes &nbsp&nbsp
-                                <input id="campaigns1" type="radio" checked name="campaigns" value="no{{ old('campaigns') }}" placeholder="" autofocus>No
+                                <input id="campaigns" type="radio" name="campaigns" value="yes" placeholder="" autofocus>Yes &nbsp&nbsp
+                                <input id="campaigns1" type="radio" checked name="campaigns" value="no" placeholder="" autofocus>No
 
                                 @if ($errors->has('campaigns'))
                                     <span class="help-block">
