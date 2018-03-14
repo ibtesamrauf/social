@@ -91,6 +91,7 @@ Route::get('/add_instagram_page', 'ViewpageController@add_instagram_page');
 Route::resource('facebook_page_resource', 'Facebook_pageController');
 Route::resource('youtube_page_resource', 'Youtube_pageController');
 Route::resource('instagram_page_resource', 'Instagram_pageController');
+Route::resource('twitter_page_resource', 'Twitter_pageController');
 
 Route::resource('hashtags', 'HashtagsController');
 
