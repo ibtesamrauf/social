@@ -245,6 +245,17 @@
                         </button>
                     </div>
                 </form>
+                <hr>
+                    
+                <div class="form-group">
+                    <div class="">
+                        <!-- <a href="{{ url('/auth_marketer/github') }}" class="btn btn-github"><i class="fa fa-github"></i> Github</a> -->
+                        <a href="{{ url('/auth_marketer/facebook') }}" class="btn btn-facebook"><i class="fa fa-facebook"></i> Facebook</a>
+                        <a href="{{ url('/auth_marketer/google') }}" class="btn btn-google"><i class="fa fa-google"></i> Google</a>
+                        <a href="{{ url('/auth_marketer/twitter') }}" class="btn btn-twitter"><i class="fa fa-twitter"></i> Twitter</a>
+
+                    </div>
+                </div>
               </div>
             </div>
           </div>

@@ -177,6 +177,13 @@ Route::get('/test_for_unread_email', 'HomeController@test_for_unread_email');
 // for social login and register
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
+// for social login and register
+
+// for social login and register marketer
+Route::get('auth_marketer/{provider}', 'JobseekerAuth\LoginController@redirectToProvider_marketer');
+Route::get('auth_marketer/{provider}/callback', 'JobseekerAuth\LoginController@handleProviderCallback_marketer');
+// for social login and register marketer
+
 
 Route::get('/update_profile_login_with_social', 'ViewpageController@update_profile_login_with_social');
 Route::post('/update_profile_login_with_social_post', 'ViewpageController@update_profile_login_with_social_post');

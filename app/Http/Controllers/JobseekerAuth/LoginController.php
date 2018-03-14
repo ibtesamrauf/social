@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use Illuminate\Support\Facades\Auth;
+use Socialite;
 
 class LoginController extends Controller
 {
@@ -129,5 +130,73 @@ class LoginController extends Controller
             'password' => $request->password,
             'verified' => '1',
         ];
+    }
+
+
+    /**
+     * Redirect the user to the OAuth Provider.
+     *
+     * @return Response
+     */
+    public function redirectToProvider_marketer($provider)
+    {
+        return Socialite::with($provider)->redirectUrl(env('FACEBOOK_REDIRECT_URL_2'))->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleProviderCallback_marketer($provider)
+    {
+        try {
+            $user = Socialite::driver($provider)->redirectUrl(env('FACEBOOK_REDIRECT_URL_2'))->user();
+            // vv($user);
+            $authUser = $this->findOrCreateUser($user, $provider);
+            if($authUser == 'no_email_found'){
+                return redirect('jobseeker_register')->with('alert', 'Email not found try again later or use another platform');
+            }
+            Auth::guard('jobseeker')->login($authUser, true);
+
+            // vv(Auth::guard('jobseeker')->user()->last_name);
+            if(empty(Auth::guard('jobseeker')->user()->last_name)){
+                return redirect('update_profile_login_with_social')->with('status', 'Register Successfully, Now Update Your profile');
+            }else{
+                return redirect($this->redirectTo);
+            }
+        } catch (Exception $e) {
+            return redirect('jobseeker_register')->with('alert', 'Something Wrong try again');
+        }
+    }
+
+    public function findOrCreateUser($user, $provider)
+    {
+        $authUser = \App\Admin::where('provider_id', $user->id)->orwhere('email',$user->email)->first();
+        if ($authUser) {
+            return $authUser;
+        }
+        if(empty($user->email)){
+            return "no_email_found";
+        }
+        $password_variable = 'marketer2';
+        $user_created = \App\Admin::create([
+
+            'first_name'     => $user->name,
+            'email'    => $user->email,
+            'provider' => $provider,
+            'provider_id' => $user->id,
+            'last_name'           => '',
+            'profile_picture'     => $user->avatar_original,
+            'phone_number'        => '',
+            'country'             => 0,
+            'verified'          => 1,
+            'password'          => bcrypt($password_variable),
+        ]);
+
+        \Mail::send('email.welcome_email', ['user' => $user_created , 'password_variable' => $password_variable], function ($m) use ($user_created) {
+            $m->to($user_created->email, $user_created->first_name)->subject('You have New massage!');
+        });
+        return $user_created;
     }
 }

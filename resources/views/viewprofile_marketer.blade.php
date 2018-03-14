@@ -48,7 +48,11 @@
                             <div class="col-sm-2">
                                 <a href="#" class="pull-right">
                                     @if (!empty(Auth::guard('jobseeker')->user()->profile_picture)) 
-                                    <img title="profile image" class="img-circle img-responsive" src="uploads/{{Auth::guard('jobseeker')->user()->profile_picture }}">
+                                        @if(strpos(Auth::guard('jobseeker')->user()->profile_picture,"http") !== false )
+                                            <img title="profile image" class="img-circle img-responsive" src="{{ Auth::guard('jobseeker')->user()->profile_picture }}">
+                                        @else                                            
+                                            <img title="profile image" class="img-circle img-responsive" src="{{ asset('uploads/'.Auth::guard('jobseeker')->user()->profile_picture) }}">
+                                        @endif
                                     @else
                                     <img title="profile image" class="img-responsive" src="img/default-profile.png">
                                     @endif
@@ -63,13 +67,19 @@
                         @endif
                         <div class="row">
                             <div class="col-sm-3">
-                                <!--left col-->
+                                <!--left col-->                                
                                 <ul class="list-group">
                                     <li class="list-group-item text-muted" contenteditable="false">Profile</li>
                                     <li class="list-group-item text-right"><span class="pull-left"><strong class="">Joined</strong></span>{{ Auth::guard('jobseeker')->user()->created_at }}</li>
                                     <li class="list-group-item text-right"><span class="pull-left"><strong class="">Email</strong></span> {{ Auth::guard('jobseeker')->user()->email }}</li>
-                                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Phone Number</strong></span> {{ Auth::guard('jobseeker')->user()->phone_number }}</li>
-                                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Country</strong></span>{{ Auth::guard('jobseeker')->user()->Country_name->country_name }}</li>
+                                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Phone Number</strong></span> {{ Auth::guard('jobseeker')->user()->phone_number ? Auth::guard('jobseeker')->user()->phone_number : 'Not given yet' }}</li>
+                                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Country</strong></span>
+                                    @if (count(Auth::guard('jobseeker')->user()->Country_name) > 0)
+                                        {{ Auth::guard('jobseeker')->user()->Country_name->country_name }}
+                                    @else
+                                        Please Complete your profile first!
+                                    @endif
+                                    </li>
                                     <li class="list-group-item text-right"><span class="pull-left"><strong class="">Role</strong></span> Marketer
 
                                     </li>
@@ -94,17 +104,25 @@
                                         <div class="">
                                             <div class="">
                                                 <a href="instagram_page_resource/$instagram_item->id" class="marketer-company-image pull-right">
-                                                    <img alt="300x200" class="marketer-company-image img-thumbnail" src="uploads/{{ Auth::guard('jobseeker')->user()->Maeketer_company->logo }} ">
+                                                    <img alt="300x200" class="marketer-company-image img-thumbnail" src="uploads/{{ Auth::guard('jobseeker')->user()->Maeketer_company ? Auth::guard('jobseeker')->user()->Maeketer_company->logo : '' }}">
                                                 </a>
                                                 <div class="pull-left caption">
-                                                    <h3 class="text-align-left"><?php echo strtoupper( Auth::guard('jobseeker')->user()->Maeketer_company->company_name); ?></h3>
+                                                    <h3 class="text-align-left"><?php 
+                                                        if (count(Auth::guard('jobseeker')->user()->Maeketer_company) > 0){
+                                                            echo strtoupper(Auth::guard('jobseeker')->user()->Maeketer_company->company_name);
+                                                        }else{
+                                                            echo "Please Complete your profile first!";
+                                                        }
+                                                    ?></h3>
                                                     <table class="table">
                                                         <tr>
                                                             <td>
                                                                 <h5 class="text-align-left">Website: </h5>
                                                             </td>
                                                             <td>
-                                                                <h6>{{ Auth::guard('jobseeker')->user()->Maeketer_company->website }}</h6>
+                                                                <h6>
+                                                                {{ Auth::guard('jobseeker')->user()->Maeketer_company ? Auth::guard('jobseeker')->user()->Maeketer_company->website : '' }}
+                                                                </h6>
                                                             </td>
                                                         </tr>
 
@@ -114,7 +132,9 @@
                                                                 <h5 class="text-align-left">Description: </h5>
                                                             </td>
                                                             <td>
-                                                                <h6>{{ Auth::guard('jobseeker')->user()->Maeketer_company->description }}</h6>
+                                                                <h6>
+                                                                {{ Auth::guard('jobseeker')->user()->Maeketer_company ? Auth::guard('jobseeker')->user()->Maeketer_company->description : '' }}
+                                                                </h6>
                                                             </td>
                                                         </tr>
                                                     </table>
