@@ -73,8 +73,8 @@ class LoginController extends Controller
             }else{
                 return redirect($this->redirectTo);
             }
-        } catch (Exception $e) {
-            
+        } catch (\Exception $e) {
+            return redirect('register')->with('alert', 'Something Wrong try again');
         }
     }
 
