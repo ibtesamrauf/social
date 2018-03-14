@@ -92,6 +92,7 @@ class Twitter_pageController extends Controller
             ->performRequest();
               
         $twitter_response = json_decode($output, true);
+        // vv($twitter_response);
         if(!empty($twitter_response['errors'])){
             return redirect('viewprofile')->with('status', 'Page not found!');
         }
@@ -124,8 +125,8 @@ class Twitter_pageController extends Controller
      */
     public function show($id)
     {
-        $instagram_page_data = Instagram_page_data::where('id' , $id)->get();
-        return view('twitter.view_instagram_page' , compact('instagram_page_data'));
+        $instagram_page_data = Twitter_page_data::where('id' , $id)->get();
+        return view('twitter.view_twitter_page' , compact('instagram_page_data'));
     }
 
     /**
@@ -179,8 +180,8 @@ class Twitter_pageController extends Controller
      */
     public function destroy($id)
     {
-        Instagram_page_data::destroy($id);
-        return redirect('viewprofile')->with('status', 'Instagram Page Deleted Succesfully!');
+        Twitter_page_data::destroy($id);
+        return redirect('viewprofile')->with('status', 'Twitter Page Deleted Succesfully!');
     }
 
     public function upload_youtube_video()

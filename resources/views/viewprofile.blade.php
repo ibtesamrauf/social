@@ -312,7 +312,7 @@
                                             @foreach($twitter_page_data as $instagram_item)
                                             <div class="col-md-4">
                                                 <div class="thumbnail">
-                                                    <a href="instagram_page_resource/{{$instagram_item->id}}" class="">
+                                                    <a href="twitter_page_resource/{{$instagram_item->id}}" class="">
                                                         <img alt="300x200" src="{{ $instagram_item->image }}">
                                                     </a>
                                                     <div class="caption">

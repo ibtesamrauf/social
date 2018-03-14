@@ -7,7 +7,7 @@
         <!-- <div class="col-md-8 col-md-offset-2"> -->
         <div class="">
             <div class="panel panel-default">
-                <div class="panel-heading">Instagram Profile</div>
+                <div class="panel-heading">Twitter Profile</div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -23,11 +23,19 @@
                       </tr>
                       <tr>
                         <td style="width:18%">Followers</td>
-                        <td>{{ $instagram_page_data[0]->followed_by}}</td>
+                        <td>{{ $instagram_page_data[0]->followers_count}}</td>
                       </tr>
                       <tr>
                         <td>Following</td>
-                        <td>{{ $instagram_page_data[0]->follows}}</td>
+                        <td>{{ $instagram_page_data[0]->friends_count}}</td>
+                      </tr>  
+                      <tr>
+                        <td>Likes</td>
+                        <td>{{ $instagram_page_data[0]->favourites_count}}</td>
+                      </tr>  
+                      <tr>
+                        <td>Tweeks</td>
+                        <td>{{ $instagram_page_data[0]->statuses_count}}</td>
                       </tr>                     
                     </table>
                 </div>
