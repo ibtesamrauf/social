@@ -22,6 +22,7 @@ use App\User_roles_hashtags;
 use Illuminate\Support\Facades\Validator;
 use App\User_previously_campaign;
 use App\user_portfolio;
+use App\Twitter_page_data;
 
 class ViewpageController extends Controller
 {
@@ -182,6 +183,7 @@ class ViewpageController extends Controller
         // statuses_count = tweeks count
         // friends_count = following
         // favourites_count = likes
+        // profile_image_url_https = profile image
 
         die;
         $url = "https://twitter.com/Janiux";
@@ -200,9 +202,10 @@ class ViewpageController extends Controller
         $facebook_page_data = Facebook_page_data::where('user_id' , Auth::user()->id)->get();
         $youtube_page_data = Youtube_page_data::where('user_id' , Auth::user()->id)->get();
         $instagram_page_data = Instagram_page_data::where('user_id' , Auth::user()->id)->get();
+        $twitter_page_data = Twitter_page_data::where('user_id' , Auth::user()->id)->get();
          
         return view('viewprofile' , compact('facebook_page_data' , 'youtube_page_data' , 
-            'instagram_page_data' ));
+            'instagram_page_data' , 'twitter_page_data'));
     }
 
     public function editprofile()

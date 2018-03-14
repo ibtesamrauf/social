@@ -302,6 +302,57 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="panel panel-default target">
+                                    <div class="panel-heading" contenteditable="false">Twitter Page
+                                        <span style="  /*padding-left: 76%;*/ "><a href="twitter_page_resource/create" style="display: inline-block;" class="btn btn-primary">Add +</a></span>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            @foreach($twitter_page_data as $instagram_item)
+                                            <div class="col-md-4">
+                                                <div class="thumbnail">
+                                                    <a href="instagram_page_resource/{{$instagram_item->id}}" class="">
+                                                        <img alt="300x200" src="{{ $instagram_item->image }}">
+                                                    </a>
+                                                    <div class="caption">
+                                                        <h3>
+                                                            {{ $instagram_item->name }}
+                                                        </h3>
+                                                        <p>
+                                                            followers: {{ $instagram_item->followers_count }} 
+                                                        </p>
+                                                        <p>
+                                                            Following: {{ $instagram_item->friends_count }}
+                                                        </p>
+                                                        <p>
+                                                            Likes: {{ $instagram_item->favourites_count }}
+                                                        </p>
+                                                        <p>
+                                                            Tweeks: {{ $instagram_item->statuses_count }}
+                                                        </p>
+                                                        <p>
+                                                            {!! Form::open([
+                                                                'method'=>'DELETE',
+                                                                'url' => ['/twitter_page_resource', $instagram_item->id],
+                                                                'style' => 'display:inline'
+                                                            ]) !!}
+                                                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
+                                                                        'type' => 'submit',
+                                                                        'class' => 'btn btn-danger btn-xs',
+                                                                        'title' => 'Delete Activity',
+                                                                        'onclick'=>'return confirm("Confirm delete?")'
+                                                                )) !!}
+                                                            {!! Form::close() !!}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endforeach
+
+                                        </div>
+                                    </div>
+                                </div>
                                 
                                 <div class="panel panel-default">
                                     <div class="panel-heading">{{ Auth::user()->name }} Portfolio</div>
