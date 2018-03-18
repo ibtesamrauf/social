@@ -75,8 +75,8 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('country') ? ' has-error' : '' }}">
-                        <select name="country" class="form-control" id="country">
-                            <option>Select</option>
+                        <select name="country" required class="form-control" id="country">
+                            <option value="">Select</option>
                             @foreach($country1 as $country_value)
                                 <option value="{{ $country_value->id }}">{{ $country_value->country_name }}</option>
                             @endforeach

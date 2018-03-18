@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Input;
 use App\User_previously_campaign;
 use Illuminate\Validation\Rule;
 
+use App\Twitter_page_data;
 use App\Facebook_page_data;
 use App\Youtube_page_data;
 use App\Instagram_page_data;
@@ -163,8 +164,6 @@ class RegisterController extends Controller
             }else{
                 $facebook_url = last($facebook_url);
             }
-
-            // vv($facebook_url);
             $url_2 = "https://graph.facebook.com/".$facebook_url."/?fields=name,likes,link,fan_count,picture&access_token=1942200009377124|2aa44fec0382b4d5715af57be82779d2";
             $response_2 = file_get_contents($url_2);
             
@@ -202,21 +201,66 @@ class RegisterController extends Controller
             // $url_2 = "https://graph.facebook.com/".$instagram_url."/?fields=name,likes,link,fan_count,picture&access_token=1942200009377124|2aa44fec0382b4d5715af57be82779d2";
             $response_22 = file_get_contents($url_22);
             
-            $instagram_response = json_decode($response_22);     
-            $instagram_response = $instagram_response->user;
-            // vv($instagram_response );
+            $instagram_response = json_decode($response_22);  
+            $instagram_response = $instagram_response->graphql->user;
+            // vv($instagram_response);
             Instagram_page_data::create([
                     'user_id'           => $user->id,
                     'page_id'           => 0,
                     'name'              => $instagram_response->full_name,
                     'keyword'           => $instagram_url,
-                    'followed_by'       => $instagram_response->followed_by->count,
-                    'follows'           => $instagram_response->follows->count,
+                    'followed_by'       => $instagram_response->edge_followed_by->count,
+                    'follows'           => $instagram_response->edge_follow->count,
                     'image'             => $instagram_response->profile_pic_url_hd,
                 ]);
-       
         }
 
+        // add Twitter page data
+        if(!empty($data['twitter_url'])){
+            $youtube_url_2 = explode("/", $data['twitter_url']);
+            if(empty(last($youtube_url_2))){
+                unset($youtube_url_2[count($youtube_url_2) - 1]);
+                $youtube_url_2 = last($youtube_url_2);
+            }else{
+                $youtube_url_2 = last($youtube_url_2);
+            }
+            
+            $instagram_url_2 = $youtube_url_2;
+
+            $settings = array(
+                'oauth_access_token' => env('TWITTER_OAUTH_ACCESS_TOKEN'),
+                'oauth_access_token_secret' => env('TWITTER_OAUTH_ACCESS_TOKEN_SECRET'),
+                'consumer_key' => env('TWITTER_KEY'),
+                'consumer_secret' => env('TWITTER_SECRET')
+            );
+
+            $url = 'https://api.twitter.com/1.1/users/show.json';
+            $getfield = '?screen_name='.$instagram_url_2;
+            $requestMethod = 'GET';
+
+            $twitter = new \App\Helpers\TwitterAPIExchange($settings);
+            // $twitter = new TwitterAPIExchange($settings);
+            $output =  $twitter->setGetfield($getfield)
+                ->buildOauth($url, $requestMethod)
+                ->performRequest();
+                  
+            $twitter_response = json_decode($output, true);
+            // vv($twitter_response);
+            if(!empty($twitter_response['errors'])){
+                // return redirect('viewprofile')->with('status', 'Page not found!');
+            }else{
+                Twitter_page_data::create([
+                        'user_id'           => $user->id,
+                        'name'              => $twitter_response['name'],
+                        'keyword'           => $instagram_url,
+                        'followers_count'   => $twitter_response['followers_count'],
+                        'statuses_count'    => $twitter_response['statuses_count'],
+                        'friends_count'     => $twitter_response['friends_count'],
+                        'favourites_count'  => $twitter_response['favourites_count'],
+                        'image'             => $twitter_response['profile_image_url_https'],
+                    ]);
+            }
+        }
 
         // add youtube page data
         if(!empty($data['youtube_url'])){
@@ -227,8 +271,16 @@ class RegisterController extends Controller
             }else{
                 $youtube_url = last($youtube_url);
             }
+            $arrContextOptions=array(
+                "ssl"=>array(
+                    "verify_peer"=>false,
+                    "verify_peer_name"=>false,
+                ),
+            );  
             // vv($youtube_url);
-            $youtube_response = file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id='.$youtube_url.'&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE');
+            $youtube_response = file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id='.$youtube_url.'&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE', false, stream_context_create($arrContextOptions));
+
+            // $youtube_response = file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id='.$youtube_url.'&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE');
             $youtube_response = json_decode($youtube_response);
             $youtube_response = $youtube_response->items[0];
             // vv($youtube_response);
@@ -244,7 +296,6 @@ class RegisterController extends Controller
                     'image'             => $youtube_response->snippet->thumbnails->medium->url,
                     'description'       => $youtube_response->snippet->description,
                 ]);
-       
         }
 
         if(!empty($data['description'])){
