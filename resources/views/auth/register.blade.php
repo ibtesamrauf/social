@@ -77,8 +77,9 @@
                     <div class="form-group{{ $errors->has('country') ? ' has-error' : '' }}">
                         <select name="country" required class="form-control" id="country">
                             <option value="">Select</option>
+                            {{ old('country') }}
                             @foreach($country1 as $country_value)
-                                <option value="{{ $country_value->id }}">{{ $country_value->country_name }}</option>
+                                <option <?php if(old('country') == $country_value->id){ echo "selected";}?> value="{{ $country_value->id }}">{{ $country_value->country_name }}</option>
                             @endforeach
                         </select>
                         @if ($errors->has('country'))
