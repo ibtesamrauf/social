@@ -286,6 +286,11 @@
                                                                         echo $search_page_data[$i]->subscriberCount."<br>";
 
                                                                     }
+                                                                    elseif (isset($search_page_data[$i]->followers_count)) {
+                                                                        echo "Twitter Subscriber: ";
+                                                                        $temp = "Twitter";
+                                                                        echo $search_page_data[$i]->followers_count."<br>";
+                                                                    }
 
                                                                     // if(isset($search_page_data[$i]->likes)){
                                                                     //     echo $search_page_data[$i]->likes."<br>"; 
@@ -307,6 +312,9 @@
                                                                 }elseif (isset($data->subscriberCount)) {
                                                                     echo "Youtube Subscriber: ";
                                                                     $temp = "Youtube";
+                                                                }elseif (isset($data->followers_count)) {
+                                                                    echo "Twitter Subscriber: ";
+                                                                    $temp = "Twitter";
                                                                 }
                                                                 if(isset($data->likes)){
                                                                     echo $data->likes; 
@@ -314,6 +322,8 @@
                                                                     echo $data->followed_by;
                                                                 }elseif (isset($data->subscriberCount)) {
                                                                     echo $data->subscriberCount;
+                                                                }elseif (isset($data->followers_count)) {
+                                                                    echo $data->followers_count;
                                                                 }
                                                             }
 
@@ -404,6 +414,11 @@
                 $( "#advanced-search-span" ).addClass('fa fa-angle-down');
             }
         });
+        var url_full = window.location.href; 
+        
+        if (~url_full.indexOf("advance_search=include")){
+            $(".Advance-search-class").css('display','block');
+        }
     } );
 </script>
 

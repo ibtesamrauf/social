@@ -12,6 +12,7 @@ use App\Preferred_medium;
 use App\Facebook_page_data;
 use App\Instagram_page_data;
 use App\Youtube_page_data;
+use App\Twitter_page_data;
 use App\User;
 
 class FindInfulencerController extends Controller
@@ -77,7 +78,7 @@ class FindInfulencerController extends Controller
         if(!empty($request->advance_search)){
             // vv($request->advance_search);
             if(empty($request->likes_on_Facebook) && empty($request->followers_on_Instagram) && 
-                empty($request->subscribers_on_Youtube)) {
+                empty($request->subscribers_on_Youtube) && empty($request->followers_on_Twitter)) {
                 if(!empty($request->country) && $request->country != 'Select'){
                     // vv($request->country);
                     $facebook_data = Facebook_page_data::join('users', 'users.id', '=', 'facebook_page_data.user_id');
@@ -102,12 +103,22 @@ class FindInfulencerController extends Controller
                     }else{
                         $Youtube_data = $Youtube_data->where('users.country', $request->country);
                     }
-                    $Youtube_data = $Youtube_data->get();                  
+                    $Youtube_data = $Youtube_data->get();     
 
+                    $Twitter_data = Twitter_page_data::join('users', 'users.id', '=', 'twitter_page_data.user_id');
+                    if($request->country == 'Select'){
+                        // $request->country = 0;
+                    }else{
+                        $Twitter_data = $Twitter_data->where('users.country', $request->country);
+                    }
+                    $Twitter_data = $Twitter_data->get();                 
+                    
                     foreach ($Instagram_data as $key => $value) {
                         $search_page_data->push($value);
                     }foreach ($Youtube_data as $key => $value2) {
                         $search_page_data->push($value2);
+                    }foreach ($Twitter_data as $key => $value3) {
+                        $search_page_data->push($value3);
                     }
                     
                 }elseif (!empty($request->preferred_medium)) {
@@ -125,12 +136,18 @@ class FindInfulencerController extends Controller
                    
                     $youtube_data = Youtube_page_data::join('users', 'users.id', '=', 'youtube_page_data.user_id')
                                             ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
-                    $youtube_data = $youtube_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get(); 
+                    $youtube_data = $youtube_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get();
+
+                    $twitter_data = Twitter_page_data::join('users', 'users.id', '=', 'twitter_page_data.user_id')
+                                            ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
+                    $twitter_data = $twitter_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get();  
 
                     foreach ($instagram_data as $key => $value) {
                         $search_page_data->push($value);
                     }foreach ($youtube_data as $key => $value2) {
                         $search_page_data->push($value2);
+                    }foreach ($twitter_data as $key => $value3) {
+                        $search_page_data->push($value3);
                     }
                         
                 }else{ 
@@ -138,15 +155,17 @@ class FindInfulencerController extends Controller
                     // vv($facebook_data);              
                     $instagram_data = Instagram_page_data::get();
                     $youtube_data = Youtube_page_data::get();
+                    $twitter_data = Twitter_page_data::get();
                     $search_page_data = $facebook_data;
                     foreach ($instagram_data as $key => $value) {
                         $search_page_data->push($value);
                     }foreach ($youtube_data as $key => $value2) {
                         $search_page_data->push($value2);
+                    }foreach ($twitter_data as $key => $value2) {
+                        $search_page_data->push($value2);
                     }
                 }
             }
-
             if(!empty($request->likes_on_Facebook)){
                 // v($request->country);
                 // if($request->country == 'Select'){
@@ -190,10 +209,16 @@ class FindInfulencerController extends Controller
                                                     ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
                             $youtube_data = $youtube_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get(); 
 
+                            $twitter_data = Twitter_page_data::join('users', 'users.id', '=', 'twitter_page_data.user_id')
+                                                ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
+                            $twitter_data = $twitter_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get();  
+
                             foreach ($instagram_data as $key => $value) {
                                 $search_page_data->push($value);
                             }foreach ($youtube_data as $key => $value2) {
                                 $search_page_data->push($value2);
+                            }foreach ($twitter_data as $key => $value3) {
+                                $search_page_data->push($value3);
                             }
                         }
                     // vv($search_page_data);
@@ -234,17 +259,85 @@ class FindInfulencerController extends Controller
                         $facebook_data = $facebook_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get();                        
                         $youtube_data = Youtube_page_data::join('users', 'users.id', '=', 'youtube_page_data.user_id')
                                                 ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
-                        $youtube_data = $youtube_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get(); 
+                        $youtube_data = $youtube_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get();
+
+                        $twitter_data = Twitter_page_data::join('users', 'users.id', '=', 'twitter_page_data.user_id')
+                                                ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
+                        $twitter_data = $twitter_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get();  
 
                         foreach ($facebook_data as $key => $value) {
                             $search_page_data->push($value);
                         }foreach ($youtube_data as $key => $value2) {
                             $search_page_data->push($value2);
+                        }foreach ($twitter_data as $key => $value3) {
+                            $search_page_data->push($value3);
                         }
                     }
                     
                 }
             }
+
+
+
+
+
+
+            if(!empty($request->followers_on_Twitter)){
+                if($request->followers_on_Twitter_checkbox == 1){
+                    // $instagram_data = Instagram_page_data::with(['User_details_2' => function ($query1) {
+                    //                     $query1->where('country', $request->country);
+                    //                 }])
+                    //                 ->where('followed_by' , '>=' ,  $request->followers_on_Instagram)
+                    //                 ->get();
+                    $instagram_data = Twitter_page_data::join('users', 'users.id', '=', 'twitter_page_data.user_id');
+                        if(!empty($request->country)){
+                            if($request->country == 'Select'){
+                                $request->country = 0;
+                            }else{
+                                $instagram_data = $instagram_data->where('users.country', $request->country);
+                            }
+                        }
+
+                        if (!empty($request->preferred_medium)) {
+                            $preferred_medium_temp = implode(",", $request->preferred_medium);
+                            $instagram_data = $instagram_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp]);                                    
+                        }
+                    $instagram_data =  $instagram_data->where('followers_count' , '>=' ,  $request->followers_on_Twitter)->get();  
+                    if (!is_object($search_page_data)) {
+                        $search_page_data = $instagram_data;
+                    }else{
+                        foreach ($instagram_data as $key => $value) {
+                            $search_page_data->push($value);
+                        }
+                    }
+                    // vv($search_page_data);
+                    if (!empty($request->preferred_medium)) {
+                        $facebook_data = Facebook_page_data::join('users', 'users.id', '=', 'facebook_page_data.user_id')
+                                                ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
+                        $facebook_data = $facebook_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get();                        
+                        $youtube_data = Youtube_page_data::join('users', 'users.id', '=', 'youtube_page_data.user_id')
+                                                ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
+                        $youtube_data = $youtube_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get(); 
+                        $instagram_data = Instagram_page_data::join('users', 'users.id', '=', 'instagram_page_data.user_id')
+                                                ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
+                        $instagram_data = $instagram_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get(); 
+
+                        foreach ($facebook_data as $key => $value) {
+                            $search_page_data->push($value);
+                        }foreach ($youtube_data as $key => $value2) {
+                            $search_page_data->push($value2);
+                        }foreach ($instagram_data as $key => $value3) {
+                            $search_page_data->push($value3);
+                        }
+                    }
+                    
+                }
+            }
+
+
+
+
+
 
             if(!empty($request->subscribers_on_Youtube)){
                 if($request->subscribers_on_Youtube_checkbox == 1){
@@ -296,11 +389,17 @@ class FindInfulencerController extends Controller
                         $instagram_data = Instagram_page_data::join('users', 'users.id', '=', 'instagram_page_data.user_id')
                                                 ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
                         $instagram_data = $instagram_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get(); 
+
+                        $twitter_data = Twitter_page_data::join('users', 'users.id', '=', 'twitter_page_data.user_id')
+                                                ->join('user_preferred_medium', 'user_preferred_medium.user_id', '=', 'users.id');
+                        $twitter_data = $twitter_data->whereIn('user_preferred_medium.preferred_medium_id' , [$preferred_medium_temp])->get();  
                        
                         foreach ($instagram_data as $key => $value) {
                             $search_page_data->push($value);
                         }foreach ($facebook_data as $key => $value2) {
                             $search_page_data->push($value2);
+                        }foreach ($twitter_data as $key => $value3) {
+                            $search_page_data->push($value3);
                         }
                     }
                 }
@@ -309,13 +408,17 @@ class FindInfulencerController extends Controller
             $facebook_data = Facebook_page_data::get();                
             $instagram_data = Instagram_page_data::get();
             $youtube_data = Youtube_page_data::get();
+            $twitter_data = Twitter_page_data::get();
             $search_page_data = $facebook_data;
             foreach ($instagram_data as $key => $value) {
                 $search_page_data->push($value);
             }foreach ($youtube_data as $key => $value2) {
                 $search_page_data->push($value2);
+            }foreach ($twitter_data as $key => $value3) {
+                $search_page_data->push($value3);
             }
         }
+        // vv($search_page_data);
         $sorted = $search_page_data->sortBy('name');
         // vv($sorted);
         $search_page_data = $sorted;
