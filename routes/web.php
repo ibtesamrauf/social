@@ -194,5 +194,5 @@ Route::get('/update_profile_login_with_social', 'ViewpageController@update_profi
 Route::post('/update_profile_login_with_social_post', 'ViewpageController@update_profile_login_with_social_post');
 
 
-
-
+Route::get('/facebook_test_callback', 'WelcomeController@facebook_test_callback');
+Route::get('/facebook', 'WelcomeController@facebook_test');
