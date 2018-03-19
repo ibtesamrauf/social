@@ -155,12 +155,6 @@
                             </div>
                             <!--/col-3-->
                             <div class="col-sm-9" style="" contenteditable="false">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading"> {{ $user_data->name }} Bio</div>
-                                    <div class="panel-body"> A long description about me.
-
-                                    </div>
-                                </div>
                                 <div class="panel panel-default target">
                                     <div class="panel-heading" contenteditable="false">Facebook Pages
                                     </div>
@@ -241,6 +235,42 @@
                                                         </p>
                                                         <p>
                                                             following: {{ $instagram_item->follows }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endforeach
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default target">
+                                    <div class="panel-heading" contenteditable="false">Twitter Page
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            @foreach($twitter_page_data as $instagram_item)
+                                            <div class="col-md-4">
+                                                <div class="thumbnail">
+                                                    <a href="twitter_page_resource/{{$instagram_item->id}}" class="">
+                                                        <img alt="300x200" style=" width: 240px; " src="{{ $instagram_item->image }}">
+                                                    </a>
+                                                    <div class="caption">
+                                                        <h3>
+                                                            {{ $instagram_item->name }}
+                                                        </h3>
+                                                        <p>
+                                                            followers: {{ $instagram_item->followers_count }} 
+                                                        </p>
+                                                        <p>
+                                                            Following: {{ $instagram_item->friends_count }}
+                                                        </p>
+                                                        <p>
+                                                            Likes: {{ $instagram_item->favourites_count }}
+                                                        </p>
+                                                        <p>
+                                                            Tweeks: {{ $instagram_item->statuses_count }}
                                                         </p>
                                                     </div>
                                                 </div>
