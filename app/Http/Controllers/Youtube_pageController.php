@@ -78,6 +78,10 @@ class Youtube_pageController extends Controller
                 "verify_peer_name"=>false,
             ),
         );  
+        $page_already_exist = Youtube_page_data::where("keyword" , $youtube_url)->first();
+        if($page_already_exist){
+            return back()->with('status', 'Page already exist');
+        }
         $youtube_response = file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id='.$youtube_url.'&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE', false, stream_context_create($arrContextOptions));
         $youtube_response = json_decode($youtube_response);
         // vv($youtube_response);

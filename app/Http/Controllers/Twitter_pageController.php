@@ -70,7 +70,10 @@ class Twitter_pageController extends Controller
         }else{
             $youtube_url = last($youtube_url);
         }
-        
+        $page_already_exist = Twitter_page_data::where("keyword" , $youtube_url)->first();
+        if($page_already_exist){
+            return back()->with('status', 'Page already exist');
+        }
         $instagram_url = $youtube_url;
 
 

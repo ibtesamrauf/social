@@ -61,7 +61,7 @@ class Facebook_pageController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'page_url'            => 'required|url',           
+            'page_url'            => 'required',           
         ]);
        
         $facebook_url = explode("/", $request->page_url);
@@ -71,7 +71,10 @@ class Facebook_pageController extends Controller
         }else{
             $facebook_url = last($facebook_url);
         }
-
+        $page_already_exist = Facebook_page_data::where("keyword" , $facebook_url)->first();
+        if($page_already_exist){
+            return back()->with('status', 'Page already exist');
+        }
         // vv($facebook_url);
         $url_2 = "https://graph.facebook.com/".$facebook_url."/?fields=name,likes,link,fan_count,picture&access_token=1942200009377124|2aa44fec0382b4d5715af57be82779d2";
         $response_2 = file_get_contents($url_2);

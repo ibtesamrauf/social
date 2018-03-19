@@ -71,6 +71,10 @@ class Instagram_pageController extends Controller
             unset($instagram_url[count($instagram_url) - 1]);
             $instagram_url = last($instagram_url);
         }
+        $page_already_exist = Instagram_page_data::where("keyword" , $instagram_url)->first();
+        if($page_already_exist){
+            return back()->with('status', 'Page already exist');
+        }
         // vv($instagram_url);
         $url_22 = "https://www.instagram.com/".$instagram_url."/?__a=1";
 
