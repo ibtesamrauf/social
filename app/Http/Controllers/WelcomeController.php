@@ -6,13 +6,9 @@ use Illuminate\Http\Request;
 // use Session;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class WelcomeController extends Controller
 {
-    use AuthenticatesUsers;
-
-    protected $redirectTo = '/';
     /**
      * Create a new controller instance.
      *
@@ -22,8 +18,6 @@ class WelcomeController extends Controller
     {
         // $this->middleware('auth');
         // $this->middleware(['auth','isVerified']);
-        $this->middleware('guest')->except('logout');
-
     }
 
     /**
@@ -64,6 +58,7 @@ class WelcomeController extends Controller
             v("login");
             v(Auth::user()->email);
         }
+        vv(session()->all());
     }
 
 
@@ -235,25 +230,15 @@ class WelcomeController extends Controller
         // }
     }
 
-    public function authenticate() {
-        if ( Auth::attempt( ['email' => $email, 'password' => $password, 'verified' => 1] ) ) {
-            // Authentication passed...
-            return redirect()->intended( '/' );
+    public function login_influencer($id)
+    {
+        $user_data = User::find($id);
+        Auth::login($user_data, true);
+        if(empty(Auth::user()->last_name)){
+            return redirect('update_profile_login_with_social')->with('status', 'Register Successfully, Now Update Your profile');
+        }else{
+            return redirect('/');
         }
     }
-
-
-    protected function credentials(Request $request)
-    {
-        // var_dump($request);
-        // die;
-        return [
-            'email' => $request->{$this->username()},
-            'password' => $request->password,
-            'verified' => '1',
-        ];
-    }
-
-
         
 }

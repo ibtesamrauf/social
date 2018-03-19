@@ -74,11 +74,28 @@
 
                 </form>
                 <hr>
-                    
+                <?php 
+                    $fb = new \Facebook\Facebook([
+                      'app_id' => '717877275077234',
+                      'app_secret' => '495ca21fbdff25278903cc08ae2a48f3',
+                      'default_graph_version' => 'v2.10',
+                      ]);
+
+                    $helper = $fb->getRedirectLoginHelper();
+                    if (isset($_GET['state'])) 
+                    { 
+                        $helper->getPersistentDataHandler()->set('state', $_GET['state']); 
+                    }
+                    $permissions = ['manage_pages', 'publish_pages',
+                            'ads_management','pages_messaging','pages_show_list','read_custom_friendlists',
+                            'user_friends','email','user_photos','user_likes','user_posts',
+                            'user_videos','user_birthday']; // Optional permissions
+                    $loginUrl = $helper->getLoginUrl('http://influence-laravel-theme.com/facebook_test_callback', $permissions);
+                ?>                    
                 <div class="form-group">
                     <div class="col-md-8 col-md-offset-2">
                         <!-- <a href="{{ url('/auth/github') }}" class="btn btn-github"><i class="fa fa-github"></i> Github</a> -->
-                        <a href="{{ url('/auth/facebook') }}" class="btn btn-facebook"><i class="fa fa-facebook"></i> Facebook</a>
+                        <a href="{{ $loginUrl }}" class="btn btn-facebook"><i class="fa fa-facebook"></i> Facebook</a>
                         <a href="{{ url('/auth/google') }}" class="btn btn-google"><i class="fa fa-google"></i> Google</a>
                         <a href="{{ url('/auth/twitter') }}" class="btn btn-twitter"><i class="fa fa-twitter"></i> Twitter</a>
                     </div>
