@@ -72,8 +72,12 @@ class Facebook_pageController extends Controller
             $facebook_url = last($facebook_url);
         }
         // session(['facebook_url' => $facebook_url]);
-        Session::put('facebook_url', $facebook_url);
-
+        if (Session::has('facebook_url'))
+        {
+            Session::forget('facebook_url');
+            Session::put('facebook_url', $facebook_url);
+            Session::save();
+        }
         // $page_already_exist = Facebook_page_data::where("keyword" , $facebook_url)->first();
         // if($page_already_exist){
         //     return back()->with('status', 'Page already exist');
@@ -178,9 +182,9 @@ class Facebook_pageController extends Controller
         $user_id_variable = "";
         try {
             $fb = new \Facebook\Facebook([
-                'app_id' =>  env('FACEBOOK_APP_ID'),
-                'app_secret' => env('FACEBOOK_APP_SECRET'),
-                'default_graph_version' => env('FACEBOOK_APP_default_graph_version'),
+                'app_id' =>  '717877275077234',
+                'app_secret' => '495ca21fbdff25278903cc08ae2a48f3',
+                'default_graph_version' => 'v2.10',
             ]);
 
             $helper = $fb->getRedirectLoginHelper();
@@ -266,7 +270,7 @@ class Facebook_pageController extends Controller
             // v($user);
             echo 'Email: ' . $user['email'];
             $facebook_url_var = Session::get('facebook_url');
-            
+
             $url_2 = "https://graph.facebook.com/".$facebook_url_var."/?fields=name,likes,link,fan_count,picture&access_token=1942200009377124|2aa44fec0382b4d5715af57be82779d2";
             $response_2 = file_get_contents($url_2);
             
@@ -299,10 +303,10 @@ class Facebook_pageController extends Controller
                             ]);
                     }
                     
-                    // return redirect('viewprofile')->with('status', 'Page Added Succesfully!');              
-                    v("pass");
+                    return redirect('viewprofile')->with('status', 'Page Added Succesfully!');
                 }
             }
+            return redirect('viewprofile')->with('status', 'Page doesnot belongs to you');
             // vv($facebook_pages_data);   
         }catch (\Exception $e) {
             return redirect('viewprofile')->with('status', 'Something Wrong try again');
