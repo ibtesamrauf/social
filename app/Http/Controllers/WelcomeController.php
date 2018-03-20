@@ -35,10 +35,10 @@ class WelcomeController extends Controller
     public function facebook_test()
     {
         $fb = new \Facebook\Facebook([
-          'app_id' => '717877275077234',
-          'app_secret' => '495ca21fbdff25278903cc08ae2a48f3',
-          'default_graph_version' => 'v2.10',
-          ]);
+           'app_id' =>  env('FACEBOOK_APP_ID'),
+            'app_secret' => env('FACEBOOK_APP_SECRET'),
+            'default_graph_version' => env('FACEBOOK_APP_default_graph_version'),
+        ]);
 
         $helper = $fb->getRedirectLoginHelper();
         if (isset($_GET['state'])) 
