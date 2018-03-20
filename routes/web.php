@@ -93,6 +93,8 @@ Route::resource('youtube_page_resource', 'Youtube_pageController');
 Route::resource('instagram_page_resource', 'Instagram_pageController');
 Route::resource('twitter_page_resource', 'Twitter_pageController');
 
+Route::get('facebook_page_facebook_call_back_page_add', 'Facebook_pageController@facebook_page_facebook_call_back_page_add');
+
 Route::resource('hashtags', 'HashtagsController');
 
 

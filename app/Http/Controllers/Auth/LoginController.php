@@ -233,7 +233,7 @@ class LoginController extends Controller
             v($tokenMetadata);
 
             // Validation (these will throw FacebookSDKException's when they fail)
-            $tokenMetadata->validateAppId('717877275077234');
+            $tokenMetadata->validateAppId(env('FACEBOOK_APP_ID'));
             // If you know the user ID this access token belongs to, you can validate it here
             //$tokenMetadata->validateUserId('123');
             $tokenMetadata->validateExpiration();
