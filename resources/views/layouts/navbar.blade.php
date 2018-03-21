@@ -33,6 +33,9 @@
                 <li class="dropdown">
                     <a class="" href="#" >Find Campaigns</a>
                 </li>
+                <li class="dropdown">
+                    <a class="" href="/find_job_resource" >Find Jobs</a>
+                </li>
                 <?php 
                   if(Auth::guest()){
                     if (Auth::guard('jobseeker')->check()) { }else{
@@ -70,7 +73,9 @@
                             <li>
                                 <a href="/messages_marketer">Inbox <span id="test_marketer"></span></a>
                             </li>
-                            
+                            <li>
+                                <a href="/job_post_resource">Jobs</a>
+                            </li>
                             <li>
                                 <a href="{{ url('jobseeker_logout') }}">
                                     Logout
