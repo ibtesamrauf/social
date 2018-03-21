@@ -201,3 +201,9 @@ Route::get('/facebook_test_callback', 'Auth\LoginController@facebook_test_callba
 Route::get('/facebook', 'WelcomeController@facebook_test');
 
 Route::get('/login_influencer/{id}', 'WelcomeController@login_influencer');
+
+Route::group(['middleware' => 'jobseeker_auth'], function() {
+    Route::resource('job_post_resource', 'Job_postController');
+    Route::get('job_post_resource_add_preferred_medium/{job_id}/{job_prefered_medium_id}', 'Job_postController@job_post_resource_add_preferred_medium');
+    Route::get('job_post_resource_delete_preferred_medium/{job_id}/{job_prefered_medium_id}', 'Job_postController@job_post_resource_delete_preferred_medium');
+});
