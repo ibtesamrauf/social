@@ -30,7 +30,8 @@ class Find_jobController extends Controller
      */
     public function __construct()
     {
-       
+        // $this->middleware('auth');
+        // $this->middleware(['auth','isVerified']);
     }
 
     public function index(Request $request)
@@ -38,8 +39,21 @@ class Find_jobController extends Controller
         $perPage = 15;    
         $device = Jobs::with('jobs_preferred_medium')->orderBy('id','DESC')->paginate($perPage);
         // vv($device);
-      
-        return view('find_job.index', compact('device'));
+        $temp_users_preferred_medium = array();
+
+        if(Auth::guest()){
+            if (Auth::guard('jobseeker')->check()) { 
+                return view('find_job.index2', compact('device' , 'temp_users_preferred_medium'));
+            }
+        }else{
+            foreach(Auth::user()->Users_preferred_medium as $preferred_medium){            
+                $temp_users_preferred_medium[] = $preferred_medium->preferred_medium_id;
+            }
+            // vv($temp_users_preferred_medium);
+        }
+// die;
+
+        return view('find_job.index', compact('device' , 'temp_users_preferred_medium'));
     }
 
     /**

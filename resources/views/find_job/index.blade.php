@@ -35,33 +35,45 @@
                         <div class="container">
 
                                 @foreach($device as $item)
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="col-md-9">
-                                                <h3>{{ $item->title }}</h3>
-                                                <p>{{ $item->description }}</p>
-                                                <p> 
-                                                    <span>Timing: </span>{{ $item->timing }}
-                                                    &nbsp&nbsp&nbsp<span>Sallery: </span> <span>{{ $item->sallery }}</span>
-                                                </p>
-                                            <?php 
-                                                foreach ($item->jobs_preferred_medium as $key => $value) {
-                                                    $data = \App\Preferred_medium::select('preferred_medium_title')
-                                                    ->where('id',$value->preferred_medium_id)->first();
-                                            ?>
-                                                <div class="btn btn-default btn-xs"> {{ $data->preferred_medium_title }} </div>
-                                            <?php
-                                                }
-                                            ?>
-                                                <br>
-                                                <br>
+                                    <?php 
+                                        $check_variable = false;
+                                        foreach ($item->jobs_preferred_medium as $key => $value) {
+                                            if(in_array($value->preferred_medium_id, $temp_users_preferred_medium)){
+                                                $check_variable = true;
+                                            }   
+                                        }
+                                        if($check_variable){
+                                    ?>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-9">
+                                                        <h3>{{ $item->title }}</h3>
+                                                        <p>{{ $item->description }}</p>
+                                                        <p> 
+                                                            <span>Timing: </span>{{ $item->timing }}
+                                                            &nbsp&nbsp&nbsp<span>Sallery: </span> <span>{{ $item->sallery }}</span>
+                                                        </p>
+                                                    <?php 
+                                                        foreach ($item->jobs_preferred_medium as $key => $value) {
+                                                            $data = \App\Preferred_medium::select('preferred_medium_title')
+                                                            ->where('id',$value->preferred_medium_id)->first();
+                                                    ?>
+                                                        <div class="btn btn-default btn-xs"> {{ $data->preferred_medium_title }} </div>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                        <br>
+                                                        <br>
+                                                    </div>
+                                                    <div class="col-md-3" style="padding-top: 6%; ">
+                                                        <a href="{{ url('/job_post_resource/' . $item->id) }}" title="View User"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View Job</button></a>
+                                                        <a href="{{ url('/job_post_resource/' . $item->id . '/edit') }}" title="Edit User"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit / Apply for job</button></a>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-md-3" style="padding-top: 6%; ">
-                                                <a href="{{ url('/job_post_resource/' . $item->id) }}" title="View User"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View Job</button></a>
-                                                <a href="{{ url('/job_post_resource/' . $item->id . '/edit') }}" title="Edit User"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit / Apply for job</button></a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <?php 
+                                        }
+                                    ?>
                                 @endforeach
                             <div class="pagination-wrapper"> {!! $device->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>

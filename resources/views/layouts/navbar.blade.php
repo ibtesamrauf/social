@@ -514,6 +514,6 @@
               $( "#test_influencer_top" ).load( "/messages_count_influencer" );
               $( "#test_marketer" ).load( "/messages_count_marketer" );
               $( "#test_marketer_top" ).load( "/messages_count_marketer" );
-            }, 3000);
+            }, 10000);
           });
         </script>
