@@ -37,4 +37,8 @@ class Jobs extends Model
     public function jobs_preferred_medium(){
         return $this->hasMany('App\Jobs_preferred_medium', 'jobs_id' , 'id');
     }
+
+    public function jobs_hashtags(){
+        return $this->hasMany('App\Jobs_hashtags', 'jobs_id' , 'id');
+    }
 }
