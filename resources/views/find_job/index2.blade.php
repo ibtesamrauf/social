@@ -15,9 +15,6 @@
                     </div>
                     @endif
                     <div class="panel-body">
-                        <a href="{{ url('/job_post_resource/create') }}" class="btn btn-success btn-sm" title="Add New Device">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
 
                         {!! Form::open(['method' => 'GET', 'url' => '/job_post_resource', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                         <div class="input-group">
@@ -38,7 +35,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="col-md-9">
-                                                <h3>{{ $item->title }}</h3>
+                                                <h3>{{ strtoUpper($item->title) }}</h3>
                                                 <p>{{ $item->description }}</p>
                                                 <p> 
                                                     <span>Timing: </span>{{ $item->timing }}

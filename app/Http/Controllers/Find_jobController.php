@@ -37,23 +37,39 @@ class Find_jobController extends Controller
     public function index(Request $request)
     {
         $perPage = 15;    
-        $device = Jobs::with('jobs_preferred_medium')->orderBy('id','DESC')->paginate($perPage);
+        if(!empty($request->search)){
+            $device = Jobs::with('jobs_preferred_medium' , 'jobs_hashtags')
+                                ->where('title' , 'like' , "%".$request->search."%")
+                                ->orWhere('description' , 'like' , "%".$request->search."%")
+                                ->orderBy('id','DESC')
+                                ->paginate($perPage);
+        }else{
+            $device = Jobs::with('jobs_preferred_medium' , 'jobs_hashtags')
+                                ->orderBy('id','DESC')
+                                ->paginate($perPage);
+        }
+
+
         // vv($device);
         $temp_users_preferred_medium = array();
+        $temp_users_hashtags = array();
 
         if(Auth::guest()){
             if (Auth::guard('jobseeker')->check()) { 
-                return view('find_job.index2', compact('device' , 'temp_users_preferred_medium'));
+                return view('find_job.index2', compact('device' , 'temp_users_preferred_medium' , 'temp_users_hashtags'));
             }
         }else{
             foreach(Auth::user()->Users_preferred_medium as $preferred_medium){            
                 $temp_users_preferred_medium[] = $preferred_medium->preferred_medium_id;
             }
-            // vv($temp_users_preferred_medium);
-        }
-// die;
 
-        return view('find_job.index', compact('device' , 'temp_users_preferred_medium'));
+            foreach(Auth::user()->Users_Roles_hashtags as $preferred_medium){            
+                $temp_users_hashtags[] = $preferred_medium->hashtags_id;
+            }
+            // vv($temp_users_hashtags);
+        }
+
+        return view('find_job.index', compact('device' , 'temp_users_preferred_medium' , 'temp_users_hashtags'));
     }
 
     /**
@@ -109,7 +125,7 @@ class Find_jobController extends Controller
      */
     public function show($id)
     {
-        $facebook_page_data = Jobs::where('id' , $id)->first();
+        $facebook_page_data = Jobs::with('jobs_preferred_medium')->where('id' , $id)->first();
         // vv($facebook_page_data);
         return view('find_job.show' , compact('facebook_page_data'));
     }
@@ -200,6 +216,13 @@ class Find_jobController extends Controller
                                 ->delete();
         return back()->with('status', 'Preferred Medium Deleted Succesfully!');
     }
-   
+
+    public function view_job($id)
+    {
+        // $jobs = Jobs::findOrFail($id);
+        // return view('' , compact('jobs'))
+    }
+    
+    
 
 }
