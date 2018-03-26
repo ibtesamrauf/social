@@ -107,7 +107,15 @@ class Job_postController extends Controller
     {
         $facebook_page_data = Jobs::where('id' , $id)->first();
         // vv($facebook_page_data);
-        return view('jobs.show' , compact('facebook_page_data'));
+        $preferred_medium_job_ids = Jobs_preferred_medium::select('preferred_medium_id')
+                                          ->where('jobs_id' , $id)
+                                          ->get();
+
+        $hashtags_job_ids = Jobs_hashtags::select('hashtags_id')
+                                          ->where('jobs_id' , $id)
+                                          ->get();
+
+        return view('jobs.show' , compact('facebook_page_data' , 'preferred_medium_job_ids' , 'hashtags_job_ids'));
     }
 
     /**

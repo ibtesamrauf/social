@@ -32,7 +32,7 @@
                             <table class="table table-borderless">
                                 <tbody>
                                     <tr>
-                                        <th>Title</th>
+                                        <th style=" width: 36%; ">Title</th>
                                         <td>{{ $facebook_page_data->title }}</td>
                                     </tr>
                                     <tr>
@@ -47,6 +47,33 @@
                                         <th>Audience</th>
                                         <td>{{ $facebook_page_data->audience }}</td>
                                     </tr>
+                                    <tr>
+                                        <th>Preferred Medium</th>
+                                        <td>
+                                            <?php   
+                                                foreach ($preferred_medium_job_ids as $key => $value) {
+                                                    # code...
+                                                    // echo $value->hashtags_id;
+                                                    echo \App\Preferred_medium::where('id' , $value->preferred_medium_id )->first()->preferred_medium_title;
+                                                    echo "<br>";
+                                                }
+                                            ?>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Hashtags</th>
+                                        <td>
+                                            <?php   
+                                                foreach ($hashtags_job_ids as $key => $value) {
+                                                    # code...
+                                                    // echo $value->hashtags_id;
+                                                    echo \App\Hashtags::where('id' , $value->hashtags_id )->first()->tags;
+                                                    echo "<br>";
+                                                }
+                                            ?>
+                                        </td>
+                                    </tr>   
 
                                 </tbody>
                             </table>
