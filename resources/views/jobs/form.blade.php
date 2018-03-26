@@ -22,11 +22,46 @@
     </div>
 </div>
 
-<div class="form-group {{ $errors->has('audience') ? 'has-error' : ''}}">
-    {!! Form::label('audience', 'Audience', ['class' => 'col-md-3 control-label']) !!}
+<div class="form-group {{ $errors->has('audience_all') ? 'has-error' : ''}}">
+    {!! Form::label('audience_all', 'Audience all', ['class' => 'col-md-3 control-label']) !!}
     <div class="input-group col-md-7">
-        {!! Form::text('audience', null, ['class' => 'form-control']) !!}
-        {!! $errors->first('audience', '<p class="help-block">:message</p>') !!}
+        {!! Form::number('audience_all', null, ['class' => 'form-control']) !!}
+        {!! $errors->first('audience_all', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
+
+<div class="form-group {{ $errors->has('audience_facebook') ? 'has-error' : ''}}">
+    {!! Form::label('audience_facebook', 'Facebook Audience', ['class' => 'col-md-3 control-label']) !!}
+    <div class="input-group col-md-7">
+        {!! Form::number('audience_facebook', null, ['class' => 'form-control']) !!}
+        {!! $errors->first('audience_facebook', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
+
+
+<div class="form-group {{ $errors->has('audience_instagram') ? 'has-error' : ''}}">
+    {!! Form::label('audience_instagram', 'Instagram Audience all', ['class' => 'col-md-3 control-label']) !!}
+    <div class="input-group col-md-7">
+        {!! Form::number('audience_instagram', null, ['class' => 'form-control']) !!}
+        {!! $errors->first('audience_instagram', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
+
+
+<div class="form-group {{ $errors->has('audience_youtube') ? 'has-error' : ''}}">
+    {!! Form::label('audience_youtube', 'Youtube Audience', ['class' => 'col-md-3 control-label']) !!}
+    <div class="input-group col-md-7">
+        {!! Form::number('audience_youtube', null, ['class' => 'form-control']) !!}
+        {!! $errors->first('audience_youtube', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
+
+
+<div class="form-group {{ $errors->has('audience_twitter') ? 'has-error' : ''}}">
+    {!! Form::label('audience_twitter', 'Twitter Audience', ['class' => 'col-md-3 control-label']) !!}
+    <div class="input-group col-md-7">
+        {!! Form::number('audience_twitter', null, ['class' => 'form-control']) !!}
+        {!! $errors->first('audience_twitter', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 

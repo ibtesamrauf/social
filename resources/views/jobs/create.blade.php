@@ -11,6 +11,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Add</div>
                     <div class="panel-body">
+                        <a href="{{ url('/job_post_resource') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                    
                         <br />
                         @if (session('status'))
                             <div class="alert alert-danger">

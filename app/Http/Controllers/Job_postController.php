@@ -189,9 +189,27 @@ class Job_postController extends Controller
             'title'               => 'required',           
             'description'         => 'required',           
             'timing'              => 'required',           
-            'audience'             => 'required',    
+            // 'audience'             => 'required',    
             // 'preferred_medium'    => 'required',
         ]);
+
+        if(empty($request->audience_facebook)){
+            $request->audience_facebook = "";
+        }
+        if(empty($request->audience_instagram)){
+            $request->audience_instagram = "";
+        }
+        if(empty($request->audience_youtube)){
+            $request->audience_youtube = "";
+        }
+        if(empty($request->audience_twitter)){
+            $request->audience_twitter = "";
+        }
+        if(empty($request->audience_all)){
+            $request->audience_all = "";
+        }
+
+        
         $requestData = $request->all();
         foreach ($requestData as $key => $value) {
             if(empty($value)){
