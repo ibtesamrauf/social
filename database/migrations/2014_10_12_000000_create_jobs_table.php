@@ -20,7 +20,7 @@ class CreateFacebookpagedataTable extends Migration
                 $table->string('title');
                 $table->string('description');
                 $table->string('timing');
-                $table->string('sallery');
+                $table->string('audience');
                 $table->timestamps();
             });
         }
