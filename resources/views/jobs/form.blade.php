@@ -22,11 +22,11 @@
     </div>
 </div>
 
-<div class="form-group {{ $errors->has('sallery') ? 'has-error' : ''}}">
-    {!! Form::label('sallery', 'Sallery', ['class' => 'col-md-3 control-label']) !!}
+<div class="form-group {{ $errors->has('audience') ? 'has-error' : ''}}">
+    {!! Form::label('audience', 'Audience', ['class' => 'col-md-3 control-label']) !!}
     <div class="input-group col-md-7">
-        {!! Form::text('sallery', null, ['class' => 'form-control']) !!}
-        {!! $errors->first('sallery', '<p class="help-block">:message</p>') !!}
+        {!! Form::text('audience', null, ['class' => 'form-control']) !!}
+        {!! $errors->first('audience', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 
@@ -75,6 +75,60 @@
                                 </strong><br>
                             </span>
                             <a href="\job_post_resource_add_preferred_medium/{{$user->id}}/{{ $preferred_medium_value->id }}" class="btn btn-primary">ADD</a>                            
+                        </li>
+                <?php
+                    }
+                ?>
+            @endforeach  
+        </ul>  
+    </div>
+</div>
+
+
+
+
+<div class="form-group {{ $errors->has('hashtags_values') ? 'has-error' : ''}}">
+    {!! Form::label('hashtags_values', 'Job Hashtags', ['class' => 'col-md-3 control-label']) !!}
+    <div class="input-group col-md-7">
+        <ul style="overflow: scroll; overflow-x: hidden; height: 20em; line-height: 2em; border: 1px solid #ccc; padding: 0; margin: 0; ">
+        
+            @foreach($hashtags as $preferred_medium_value)
+                <?php
+                    if (in_array($preferred_medium_value->id, $hashtags_id)) {
+                ?>
+                        <li class="list-group-item text-right">
+                            <span class="pull-left">
+                                <strong class="">
+                                {{ $preferred_medium_value->tags }}
+                                </strong><br>
+                            </span>
+                            <a href="\job_post_resource_delete_hashtags/{{$user->id}}/{{ $preferred_medium_value->id }}" class="btn btn-danger">REMOVE</a>
+
+                        </li>
+                <?php
+                    }
+                ?>
+            @endforeach  
+        </ul>  
+    </div>
+</div>
+
+<div class="form-group {{ $errors->has('hashtags_values') ? 'has-error' : ''}}">
+    {!! Form::label('hashtags_values', 'Add Job Hashtags', ['class' => 'col-md-3 control-label']) !!}
+    <div class="input-group col-md-7">
+        <ul style="overflow: scroll; overflow-x: hidden; height: 20em; line-height: 2em; border: 1px solid #ccc; padding: 0; margin: 0; ">
+        
+            @foreach($hashtags as $preferred_medium_value)
+                <?php
+                    if (!in_array($preferred_medium_value->id, $hashtags_id)) {
+                ?>
+                        <li class="list-group-item text-right">
+                            <span class="pull-left">
+                                <strong class="">
+                                {{ $preferred_medium_value->tags }}
+                                </strong><br>
+                            </span>
+                            <a href="\job_post_resource_add_hashtags/{{$user->id}}/{{ $preferred_medium_value->id }}" class="btn btn-primary">ADD</a>                            
                         </li>
                 <?php
                     }

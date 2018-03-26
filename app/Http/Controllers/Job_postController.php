@@ -16,6 +16,8 @@ use App\Instagram_page_data;
 use App\Jobs;
 use App\Preferred_medium;
 use App\Jobs_preferred_medium;
+use App\Jobs_hashtags;
+use App\Hashtags;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
@@ -50,7 +52,8 @@ class Job_postController extends Controller
     {
         // vv("create");
         $preferred_medium = Preferred_medium::get();
-        return view('jobs.create' , compact('preferred_medium'));
+        $hashtags = Hashtags::orderBy('tags', 'ASC')->get();
+        return view('jobs.create' , compact('preferred_medium' , 'hashtags'));
     }
 
     /**
@@ -66,20 +69,28 @@ class Job_postController extends Controller
             'title'               => 'required',           
             'description'         => 'required',           
             'timing'              => 'required',           
-            'sallery'             => 'required',    
+            'audience'             => 'required',    
             'preferred_medium'    => 'required',
+            'jobs_hashtags'     => 'required',
         ]);
         $jobs_id = Jobs::create([
                     'user_id'           => Auth::guard('jobseeker')->user()->id,
                     'title'             => $request->title,
                     'description'       => $request->description,
                     'timing'            => $request->timing,
-                    'sallery'           => $request->sallery,
+                    'audience'           => $request->audience,
                 ]);
         foreach ($request->preferred_medium as $key => $value) {
-          Jobs_preferred_medium::create([
+            Jobs_preferred_medium::create([
                       'jobs_id'                 => $jobs_id->id,
                       'preferred_medium_id'     => $value,
+                  ]);
+        }
+
+        foreach ($request->jobs_hashtags as $key => $value) {
+            Jobs_hashtags::create([
+                      'jobs_id'                 => $jobs_id->id,
+                      'hashtags_id'             => $value,
                   ]);
         }
         return redirect('job_post_resource')->with('status', 'Job Posted Succesfully!');
@@ -114,12 +125,19 @@ class Job_postController extends Controller
         $preferred_medium_job_value = Jobs_preferred_medium::select('preferred_medium_id')
                                           ->where('jobs_id' , $id)
                                           ->get();
-
         foreach ($preferred_medium_job_value as $key => $value) {
           $temp[] = $value->preferred_medium_id;
         }
 
-        return view('jobs.edit', compact('user', 'preferred_medium' , 'temp'));
+        $hashtags = Hashtags::orderBy('tags', 'ASC')->get();
+        $hashtags_job_value = Jobs_hashtags::select('hashtags_id')
+                                          ->where('jobs_id' , $id)
+                                          ->get();
+        foreach ($hashtags_job_value as $key => $value) {
+          $hashtags_id[] = $value->hashtags_id;
+        }
+
+        return view('jobs.edit', compact('user', 'preferred_medium' , 'temp' , 'hashtags' , 'hashtags_id'));
     }
 
     /**
@@ -136,8 +154,8 @@ class Job_postController extends Controller
             'title'               => 'required',           
             'description'         => 'required',           
             'timing'              => 'required',           
-            'sallery'             => 'required',    
-            'preferred_medium'    => 'required',
+            'audience'             => 'required',    
+            // 'preferred_medium'    => 'required',
         ]);
         $requestData = $request->all();
         foreach ($requestData as $key => $value) {
@@ -165,6 +183,7 @@ class Job_postController extends Controller
         // vv("here");
         Jobs::destroy($id);
         Jobs_preferred_medium::where('jobs_id' , $id)->delete();
+        Jobs_hashtags::where('jobs_id' , $id)->delete();
         return back()->with('status', 'Job Deleted Succesfully!');
     }
 
@@ -185,6 +204,26 @@ class Job_postController extends Controller
                                 ->delete();
         return back()->with('status', 'Preferred Medium Deleted Succesfully!');
     }
+
+    
+    public function job_post_resource_add_hashtags($job_id , $job_hashtags_id)
+    {
+        Jobs_hashtags::create([
+                      'jobs_id'         => $job_id,
+                      'hashtags_id'     => $job_hashtags_id,
+                  ]);
+        return back()->with('status', 'Hashtags Added Succesfully!');
+    }
+
+
+    public function job_post_resource_delete_hashtags($job_id , $job_hashtags_id)
+    {
+        Jobs_hashtags::where('jobs_id' , $job_id)
+                                ->where('hashtags_id' , $job_hashtags_id)
+                                ->delete();
+        return back()->with('status', 'Hashtags Deleted Succesfully!');
+    }
+   
    
 
 }

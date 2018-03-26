@@ -39,7 +39,7 @@
                                         <th>Title</th>
                                         <th>Description</th>
                                         <th>Timing</th>
-                                        <th>Sallary</th>
+                                        <th>Audience</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -48,7 +48,7 @@
                                         <td>{{ $item->title }}</td>
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->timing }}</td>
-                                        <td>{{ $item->sallery }}</td>
+                                        <td>{{ $item->audience }}</td>
                                         <td>
                                             <a href="{{ url('/job_post_resource/' . $item->id) }}" title="View User"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/job_post_resource/' . $item->id . '/edit') }}" title="Edit User"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

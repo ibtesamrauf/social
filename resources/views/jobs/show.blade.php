@@ -44,8 +44,8 @@
                                         <td>{{ $facebook_page_data->timing }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Sallery</th>
-                                        <td>{{ $facebook_page_data->sallery }}</td>
+                                        <th>Audience</th>
+                                        <td>{{ $facebook_page_data->audience }}</td>
                                     </tr>
 
                                 </tbody>

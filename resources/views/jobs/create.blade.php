@@ -51,11 +51,11 @@
                             </div>
                         </div>
 
-                        <div class="form-group {{ $errors->has('sallery') ? 'has-error' : ''}}">
-                            {!! Form::label('sallery', 'Sallery', ['class' => 'col-md-3 control-label']) !!}
+                        <div class="form-group {{ $errors->has('audience') ? 'has-error' : ''}}">
+                            {!! Form::label('audience', 'Audience', ['class' => 'col-md-3 control-label']) !!}
                             <div class="input-group col-md-7">
-                                {!! Form::text('sallery', null, ['class' => 'form-control']) !!}
-                                {!! $errors->first('sallery', '<p class="help-block">:message</p>') !!}
+                                {!! Form::number('audience', null, ['class' => 'form-control']) !!}
+                                {!! $errors->first('audience', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
                         
@@ -80,9 +80,41 @@
                                         
                                     </td>
                                 </tr>
-                                @endforeach    
+                                @endforeach
+                                {!! $errors->first('preferred_medium', '<p class="help-block">:message</p>') !!}    
                             </div>
                         </div>
+
+                        <div class="form-group {{ $errors->has('jobs_hashtags') ? 'has-error' : ''}}">
+                            {!! Form::label('jobs_hashtags', 'Hashtags', ['class' => 'col-md-3 control-label']) !!}
+
+                            <div class="input-group col-md-7">
+                                <ul style=" overflow: scroll; overflow-x: hidden; height: 20em; line-height: 2em; border: 1px solid #ccc; padding: 10px; margin: 0; "> 
+                                    @foreach($hashtags as $hashtags_value)
+                                        <tr>
+                                            <td>
+                                            <li>
+                                                
+                                                <input type="checkbox" value="{{ $hashtags_value->id }}" name="jobs_hashtags[]" id="jobs_hashtags[]" autofocus 
+                                                <?php 
+                                                    $test = old('jobs_hashtags');
+                                                    if(!empty($test)){
+                                                        if (in_array($hashtags_value->id, $test)){
+                                                            echo "Checked"; 
+                                                        } 
+                                                    }
+                                                ?>
+                                                > {{ $hashtags_value->tags }}<br>
+                                                
+                                            </li>
+                                            </td>
+                                        </tr>
+                                    @endforeach    
+                                </ul>
+                                {!! $errors->first('jobs_hashtags', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-md-offset-4 col-md-4">
                                 {!! Form::submit(isset($submitButtonText) ? $submitButtonText : 'Create', ['class' => 'btn btn-primary']) !!}

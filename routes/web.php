@@ -206,8 +206,13 @@ Route::group(['middleware' => 'jobseeker_auth'], function() {
     Route::resource('job_post_resource', 'Job_postController');
     Route::get('job_post_resource_add_preferred_medium/{job_id}/{job_prefered_medium_id}', 'Job_postController@job_post_resource_add_preferred_medium');
     Route::get('job_post_resource_delete_preferred_medium/{job_id}/{job_prefered_medium_id}', 'Job_postController@job_post_resource_delete_preferred_medium');
+
+    Route::get('job_post_resource_add_hashtags/{job_id}/{job_hashtags_id}', 'Job_postController@job_post_resource_add_hashtags');
+    Route::get('job_post_resource_delete_hashtags/{job_id}/{job_hashtags_id}', 'Job_postController@job_post_resource_delete_hashtags');
+
 });
 
 Route::resource('find_job_resource', 'Find_jobController');
+Route::get('view_job/{id}', 'Find_jobController@view_job');
 
 
