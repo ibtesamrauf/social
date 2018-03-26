@@ -43,10 +43,47 @@
                                         <th>Timing</th>
                                         <td>{{ $facebook_page_data->timing }}</td>
                                     </tr>
+                                    <?php if(!empty($facebook_page_data->audience_all)){ ?>
                                     <tr>
                                         <th>Audience</th>
-                                        <td>{{ $facebook_page_data->audience }}</td>
+                                        <td>
+                                            {{ $facebook_page_data->audience_all }}
+                                        </td>
                                     </tr>
+                                    <?php } ?>
+                                    <?php if(!empty($facebook_page_data->audience_facebook)){ ?>
+                                    <tr>
+                                        <th>Facebook Audience</th>
+                                        <td>
+                                            {{ $facebook_page_data->audience_facebook }}
+                                        </td>
+                                    </tr>
+                                    <?php } ?>
+                                    <?php if(!empty($facebook_page_data->audience_instagram)){ ?>
+                                    <tr>
+                                        <th>Instagram Audience</th>
+                                        <td>
+                                            {{ $facebook_page_data->audience_instagram }}
+                                        </td>
+                                    </tr>
+                                    <?php } ?>
+                                    <?php if(!empty($facebook_page_data->audience_youtube)){ ?>
+                                    <tr>
+                                        <th>Youtube Audience</th>
+                                        <td>
+                                            {{ $facebook_page_data->audience_youtube }}
+                                        </td>
+                                    </tr>
+                                    <?php } ?>
+                                    <?php if(!empty($facebook_page_data->audience_twitter)){ ?>
+                                    <tr>
+                                        <th>Twitter Audience</th>
+                                        <td>
+                                            {{ $facebook_page_data->audience_twitter }}
+                                        </td>
+                                    </tr>
+                                    <?php } ?>
+                                    
                                     <tr>
                                         <th>Preferred Medium</th>
                                         <td>

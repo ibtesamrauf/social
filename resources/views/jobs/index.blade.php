@@ -39,7 +39,7 @@
                                         <th>Title</th>
                                         <th>Description</th>
                                         <th>Timing</th>
-                                        <th>Audience</th>
+                                        <th>Audience All</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -48,7 +48,15 @@
                                         <td>{{ $item->title }}</td>
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->timing }}</td>
-                                        <td>{{ $item->audience }}</td>
+                                        <td>
+                                            <?php 
+                                                if(!empty($item->audience_all)){
+                                                    echo $item->audience_all;
+                                                }else{
+                                                    echo "Empty";
+                                                }
+                                            ?>
+                                        </td>
                                         <td>
                                             <a href="{{ url('/job_post_resource/' . $item->id) }}" title="View User"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/job_post_resource/' . $item->id . '/edit') }}" title="Edit User"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

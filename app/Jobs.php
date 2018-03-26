@@ -27,7 +27,8 @@ class Jobs extends Model
      */
  
  
-    protected $fillable = ['user_id' , 'title' , 'description' , 'timing' , 'audience'];
+    protected $fillable = ['user_id' , 'title' , 'description' , 'timing' , 'audience_all' , 
+                            'audience_facebook', 'audience_instagram', 'audience_youtube', 'audience_twitter'];
     
     public function users_data(){
         return $this->hasOne('App\User' , 'id' , 'user_id');

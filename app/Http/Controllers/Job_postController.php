@@ -65,20 +65,47 @@ class Job_postController extends Controller
      */
     public function store(Request $request)
     {
+
+        if(empty($request->audience_facebook) && empty($request->audience_instagram) &&
+            empty($request->audience_youtube) && empty($request->audience_twitter) && 
+            empty($request->audience_all)){
+            return back()->with('status', 'Select audience for one first!');
+        }
         $this->validate($request, [
             'title'               => 'required',           
             'description'         => 'required',           
             'timing'              => 'required',           
-            'audience'             => 'required',    
+            // 'audience'             => 'required',    
             'preferred_medium'    => 'required',
             'jobs_hashtags'     => 'required',
         ]);
+
+        if(empty($request->audience_facebook)){
+            $request->audience_facebook = "";
+        }
+        if(empty($request->audience_instagram)){
+            $request->audience_instagram = "";
+        }
+        if(empty($request->audience_youtube)){
+            $request->audience_youtube = "";
+        }
+        if(empty($request->audience_twitter)){
+            $request->audience_twitter = "";
+        }
+        if(empty($request->audience_all)){
+            $request->audience_all = "";
+        }
+
         $jobs_id = Jobs::create([
-                    'user_id'           => Auth::guard('jobseeker')->user()->id,
-                    'title'             => $request->title,
-                    'description'       => $request->description,
-                    'timing'            => $request->timing,
-                    'audience'           => $request->audience,
+                    'user_id'               => Auth::guard('jobseeker')->user()->id,
+                    'title'                 => $request->title,
+                    'description'           => $request->description,
+                    'timing'                => $request->timing,
+                    'audience_all'          => $request->audience_all,
+                    'audience_twitter'      => $request->audience_twitter,
+                    'audience_instagram'    => $request->audience_instagram,
+                    'audience_facebook'     => $request->audience_facebook,
+                    'audience_youtube'      => $request->audience_youtube,
                 ]);
         foreach ($request->preferred_medium as $key => $value) {
             Jobs_preferred_medium::create([
