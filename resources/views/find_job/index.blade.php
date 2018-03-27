@@ -37,6 +37,8 @@
                                     <?php 
                                         $check_variable = false;
                                         $check_variable_hashtags = false;
+                                        $check_variable_audience = false;
+
                                         foreach ($item->jobs_preferred_medium as $key => $value) {
                                             if(in_array($value->preferred_medium_id, $temp_users_preferred_medium)){
                                                 $check_variable = true;
@@ -58,30 +60,71 @@
                                                         <p> 
                                                             <span>Timing: </span>{{ $item->timing }}
                                                             &nbsp&nbsp&nbsp
-                                                            <?php if(!empty($item->audience_all)){ ?>
-                                                                &nbsp&nbsp<span>Audience: </span> 
-                                                                <span>{{ $item->audience_all }}</span>
-                                                            <?php } ?>
+                                                            Audience List:
+                                                            <ul>
+                                                            <?php 
+                                                                if(!empty($item->audience_all)){ 
 
-                                                            <?php if(!empty($item->audience_facebook)){ ?>
-                                                                &nbsp&nbsp<span>Facebook Audience: </span> 
-                                                                <span>{{ $item->audience_facebook }}</span>
-                                                            <?php } ?>
+                                                                    echo "<li>
+                                                                            &nbsp&nbsp<span>Audience: </span> 
+                                                                            <span>$item->audience_all </span>
+                                                                        </li>";
+                                                                } 
+ 
+                                                                if(!empty($item->audience_facebook))
+                                                                { 
+                                                                    foreach ($facebook_page_likes as $key => $value) { 
+                                                                        if($value > $item->audience_facebook){
+                                                                            $check_variable_audience = true;   
+                                                                        }
+                                                                    }
+                                                                    // var_dump($check_variable_audience );
+                                                                    echo "<li>
+                                                                            &nbsp&nbsp<span>Facebook Audience: </span>
+                                                                            <span>$item->audience_facebook</span>
+                                                                        </li>";
+                                                                } 
 
-                                                            <?php if(!empty($item->audience_instagram)){ ?>
-                                                                &nbsp&nbsp<span>Instagram Audience: </span> 
-                                                                <span>{{ $item->audience_instagram }}</span>
-                                                            <?php } ?>
+                                                                if(!empty($item->audience_instagram))
+                                                                { 
+                                                                    foreach ($instagram_page_likes as $key => $value) { 
+                                                                        if($value > $item->audience_instagram){
+                                                                            $check_variable_audience = true;   
+                                                                        }
+                                                                    }
+                                                                    echo "<li>
+                                                                            &nbsp&nbsp<span>Instagram Audience: </span> 
+                                                                            <span>$item->audience_instagram</span>
+                                                                        </li>";
+                                                                } 
 
-                                                            <?php if(!empty($item->audience_youtube)){ ?>
-                                                                &nbsp&nbsp<span>Youtube Audience: </span> 
-                                                                <span>{{ $item->audience_youtube }}</span>
-                                                            <?php } ?>
+                                                                if(!empty($item->audience_youtube))
+                                                                { 
+                                                                    foreach ($youtube_page_likes as $key => $value) { 
+                                                                        if($value > $item->audience_youtube){
+                                                                            $check_variable_audience = true;   
+                                                                        }
+                                                                    }
+                                                                    echo "<li>
+                                                                            &nbsp&nbsp<span>Youtube Audience: </span> 
+                                                                            <span> $item->audience_youtube</span>
+                                                                        </li>";
+                                                                }
 
-                                                            <?php if(!empty($item->audience_twitter)){ ?>
-                                                                &nbsp&nbsp<span>Twitter Audience: </span> 
-                                                                <span>{{ $item->audience_twitter }}</span>
-                                                            <?php } ?>
+                                                                if(!empty($item->audience_twitter))
+                                                                { 
+                                                                    foreach ($twitte_page_likes as $key => $value) { 
+                                                                        if($value > $item->audience_twitter){
+                                                                            $check_variable_audience = true;   
+                                                                        }
+                                                                    }
+                                                                    echo "<li>
+                                                                            &nbsp&nbsp<span>Twitter Audience: </span> 
+                                                                            <span>$item->audience_twitter</span>
+                                                                        </li>";
+                                                                } 
+                                                            ?>
+                                                            </ul>
 
                                                         </p>
                                                         Hashtags
@@ -114,13 +157,13 @@
                                                     </div>
                                                     <div class="col-md-3" style="padding-top: 6%; ">
                                                         <?php 
-                                                            if($check_variable && $check_variable_hashtags){
+                                                            if($check_variable && $check_variable_hashtags && $check_variable_audience){
                                                         ?>
                                                                 <a href="{{ url('/find_job_resource/' . $item->id) }}" title="View User">
                                                                     <button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View Job</button>
                                                                 </a>
-                                                                <a href="{{ url('/find_job_resource/' . $item->id . '/edit') }}" title="Edit User">
-                                                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit / Apply for job</button>
+                                                                <a href="/apply_for_job/{{ $item->id }}" title="Apply for job">
+                                                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Apply for job</button>
                                                                 </a>
                                                         <?php 
                                                             }else{
