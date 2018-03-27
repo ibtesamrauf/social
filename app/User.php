@@ -51,6 +51,25 @@ class User extends Authenticatable
     public function User_previously_campaign(){
         return $this->hasMany('App\User_previously_campaign');
     }
+
+    public function User_facebook_page(){
+        return $this->hasMany('App\Facebook_page_data', 'user_id' , 'id');
+    }
+
+    public function User_youtube_page(){
+        return $this->hasMany('App\Youtube_page_data', 'user_id' , 'id');
+    }
+
+    public function User_instagram_page(){
+        return $this->hasMany('App\Instagram_page_data', 'user_id' , 'id');
+    }
+
+
+    public function User_twitter_page(){
+        return $this->hasMany('App\Twitter_page_data', 'user_id' , 'id');
+    }
+
+
     
     
     // public function Users_Roles_hashtags_names(){
