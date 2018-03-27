@@ -41,4 +41,8 @@ class Jobs extends Model
     public function jobs_hashtags(){
         return $this->hasMany('App\Jobs_hashtags', 'jobs_id' , 'id');
     }
+
+    public function jobs_applicant(){
+        return $this->hasMany('App\Jobs_applicant', 'jobs_id' , 'id');
+    }
 }
