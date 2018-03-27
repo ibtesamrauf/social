@@ -18,6 +18,7 @@ use App\Preferred_medium;
 use App\Jobs_preferred_medium;
 use App\Jobs_hashtags;
 use App\Hashtags;
+use App\Jobs_applicant;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
@@ -237,6 +238,7 @@ class Job_postController extends Controller
         Jobs::destroy($id);
         Jobs_preferred_medium::where('jobs_id' , $id)->delete();
         Jobs_hashtags::where('jobs_id' , $id)->delete();
+        Jobs_applicant::where('jobs_id' , $id)->delete();
         return back()->with('status', 'Job Deleted Succesfully!');
     }
 
