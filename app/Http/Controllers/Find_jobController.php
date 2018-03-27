@@ -16,6 +16,7 @@ use App\Instagram_page_data;
 use App\Jobs;
 use App\Preferred_medium;
 use App\Jobs_preferred_medium;
+use App\Jobs_applicant;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
@@ -49,7 +50,6 @@ class Find_jobController extends Controller
                                 ->paginate($perPage);
         }
 
-
         // vv($device);
         $temp_users_preferred_medium = array();
         $temp_users_hashtags = array();
@@ -69,7 +69,30 @@ class Find_jobController extends Controller
             // vv($temp_users_hashtags);
         }
 
-        return view('find_job.index', compact('device' , 'temp_users_preferred_medium' , 'temp_users_hashtags'));
+        $facebook_page_likes = array();
+        foreach (Auth::user()->User_facebook_page as $key => $value) {
+            $facebook_page_likes[] = $value->likes;
+        }
+        // vv($facebook_page_likes);
+        
+        $youtube_page_likes = array();
+        foreach (Auth::user()->User_youtube_page as $key => $value) {
+            $youtube_page_likes[] = $value->subscriberCount;
+        }
+
+        $instagram_page_likes = array();
+        foreach (Auth::user()->User_instagram_page as $key => $value) {
+            $instagram_page_likes[] = $value->followed_by;
+        }
+
+        $twitte_page_likes = array();
+        foreach (Auth::user()->User_twitter_page as $key => $value) {
+            $twitte_page_likes[] = $value->followers_count;
+        }
+        // vv(Auth::user()->User_twitter_page);
+
+        return view('find_job.index', compact('device' , 'temp_users_preferred_medium' , 'temp_users_hashtags',
+            'facebook_page_likes' , 'youtube_page_likes' , 'instagram_page_likes' , 'twitte_page_likes'));
     }
 
     /**
@@ -222,7 +245,30 @@ class Find_jobController extends Controller
         // $jobs = Jobs::findOrFail($id);
         // return view('' , compact('jobs'))
     }
+
+    public function apply_for_job($id)
+    {
+        $jobs = Jobs::findOrFail($id);
+        return view('find_job.apply_for_job' , compact('jobs'));
+    }
     
+    public function apply_for_job_post(Request $request)
+    {
+        $this->validate($request, [
+            'job_id'                        => 'required',           
+            'applicant_name'                => 'required',           
+            'applicant_description'         => 'required',           
+        ]);
+
+        $jobs_id = Jobs_applicant::create([
+                    'jobs_id'                   => $request->job_id,
+                    'applicant_id'              => Auth::user()->id,
+                    'applicant_name'            => $request->applicant_name,
+                    'applicant_description'     => $request->applicant_description,
+                ]);
+        
+        return redirect('find_job_resource')->with('status', 'Thank you for applying on this job!');
+    }
     
 
 }

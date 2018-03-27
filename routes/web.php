@@ -214,5 +214,7 @@ Route::group(['middleware' => 'jobseeker_auth'], function() {
 
 Route::resource('find_job_resource', 'Find_jobController');
 Route::get('view_job/{id}', 'Find_jobController@view_job');
+Route::get('apply_for_job/{id}', 'Find_jobController@apply_for_job');
+Route::post('apply_for_job_post', 'Find_jobController@apply_for_job_post');
 
 
