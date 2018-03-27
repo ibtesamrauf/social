@@ -210,6 +210,8 @@ Route::group(['middleware' => 'jobseeker_auth'], function() {
     Route::get('job_post_resource_add_hashtags/{job_id}/{job_hashtags_id}', 'Job_postController@job_post_resource_add_hashtags');
     Route::get('job_post_resource_delete_hashtags/{job_id}/{job_hashtags_id}', 'Job_postController@job_post_resource_delete_hashtags');
 
+    Route::get('job_post_resource_view_applicants/{job_id}', 'Job_postController@job_post_resource_view_applicants');
+
 });
 
 Route::resource('find_job_resource', 'Find_jobController');

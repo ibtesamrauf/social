@@ -58,7 +58,8 @@
                                             ?>
                                         </td>
                                         <td>
-                                            <a href="{{ url('/job_post_resource/' . $item->id) }}" title="View User"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                            <a href="{{ url('/job_post_resource/' . $item->id) }}" title="View User"><button class="btn btn-success btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                            <a href="{{ url('/job_post_resource_view_applicants/' . $item->id) }}" title="View All Applicants"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View all applicants</button></a>
                                             <a href="{{ url('/job_post_resource/' . $item->id . '/edit') }}" title="Edit User"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                                             {!! Form::open([
                                                 'method'=>'DELETE',

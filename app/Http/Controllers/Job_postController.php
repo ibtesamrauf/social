@@ -278,7 +278,13 @@ class Job_postController extends Controller
                                 ->delete();
         return back()->with('status', 'Hashtags Deleted Succesfully!');
     }
-   
+    
+
+    public function job_post_resource_view_applicants($job_id)
+    {
+        $jobs = Jobs::where('id' , $job_id)->first();
+        return view('jobs.view_all_applicant' , compact('jobs'));
+    }
    
 
 }
