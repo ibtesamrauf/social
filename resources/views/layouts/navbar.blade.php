@@ -505,15 +505,11 @@
 
         <script type="text/javascript">
           $( document ).ready(function() {
-            $( "#test_influencer" ).load( "/messages_count_influencer" );
-            $( "#test_influencer_top" ).load( "/messages_count_influencer" );
-            $( "#test_marketer" ).load( "/messages_count_marketer" );
-            $( "#test_marketer_top" ).load( "/messages_count_marketer" );
+            $( "#test_influencer,#test_influencer_top" ).load( "/messages_count_influencer" );
+            $( "#test_marketer,#test_marketer_top" ).load( "/messages_count_marketer" );
             window.setInterval(function(){
-              $( "#test_influencer" ).load( "/messages_count_influencer" );
-              $( "#test_influencer_top" ).load( "/messages_count_influencer" );
-              $( "#test_marketer" ).load( "/messages_count_marketer" );
-              $( "#test_marketer_top" ).load( "/messages_count_marketer" );
+              $( "#test_influencer,#test_influencer_top" ).load( "/messages_count_influencer" );
+              $( "#test_marketer,#test_marketer_top" ).load( "/messages_count_marketer" );
             }, 10000);
           });
         </script>
