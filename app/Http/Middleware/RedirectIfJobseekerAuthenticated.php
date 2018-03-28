@@ -19,13 +19,13 @@ class RedirectIfJobseekerAuthenticated
         //If request comes from logged in user, he will
         //be redirect to home page.
         if (Auth::guard()->check()) {
-            return redirect('/home');
+            return redirect('/');
         }
 
         //If request comes from logged in jobseeker, he will
         //be redirected to jobseeker's home page.
         if (Auth::guard('jobseeker')->check()) {
-            return redirect('/findinfulencer');
+            return redirect('/finde_influencer_test');
         }
         return $next($request);
     }

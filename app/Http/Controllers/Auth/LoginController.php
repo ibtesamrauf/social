@@ -42,6 +42,12 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    //Shows influencer login form
+    public function showLoginForm()
+    {
+       return view('auth.login');
+    }
+
     /**
      * Redirect the user to the OAuth Provider.
      *

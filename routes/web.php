@@ -101,12 +101,18 @@ Route::resource('hashtags', 'HashtagsController');
 // Route::get('/register', 'Auth\RegisterController@getRegister');
 
 Route::get('finde_influencer_test', 'FindInfulencerController@finde_influencer_test');
+Route::get('/viewprofile_from_find_influencer/{user_id}', 'FindInfulencerController@viewprofile_from_find_influencer');
 
+    // Route::get('login',  function () {
+    //     vv("ponka");
+    // });
 
-    Route::get('/viewprofile_from_find_influencer/{user_id}', 'FindInfulencerController@viewprofile_from_find_influencer');
 Route::group(['middleware' => 'jobseeker_guest'], function() {
     
-
+    $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
+    $this->get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+    // Route::get('/login', 'Auth\LoginController@showLoginForm');
+    
     Route::get('/jobseeker_register', 'JobseekerAuth\RegisterController@showRegistrationForm');
     Route::post('/jobseeker_register', 'JobseekerAuth\RegisterController@register');
     Route::get('jobseeker_login', 'JobseekerAuth\LoginController@showLoginForm');
