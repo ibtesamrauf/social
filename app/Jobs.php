@@ -33,6 +33,10 @@ class Jobs extends Model
     public function users_data(){
         return $this->hasOne('App\User' , 'id' , 'user_id');
     }
+
+    public function jobs_belongs_to_marketer(){
+        return $this->hasOne('App\Admin' , 'id' , 'user_id');
+    }
     
     public function jobs_preferred_medium(){
         return $this->hasMany('App\Jobs_preferred_medium', 'jobs_id' , 'id');
