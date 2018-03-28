@@ -262,19 +262,18 @@ class Find_jobController extends Controller
             'applicant_description'         => 'required',           
         ]);
 
-        // $jobs_id = Jobs_applicant::create([
-        //             'jobs_id'                   => $request->job_id,
-        //             'applicant_id'              => Auth::user()->id,
-        //             'applicant_name'            => $request->applicant_name,
-        //             'applicant_description'     => $request->applicant_description,
-        //         ]);
+        $jobs_id = Jobs_applicant::create([
+                    'jobs_id'                   => $request->job_id,
+                    'applicant_id'              => Auth::user()->id,
+                    'applicant_name'            => $request->applicant_name,
+                    'applicant_description'     => $request->applicant_description,
+                ]);
 
         $jobs = Jobs::with('jobs_belongs_to_marketer')->where('id',$request->job_id)->first();
         $marketer_data = $jobs->jobs_belongs_to_marketer;
         $user = User::where('id' , Auth::user()->id)->first();
         // vv($marketer_data->email);
         \Mail::send('email.job_applicant', ['marketer_data' => $marketer_data , 'job_applicant' => $user, 'jobs' => $jobs], function ($m) use ($marketer_data) {
-            // $m->from('hello@app.com', 'Your Application');
             $m->to($marketer_data->email, $marketer_data->first_name)->subject('You have New Job Applicant!');
         });
 
