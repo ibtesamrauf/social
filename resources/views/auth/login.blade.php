@@ -90,7 +90,7 @@
                             'ads_management','pages_messaging','pages_show_list','read_custom_friendlists',
                             'user_friends','email','user_photos','user_likes','user_posts',
                             'user_videos','user_birthday']; // Optional permissions
-                    $loginUrl = $helper->getLoginUrl('http://influence-laravel-theme.com/facebook_test_callback', $permissions);
+                    $loginUrl = $helper->getLoginUrl(env('FACEBOOK_REDIRECT_URL_MANNUAL_LOGIN' , 'http://influence-laravel-theme.com/facebook_test_callback'),, $permissions);
                 ?>                    
                 <div class="form-group">
                     <div class="col-md-8 col-md-offset-2">
