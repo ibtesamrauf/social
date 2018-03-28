@@ -129,123 +129,17 @@
                         @endif
                     </div>
 
-
                     <div class="form-group">
                         <input id="password-confirm" placeholder="Confirm New Password" type="password" class="form-control" name="password_confirmation" required>
                     </div>
-
-                    <hr>
-                    <div class="form-group">
-
-                        <div class="col-md-12">
-                            <p align="center" style=" font-size: 22px; ">Where can we find you?</p>                               
-                        </div>
-                    </div>
-                    <hr>
                     
-                    <div class="form-group{{ $errors->has('faebook_url') ? ' has-error' : '' }}">
-
-                        <div class="input-group">
-                            <span class="input-group-addon" style=" padding-right: 2px; ">https://www.facebook.com/</span>
-                            <input id="faebook_url" style="padding-left: 2px;" placeholder="Page name" type="text" class="form-control" name="faebook_url" value="{{ old('faebook_url') }}" placeholder="Page url" autofocus>
-                        </div>
-                        <div class="form-group hidden route_breakout_id">
-                        </div>
-                        @if ($errors->has('faebook_url'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('faebook_url') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-
-                    <div class="form-group{{ $errors->has('instagram_url') ? ' has-error' : '' }}">
-                        <div class="input-group">
-                            <span class="input-group-addon" style=" padding-right: 2px;">https://www.instagram.com/</span>
-                            <input id="instagram_url" style="padding-left: 2px;" placeholder="Page name" type="text" class="form-control" name="instagram_url" value="{{ old('instagram_url') }}" placeholder="Profile url" autofocus>
-                        </div>
-                        <div class="form-group hidden route_breakout_id">
-                        </div>
-                        @if ($errors->has('instagram_url'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('instagram_url') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-
-                    <div class="form-group{{ $errors->has('youtube_url') ? ' has-error' : '' }}">
-                        <div class="input-group">
-                            <span class="input-group-addon" style=" padding-right: 2px;">https://www.youtube.com/channel/</span>
-                            <input id="youtube_url" style="padding-left: 2px;" placeholder="Page name" type="text" class="form-control" name="youtube_url" value="{{ old('youtube_url') }}" placeholder="channel url" autofocus>
-                        </div>
-                        <div class="form-group hidden route_breakout_id">
-                        </div>
-                        @if ($errors->has('youtube_url'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('youtube_url') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-
-                    <div class="form-group{{ $errors->has('twitter_url') ? ' has-error' : '' }}">
-                        <div class="input-group">
-                            <span class="input-group-addon" style=" padding-right: 2px;">https://twitter.com/</span>
-                            <input id="twitter_url" style="padding-left: 2px;" placeholder="Page name" type="text" class="form-control" name="twitter_url" value="{{ old('twitter_url') }}" placeholder="Profile url" autofocus>
-                        </div>
-                        <div class="form-group hidden route_breakout_id">
-                        </div>
-
-                        @if ($errors->has('twitter_url'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('twitter_url') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-
-                    <div class="form-group{{ $errors->has('soundcloud_url') ? ' has-error' : '' }}">
-                        <div class="input-group">
-                            <span class="input-group-addon" style=" padding-right: 2px;">https://soundcloud.com/</span>
-                            <input id="soundcloud_url" style="padding-left: 2px;" placeholder="Page name" type="text" class="form-control" name="soundcloud_url" value="{{ old('soundcloud_url') }}" placeholder="Profile url" autofocus>
-                        </div>
-                        <div class="form-group hidden route_breakout_id">
-                        </div>
-                        @if ($errors->has('soundcloud_url'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('soundcloud_url') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-
-                    <div class="form-group{{ $errors->has('website_blog') ? ' has-error' : '' }}">
-                        <div class="input-group">
-                            <span class="input-group-addon" style=" padding-right: 2px;">https://www.example.com/</span>
-                            <input id="website_blog" style="padding-left: 2px;" type="text" class="form-control" name="website_blog" value="{{ old('website_blog') }}" placeholder="Website / blog " autofocus>
-                        </div>
-                        <div class="form-group hidden route_breakout_id">
-                        </div>
-
-
-                        @if ($errors->has('website_blog'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('website_blog') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-
-                    <div class="form-group{{ $errors->has('monthly_visitors') ? ' has-error' : '' }}">
-                        <div class="input-group">
-                            <span class="input-group-addon" style=" padding-right: 2px;">blog average monthly visitors</span>
-                            <input id="monthly_visitors" style="padding-left: 2px;" type="text" class="form-control" name="monthly_visitors" value="{{ old('monthly_visitors') }}" placeholder="Example" autofocus>
-                        </div>
-                        <div class="form-group hidden route_breakout_id">
-                        </div>
-                        
-
-                        @if ($errors->has('monthly_visitors'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('monthly_visitors') }}</strong>
-                            </span>
-                        @endif
-                    </div>
+                    <input id="faebook_url" style="padding-left: 2px;" placeholder="Page name" type="hidden" class="form-control" name="faebook_url" value="{{ old('faebook_url') }}" placeholder="Page url" autofocus>
+                    <input id="instagram_url" style="padding-left: 2px;" placeholder="Page name" type="hidden" class="form-control" name="instagram_url" value="{{ old('instagram_url') }}" placeholder="Profile url" autofocus>
+                    <input id="youtube_url" style="padding-left: 2px;" placeholder="Page name" type="hidden" class="form-control" name="youtube_url" value="{{ old('youtube_url') }}" placeholder="channel url" autofocus>
+                    <input id="twitter_url" style="padding-left: 2px;" placeholder="Page name" type="hidden" class="form-control" name="twitter_url" value="{{ old('twitter_url') }}" placeholder="Profile url" autofocus>
+                    <input id="soundcloud_url" style="padding-left: 2px;" placeholder="Page name" type="hidden" class="form-control" name="soundcloud_url" value="{{ old('soundcloud_url') }}" placeholder="Profile url" autofocus>
+                    <input id="website_blog" style="padding-left: 2px;" type="hidden" class="form-control" name="website_blog" value="{{ old('website_blog') }}" placeholder="Website / blog " autofocus>
+                    <input id="monthly_visitors" style="padding-left: 2px;" type="hidden" class="form-control" name="monthly_visitors" value="{{ old('monthly_visitors') }}" placeholder="Example" autofocus>
 
                     
                     <hr>
