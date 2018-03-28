@@ -36,7 +36,7 @@
                 <form class="form" method="POST" action="/update_profile_login_with_social_post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
-                        <input id="first_name" placeholder="First Name" type="text" class="form-control" name="first_name" value="{{ $user->first_name }}{{ old('first_name') }}" required autofocus>
+                        <input id="first_name" placeholder="First Name" type="text" class="form-control" name="first_name" value="{{ !empty(old('first_name')) ? old('first_name') : $user->first_name }}" required autofocus>
                         @if ($errors->has('first_name'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('first_name') }}</strong>
