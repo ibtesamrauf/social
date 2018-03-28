@@ -17,6 +17,7 @@ use App\Thread_marketer;
 use App\Message_marketer;
 use App\Facebook_page_data;
 use App\Instagram_page_data;
+use App\Jobs;
 use App\Youtube_page_data;
 use Illuminate\Http\Request;
 
@@ -108,6 +109,8 @@ class MessagesmarketerController extends Controller
                 $temp = Instagram_page_data::where('id' , $product_id)->first();
             }elseif ($platform =='Youtube') {
                 $temp = Youtube_page_data::where('id' , $product_id)->first();
+            }elseif ($platform =='jobs') {
+                $temp = Jobs::where('id' , $product_id)->first();
             }
             // vv($temp);
             return view('messenger_marketer.create', compact('belongsto1', 'temp', 'platform', 'product_id', 'user_id'));

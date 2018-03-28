@@ -58,7 +58,8 @@
                                                 <td>{{ $item->applicant_description }}</td>
                                                 <td>
                                                     <a href="{{ url('/viewprofile_from_find_influencer/' . $item->applicant_id) }}" title="View All Applicants"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View Profile</button></a>
-                                                    <a href="{{ url('/job_post_resource/' . $item->id . '/edit') }}" title="Edit User"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                                    <a href="{{ url('/messages_marketer/jobs,,'.$item->jobs_id.',,'.$item->applicant_id.'/create') }}" title="Edit User"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Message Applicant</button></a>
+                                                    <!-- <a href="{{ url('/job_post_resource/' . $item->id . '/edit') }}" title="Edit User"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a> -->
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -35,8 +35,8 @@
                                         <!-- Subject Form Input -->
                                         <div class="form-group">
                                             <label class="control-label">Subject</label>
-                                            <h5>{{ $temp->name }}</h5>
-                                            <input style="display:none" type="text" class="form-control" name="subject" placeholder="Subject" value="{{ $temp->name }}">
+                                            <h5>{{ !empty($temp->name) ? $temp->name : strtoUpper($temp->title)}}</h5>
+                                            <input style="display:none" type="text" class="form-control" name="subject" placeholder="Subject" value="{{ !empty($temp->name) ? $temp->name : $temp->title}}">
                                             <input style="display:none" type="text" class="form-control" name="belongsto1" placeholder="belongsto1" value="{{ $belongsto1 }}">
                                                    
                                         </div>
