@@ -236,7 +236,7 @@ class LoginController extends Controller
             // Get the access token metadata from /debug_token
             $tokenMetadata = $oAuth2Client->debugToken($accessToken);
             echo '<h3>Metadata</h3>';
-            v($tokenMetadata);
+            var_dump($tokenMetadata);
 
             // Validation (these will throw FacebookSDKException's when they fail)
             $tokenMetadata->validateAppId(env('FACEBOOK_APP_ID'));
@@ -275,7 +275,7 @@ class LoginController extends Controller
             }
 
             $user = $response->getGraphUser();
-            v($user);
+            var_dump($user);
             echo 'Email: ' . $user['email'];
             $profile_image_url = "https://graph.facebook.com/".$user['id']."/picture?type=large";          
 
