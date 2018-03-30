@@ -153,6 +153,21 @@
                                     </li>
                                     @endforeach
                                 </ul>
+
+                                <ul class="list-group">
+                                    <li class="list-group-item text-muted">Soial Profile Integration 
+                                        <i class="fa fa-dashboard fa-1x"></i>
+                                    </li>
+
+                                    <li class="list-group-item text-right">
+                                        <span class="pull-left">
+                                            <strong class="">
+                                                <a href="{{ url('/auth_profile_integration/twitter') }}" class="btn btn-twitter"><i class="fa fa-twitter"></i> Twitter</a>
+                                            </strong>
+                                        </span> 
+                                        .
+                                    </li>
+                                </ul>
                                 
                                 <!-- <div class="panel panel-default">
                                     <div class="panel-heading">Relevant hatags</div>

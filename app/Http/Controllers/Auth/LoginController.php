@@ -66,7 +66,16 @@ class LoginController extends Controller
      */
     public function handleProviderCallback($provider)
     {
+        // vv(url()->previous());
+        // where it came from
         try {
+            $previous_url = url()->previous();
+            if (strpos($previous_url, 'auth_profile_integration/twitter') !== false) {
+                $user = Socialite::driver($provider)->user();
+                v($user->nickname);
+            }
+            // die;
+            
             $user = Socialite::driver($provider)->user();
             // vv($user);
             $authUser = $this->findOrCreateUser($user, $provider);
@@ -81,7 +90,7 @@ class LoginController extends Controller
                 return redirect($this->redirectTo);
             }
         } catch (\Exception $e) {
-            // return redirect('register')->with('alert', 'Something Wrong try again');
+            return redirect('register')->with('alert', 'Something Wrong try again');
         }
     }
 
@@ -182,8 +191,6 @@ class LoginController extends Controller
             'verified' => '1',
         ];
     }
-
-
 
     public function facebook_test_callback()
     {
@@ -347,6 +354,44 @@ class LoginController extends Controller
 
         } catch (\Exception $e) {
             return redirect('register')->with('alert', 'Something Wrong try again');
+        }
+    }
+
+    public function redirectToProvider_profile_integration()
+    {
+        $redirect_url_variable = "";    
+        $redirect_url_variable = env('TWITTER_REDIRECT_URI_PROFILE_INTEGRATION');
+        
+        return Socialite::with($provider)->redirectUrl($redirect_url_variable)->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleProviderCallback_profile_integration()
+    {
+        $redirect_url_variable = "";    
+        $redirect_url_variable = env('TWITTER_REDIRECT_URI_PROFILE_INTEGRATION');
+        try {
+            $user = Socialite::driver($provider)->redirectUrl($redirect_url_variable)->user();
+            // vv($user);
+            $authUser = $this->findOrCreateUser($user, $provider);
+            if($authUser == 'no_email_found'){
+                return redirect('jobseeker_register')->with('alert', 'Email not found try again later or use another platform');
+            }
+            Auth::guard('jobseeker')->login($authUser, true);
+
+            // vv(Auth::guard('jobseeker')->user()->last_name);
+            if(empty(Auth::guard('jobseeker')->user()->last_name)){
+
+                return redirect('update_profile_login_with_social_marketer')->with('status', 'Register Successfully, Now Update Your profile');
+            }else{
+                return redirect($this->redirectTo);
+            }
+        } catch (\Exception $e) {
+            return redirect('jobseeker_register')->with('alert', 'Something Wrong try again');
         }
     }
 

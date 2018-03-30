@@ -14,6 +14,7 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+use App\Twitter_page_data;
 
 Route::get('/', 'WelcomeController@index')->name('home');
 
@@ -189,7 +190,62 @@ Route::get('/test_for_unread_email', 'HomeController@test_for_unread_email');
 
 // for social login and register
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
-Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
+// Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('auth/{provider}/callback_2', 'Auth\LoginController@handleProviderCallback');
+Route::get('auth/{provider}/callback', function ($provider) {
+        $previous_url = url()->previous();
+        try {
+            if (strpos($previous_url, 'auth_profile_integration/twitter') !== false) {
+                $user = Socialite::driver('twitter')->user();
+                v($user->nickname);
+                if(empty($user->nickname)){
+                    return redirect('viewprofile')->with('alert', 'Email not found try again later');
+                }
+                $settings = array(
+                    'oauth_access_token' => env('TWITTER_OAUTH_ACCESS_TOKEN'),
+                    'oauth_access_token_secret' => env('TWITTER_OAUTH_ACCESS_TOKEN_SECRET'),
+                    'consumer_key' => env('TWITTER_KEY'),
+                    'consumer_secret' => env('TWITTER_SECRET')
+                );
+                $url = 'https://api.twitter.com/1.1/users/show.json';
+                $getfield = '?screen_name='.$user->nickname;
+                $requestMethod = 'GET';
+
+                $twitter = new \App\Helpers\TwitterAPIExchange($settings);
+                // $twitter = new TwitterAPIExchange($settings);
+                $output =  $twitter->setGetfield($getfield)
+                    ->buildOauth($url, $requestMethod)
+                    ->performRequest();
+                      
+                $twitter_response = json_decode($output, true);
+                // vv($twitter_response);
+                if(!empty($twitter_response['errors'])){
+                    return redirect('viewprofile')->with('status', 'Page not found!');
+                }
+        
+                Twitter_page_data::create([
+                        'user_id'           => Auth::user()->id,
+                        'name'              => $twitter_response['name'],
+                        'keyword'           => $user->nickname,
+                        'followers_count'   => $twitter_response['followers_count'],
+                        'statuses_count'    => $twitter_response['statuses_count'],
+                        'friends_count'     => $twitter_response['friends_count'],
+                        'favourites_count'  => $twitter_response['favourites_count'],
+                        'image'             => $twitter_response['profile_image_url_https'],
+                    ]);
+                return redirect('viewprofile')->with('status', 'Page Added Successfully!');    
+            }else{
+                return redirect('auth/{{$provider}}/callback_2');            
+            }            
+        } catch (\Exception $e) {
+            return redirect('register')->with('alert', 'Something Wrong try again');
+        }
+    });
+// for social login and register
+
+// for social Profile integration
+Route::get('auth_profile_integration/twitter', 'Social_profile_integration@redirectToProvider_profile_integration');
+Route::get('auth_profile_integration/twitter/callback', 'Social_profile_integration@handleProviderCallback_profile_integration');
 // for social login and register
 
 // for social login and register marketer
