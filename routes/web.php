@@ -197,7 +197,7 @@ Route::get('auth/{provider}/callback', function ($provider) {
         try {
             if (strpos($previous_url, 'auth_profile_integration/twitter') !== false) {
                 $user = Socialite::driver('twitter')->user();
-                v($user->nickname);
+                // v($user->nickname);
                 if(empty($user->nickname)){
                     return redirect('viewprofile')->with('alert', 'Email not found try again later');
                 }
