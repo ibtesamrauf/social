@@ -168,7 +168,8 @@ return [
         // SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
         // facebook\Facebook\Facebook::class,
         Cmgmyr\Messenger\MessengerServiceProvider::class,
-        Laravel\Socialite\SocialiteServiceProvider::class,
+        // Laravel\Socialite\SocialiteServiceProvider::class,
+        \SocialiteProviders\Manager\ServiceProvider::class,
 
 
         /*
