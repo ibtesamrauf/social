@@ -68,7 +68,6 @@ class Instagram_pageController extends Controller
             unset($instagram_url[count($instagram_url) - 1]);
             $instagram_url = last($instagram_url);
         }else{
-            unset($instagram_url[count($instagram_url) - 1]);
             $instagram_url = last($instagram_url);
         }
         $page_already_exist = Instagram_page_data::where("keyword" , $instagram_url)->first();
@@ -82,8 +81,8 @@ class Instagram_pageController extends Controller
         $response_22 = file_get_contents($url_22);
         
         $instagram_response = json_decode($response_22);     
-        $instagram_response = $instagram_response->user;
-        
+        $instagram_response = $instagram_response->graphql->user;
+        // vv($instagram_response);
         $count = Instagram_page_data::where('user_id', Auth::user()->id)->count();
         // vv($count);
         if($count > 4){
@@ -94,8 +93,8 @@ class Instagram_pageController extends Controller
                     'page_id'           => 0,
                     'name'              => $instagram_response->full_name,
                     'keyword'           => $instagram_url,
-                    'followed_by'       => $instagram_response->followed_by->count,
-                    'follows'           => $instagram_response->follows->count,
+                    'followed_by'       => $instagram_response->edge_followed_by->count,
+                    'follows'           => $instagram_response->edge_follow->count,
                     'image'             => $instagram_response->profile_pic_url_hd,
                 ]);
         }
