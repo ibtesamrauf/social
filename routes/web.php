@@ -243,10 +243,17 @@ Route::get('auth/{provider}/callback', function ($provider) {
     });
 // for social login and register
 
+
 // for social Profile integration
 Route::get('auth_profile_integration/twitter', 'Social_profile_integration@redirectToProvider_profile_integration');
 Route::get('auth_profile_integration/twitter/callback', 'Social_profile_integration@handleProviderCallback_profile_integration');
+
+// for instagram
+Route::get('auth_profile_integration/instagram', 'Social_profile_integration@redirectToProvider_profile_integration_instagram');
+Route::get('auth_profile_integration/instagram/callback', 'Social_profile_integration@handleProviderCallback_profile_integration_instagram');
+
 // for social login and register
+
 
 // for social login and register marketer
 Route::get('auth_marketer/{provider}', 'JobseekerAuth\LoginController@redirectToProvider_marketer');

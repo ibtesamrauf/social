@@ -167,6 +167,16 @@
                                         </span> 
                                         .
                                     </li>
+
+                                    <li class="list-group-item text-right">
+                                        <span class="pull-left">
+                                            <strong class="">
+                                                <a href="{{ url('/auth_profile_integration/instagram') }}" class="btn btn-twitter"><i class="fa fa-instagram"></i> Instagram</a>
+                                            </strong>
+                                        </span> 
+                                        .
+                                    </li>
+
                                 </ul>
                                 
                                 <!-- <div class="panel panel-default">
