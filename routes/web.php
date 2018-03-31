@@ -235,8 +235,9 @@ Route::get('auth/{provider}/callback', function ($provider) {
                     ]);
                 return redirect('viewprofile')->with('status', 'Page Added Successfully!');    
             }else{
-                return redirect('auth/{{$provider}}/callback_2');            
-            }            
+                return redirect('auth/'.$provider.'/callback_2');            
+            }    
+
         } catch (\Exception $e) {
             return redirect('register')->with('alert', 'Something Wrong try again');
         }
