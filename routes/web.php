@@ -194,8 +194,8 @@ Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback_2', 'Auth\LoginController@handleProviderCallback');
 Route::get('auth/{provider}/callback', function ($provider) {
         $previous_url = url()->previous();
-                $user = Socialite::driver($provider)->user();
-                vv($user);
+                // $user = Socialite::driver('twitter')->user();
+                // vv($user);
         try {
             if (strpos($previous_url, 'auth_profile_integration/twitter') !== false) {
                 $user = Socialite::driver('twitter')->user();
@@ -237,6 +237,17 @@ Route::get('auth/{provider}/callback', function ($provider) {
                     ]);
                 return redirect('viewprofile')->with('status', 'Page Added Successfully!');    
             }else{
+                $user = Socialite::driver($provider)->user();
+                // vv($user);
+                if (Session::has('Socialite_data'))
+                {
+                    Session::forget('Socialite_data');
+                    Session::put('Socialite_data', $user);
+                    Session::save();
+                }else{
+                    Session::put('Socialite_data', $user);
+                    Session::save();
+                }
                 return redirect('auth/'.$provider.'/callback_2');            
             }    
 

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Socialite;
 use App\Facebook_page_data;
+use Session;
 
 class LoginController extends Controller
 {
@@ -66,18 +67,15 @@ class LoginController extends Controller
      */
     public function handleProviderCallback($provider)
     {
-        // vv(url()->previous());
-        // where it came from
         try {
-            $previous_url = url()->previous();
-            if (strpos($previous_url, 'auth_profile_integration/twitter') !== false) {
-                $user = Socialite::driver($provider)->user();
-                v($user->nickname);
+            if (Session::has('Socialite_data'))
+            {
+                $Socialite_data_session = Session::get('Socialite_data');
+                $user = $Socialite_data_session;
+            }else{
+                return redirect('register')->with('alert', 'Something Wrong try again');
             }
-            // die;
-            
-            $user = Socialite::driver($provider)->user();
-            // vv($user);
+
             $authUser = $this->findOrCreateUser($user, $provider);
             if($authUser == 'no_email_found'){
                 return redirect('register')->with('alert', 'Email not found try again later or use another platform');
