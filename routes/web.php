@@ -194,6 +194,8 @@ Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback_2', 'Auth\LoginController@handleProviderCallback');
 Route::get('auth/{provider}/callback', function ($provider) {
         $previous_url = url()->previous();
+                $user = Socialite::driver($provider)->user();
+                vv($user);
         try {
             if (strpos($previous_url, 'auth_profile_integration/twitter') !== false) {
                 $user = Socialite::driver('twitter')->user();
@@ -252,6 +254,10 @@ Route::get('auth_profile_integration/twitter/callback', 'Social_profile_integrat
 // for instagram
 Route::get('auth_profile_integration/instagram', 'Social_profile_integration@redirectToProvider_profile_integration_instagram');
 Route::get('auth_profile_integration/instagram/callback', 'Social_profile_integration@handleProviderCallback_profile_integration_instagram');
+
+// for youtube
+Route::get('auth_profile_integration/youtube', 'Social_profile_integration@redirectToProvider_profile_integration_youtube');
+Route::get('auth_profile_integration/youtube/callback', 'Social_profile_integration@handleProviderCallback_profile_integration_youtube');
 
 // for social login and register
 

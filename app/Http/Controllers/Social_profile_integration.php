@@ -265,4 +265,56 @@ class Social_profile_integration extends Controller
         }
     }
 
+
+
+    public function redirectToProvider_profile_integration_youtube()
+    {
+      // vv("asdsa");
+        return Socialite::with('youtube')->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleProviderCallback_profile_integration_youtube()
+    {
+        try {
+          $user = Socialite::driver('youtube')->user();
+          $page_id = $user->id;
+          // vv($user->id);
+          $arrContextOptions=array(
+              "ssl"=>array(
+                  "verify_peer"=>false,
+                  "verify_peer_name"=>false,
+              ),
+          );  
+          $youtube_response = file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id='.$page_id.'&key=AIzaSyAg_FC0M57hpDOSnCgCjiXlnHdr979nEJE', false, stream_context_create($arrContextOptions));
+          $youtube_response = json_decode($youtube_response);
+          // vv($youtube_response);
+          if(empty($youtube_response->items)){
+              return redirect('viewprofile')->with('status', 'Page Not Found');
+          }
+          $youtube_response = $youtube_response->items[0];
+          // vv($youtube_response);
+          if(empty($youtube_response->snippet->description)){
+              $youtube_response->snippet->description = 'null';
+          }
+
+            Youtube_page_data::create([
+                    'user_id'           => Auth::user()->id,
+                    'page_id'           => 0,
+                    'name'              => $youtube_response->snippet->title,
+                    'keyword'           => $page_id,
+                    'subscriberCount'   => $youtube_response->statistics->subscriberCount,
+                    'image'             => $youtube_response->snippet->thumbnails->medium->url,
+                    'description'       => $youtube_response->snippet->description,
+                ]);
+
+          return redirect('viewprofile')->with('status', 'Instagram Page Integrated!');
+        } catch (\Exception $e) {
+            return redirect('viewprofile')->with('alert', 'Something Wrong try again');
+        }
+    }
 }

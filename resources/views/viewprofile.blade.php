@@ -177,6 +177,15 @@
                                         .
                                     </li>
 
+                                    <li class="list-group-item text-right">
+                                        <span class="pull-left">
+                                            <strong class="">
+                                                <a href="{{ url('/auth_profile_integration/youtube') }}" class="btn btn-twitter"><i class="fa fa-youtube"></i> Youtube</a>
+                                            </strong>
+                                        </span> 
+                                        .
+                                    </li>
+
                                 </ul>
                                 
                                 <!-- <div class="panel panel-default">
